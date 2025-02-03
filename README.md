@@ -6,12 +6,12 @@ Asignatura: Desarrollo Web en Entorno Servidor, Desarrollo Web en Entorno Client
 
 Proyecto de Gestión portuaria y de amarres. Puerto deportivo La Marina de Valencia programado con TypeScript (Angular) y PHP, el cual vamos a realizar mediante un desarrollo incremental y siguiendo la metodología SCRUM.
 
-Front end:
+- Front end:
 
 
-Back-end:
-  Responsabilidades Primer Sprint:
-  Santiago Calderon --> PBL1: Gestión de usuarios.
-  Marcos Poveda ------> PBL2: Gestionar instalaciones.
-  Daniel Rufes -------> PBL3: Gestionar funcionalidades
-  Damián Rodríguez ---> PBL4: Gestionar perfiles o roles
+- Back-end:
+  + Responsabilidades Primer Sprint:
+  + Santiago Calderon --> PBL1: Gestión de usuarios.
+  + Marcos Poveda ------> PBL2: Gestionar instalaciones.
+  + Daniel Rufes -------> PBL3: Gestionar funcionalidades
+  + Damián Rodríguez ---> PBL4: Gestionar perfiles o roles
