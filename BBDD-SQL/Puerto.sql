@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `funcionalidad`
 --
-
+CREATE DATABASE Puerto;
+USE Puerto;
 CREATE TABLE `funcionalidad` (
   `id_funcionalidad` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
