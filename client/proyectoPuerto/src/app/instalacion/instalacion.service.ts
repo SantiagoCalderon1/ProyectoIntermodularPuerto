@@ -8,13 +8,24 @@ import { Observable, tap } from 'rxjs';
 export class InstalacionService {
   private urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   crearInstalacion(instalacion: any): Observable<any> {
     console.log("entrando en creaInstalacion");
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post<any>(this.urlApi, instalacion, { headers }).pipe(
+      // visualizar respuesta por consola
+      tap(response => console.log("Respuesta del servidor:", response))
+    );
+  }
+
+  deshecharInstalacion(id: number): Observable<any> {
+    console.log("entrando en deshecharInstalacion");
+    const URLDelete = this.urlApi + "?id_instalacion=" + id;
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+
+    return this.http.delete<any>(URLDelete).pipe(
       // visualizar respuesta por consola
       tap(response => console.log("Respuesta del servidor:", response))
     );

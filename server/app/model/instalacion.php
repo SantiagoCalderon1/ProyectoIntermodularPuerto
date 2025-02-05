@@ -21,6 +21,7 @@ class Instalacion
     //funcion para crear nuevas instalaciones, devuelve true(todo fue bien) o false(algo fallo)
     public static function crearInstalacion(string $codigo, string $puerto, string $descripcion, string $tipo_instalacion, $fecha_disposicion, $estado, $embarcacion_menores)
     {
+        //embarcacion_menores no se llega a meter en la BBDD
         if ($estado) {
             $estado = 1;
         } else {
@@ -44,7 +45,7 @@ class Instalacion
     public static function eliminarInstalacion($id)
     {
         $conexion = conexion();
-        $ssql = "";
+        $ssql = "DELETE FROM `instalacion` WHERE `id_instalacion`=$id";
         $resultado = $conexion->query($ssql);
         if ($resultado && $conexion->affected_rows > 0) {
             return true;

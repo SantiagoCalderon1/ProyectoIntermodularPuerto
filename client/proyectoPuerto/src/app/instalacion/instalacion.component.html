@@ -1,5 +1,5 @@
 <h3>Crear nueva instalacion</h3>
-<form #myForm="ngForm" (ngSubmit)="agregarInstalacion()">
+<form #crear="ngForm" (ngSubmit)="agregarInstalacion()">
     <label for="codigo">Código:</label><br>
     <input type="text" [(ngModel)]="codigo" name="codigo" id="codigo" required>
     <br><br>
@@ -29,5 +29,16 @@
     <br><br>
   
     <button type="submit">Crear Instalación</button>
+    <p *ngIf="mensajeCreacion == 1" style="color: greenyellow;">Instalación creada correctamente</p>
+    <p *ngIf="mensajeCreacion == 0" style="color: red;">Error al crear la instalación</p>
+  </form>
+<br>
+<h3>Eliminar Instalación</h3>
+  <form #eliminar="ngForm" (ngSubmit)="eliminarInstalacion()">
+    <label for="id_eliminar">ID de instalación a eliminar</label>
+    <input type="text" [(ngModel)]="id" name="id_eliminar" id="id_eliminar">
+    <button type="submit">Eliminar Instalación</button>
+    <p *ngIf="mensajeEliminacion == 1" style="color: greenyellow;">Instalación eliminada correctamente</p>
+    <p *ngIf="mensajeEliminacion == 0" style="color: red;">Error al eliminar la instalación</p>
   </form>
   

@@ -9,13 +9,17 @@ import { InstalacionService } from './instalacion.service';
   styleUrl: './instalacion.component.css'
 })
 export class InstalacionComponent {
+  id = 0;
   codigo = "";
   puerto = "";
   descripcion = "";
   tipo_instalacion = "";
   fecha_disposicion = "";
-  estado = false;
-  embarcacion_menores = false;
+  estado = null;
+  embarcacion_menores = null;
+
+  mensajeCreacion = 2;
+  mensajeEliminacion = 2;
 
   constructor(private instalacionesService: InstalacionService) { }
 
@@ -23,6 +27,11 @@ export class InstalacionComponent {
 
   //constructor()
   agregarInstalacion() {
+    if (this.codigo == "" || this.puerto == "" || this.descripcion == "" || this.tipo_instalacion == "" || this.fecha_disposicion == "") {
+      this.mensajeCreacion = 0;
+      console.log("Error, inputs sin rellenar");
+      return
+    }
     const nuevaInstalacion = {
       codigo: this.codigo,
       puerto: this.puerto,
@@ -37,13 +46,37 @@ export class InstalacionComponent {
       next: (response) => {
         console.log("Instalación creada", response);
         this.instalaciones.push(nuevaInstalacion);
+        this.mensajeCreacion = 1;
       },
       error: (error) => {
         console.log("Error al crear instalación", error);
+        this.mensajeCreacion = 0;
       },
       complete: () => {
         console.log("Petición completada");
       }
     });
+  }
+  eliminarInstalacion() {
+    console.log(this.id);
+    this.instalacionesService.deshecharInstalacion(this.id).subscribe({
+      next: (response) => {
+        if (response.error != "Error al eliminar la instalacion") {
+          console.log("Instalacion eliminada", response);
+          //falta eliminar la instalacion del array de instalaciones
+          this.mensajeEliminacion = 1;
+        } else {
+          console.log("Error al eliminar la instalacion", response.error);
+          this.mensajeEliminacion = 0;
+        }
+      },
+      error: (error) => {
+        console.log("Error al eliminar la instalacion", error);
+        this.mensajeEliminacion = 0;
+      },
+      complete: () => {
+        console.log("Petición completada");
+      }
+    })
   }
 }
