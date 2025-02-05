@@ -47,6 +47,7 @@ export class InstalacionComponent {
         console.log("Instalación creada", response);
         this.instalaciones.push(nuevaInstalacion);
         this.mensajeCreacion = 1;
+        console.log(this.instalaciones);
       },
       error: (error) => {
         console.log("Error al crear instalación", error);
@@ -63,7 +64,12 @@ export class InstalacionComponent {
       next: (response) => {
         if (response.error != "Error al eliminar la instalacion") {
           console.log("Instalacion eliminada", response);
-          //falta eliminar la instalacion del array de instalaciones
+          //falta eliminar la instalacion del array de instalaciones FALTA
+          // this.instalaciones.forEach((instalacion: any) => {
+          //   if(instalacion.id == this.id){
+          //     this.instalaciones
+          //   }
+          // });
           this.mensajeEliminacion = 1;
         } else {
           console.log("Error al eliminar la instalacion", response.error);
