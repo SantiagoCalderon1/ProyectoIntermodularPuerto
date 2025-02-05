@@ -1,5 +1,5 @@
 <?php
-include_once "./bd.php";
+include_once "../database/bd.php";
 class Instalacion
 {
     public int $id_instalacion;
@@ -21,6 +21,16 @@ class Instalacion
     //funcion para crear nuevas instalaciones, devuelve true(todo fue bien) o false(algo fallo)
     public static function crearInstalacion(string $codigo, string $puerto, string $descripcion, string $tipo_instalacion, $fecha_disposicion, $estado, $embarcacion_menores)
     {
+        if ($estado) {
+            $estado = 1;
+        } else {
+            $estado = 0;
+        }
+        if ($embarcacion_menores) {
+            $embarcacion_menores = 1;
+        } else {
+            $embarcacion_menores = 0;
+        }
         $conexion = conexion();
         $ssql = "INSERT INTO `instalacion` (`codigo`, `descripcion`, `fecha_disposicion`, `estado`, `puerto`) VALUES ('$codigo', '$descripcion', '$fecha_disposicion', '$estado', '$puerto')";
         $resultado = $conexion->query($ssql);
@@ -42,41 +52,39 @@ class Instalacion
             return false;
         }
     }
-//funcion para actualizar instalaciones, pasamos por parametro el id(obligatorio) y el resto de datos como opcionales (se pueden actualizar o no), devuelve true(todo fue bien) o false(algo fallo)
+    //funcion para actualizar instalaciones, pasamos por parametro el id(obligatorio) y el resto de datos como opcionales (se pueden actualizar o no), devuelve true(todo fue bien) o false(algo fallo)
     public static function actualizarInstalaciones($id, string $codigo = "", string $puerto = "", string $descripcion = "", string $tipo_instalacion = "", $fecha_disposicion = "", $estado = "", $embarcacion_menores = "")
     {
         $conexion = conexion();
         $dataActualizar = [];
         //si el parametro no esta por defecto, se añade a la actualizacion
-        if($codigo != ""){
+        if ($codigo != "") {
             $dataActualizar[] = "codigo='$codigo'";
         }
-        if($puerto != ""){
+        if ($puerto != "") {
             $dataActualizar[] = "codigo='$puerto'";
         }
-        if($descripcion != ""){
+        if ($descripcion != "") {
             $dataActualizar[] = "codigo='$descripcion'";
         }
-        if($tipo_instalacion != ""){
+        if ($tipo_instalacion != "") {
             $dataActualizar[] = "codigo='$tipo_instalacion'";
         }
-        if($fecha_disposicion != ""){
+        if ($fecha_disposicion != "") {
             $dataActualizar[] = "codigo='$fecha_disposicion'";
         }
-        if($estado != ""){
+        if ($estado != "") {
             $dataActualizar[] = "codigo='$estado'";
         }
-        if($embarcacion_menores != ""){
+        if ($embarcacion_menores != "") {
             $dataActualizar[] = "codigo='$embarcacion_menores'";
         }
-        $ssql = "UPDATE `tablaNombre` SET " . implode(",", $dataActualizar) ." WHERE id='$id'";
+        $ssql = "UPDATE `tablaNombre` SET " . implode(",", $dataActualizar) . " WHERE id='$id'";
         $resultado = $conexion->query($ssql);
-        if($resultado && $conexion->affected_rows > 0){
+        if ($resultado && $conexion->affected_rows > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-
-
 }

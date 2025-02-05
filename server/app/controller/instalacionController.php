@@ -1,25 +1,37 @@
 <?php
-header('Content-Type: application/json; charset=utf-8'); // Encabezado JSON
-header("Access-Control-Allow-Methods: POST");
-header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+header("Access-Control-Allow-Origin: *"); // Permitir cualquier origen
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); // Métodos permitidos
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Permitir estos headers
+header("Content-Type: application/json; charset=utf-8"); // Indicar que la respuesta es JSON
 
 include_once "../model/instalacion.php";
 
+// Verifica si la solicitud es POST
 if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-    //recogemos los datos enviados para crear la nueva instalacion
-    $codigo = $_POST["codigo"];
-    $puerto = $_POST["puerto"];
-    $descripcion = $_POST["descripcion"];
-    $tipo_instalacion = $_POST["tipo_instalacion"];
-    $fecha_disposicion = $_POST["fecha_disposicion"];
-    $estado = $_POST["estado"];
-    $embarcacion_menores = $_POST["embarcacion_menores"];
+    // Obtén los datos JSON del cuerpo de la solicitud
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    $respuesta = Instalacion::crearInstalacion($codigo, $puerto, $descripcion, $tipo_instalacion, $fecha_disposicion, $estado, $embarcacion_menores);
+    // Verifica si los datos fueron decodificados correctamente
+    if ($data) {
+        // Recoge los datos del JSON
+        $codigo = $data["codigo"];
+        $puerto = $data["puerto"];
+        $descripcion = $data["descripcion"];
+        $tipo_instalacion = $data["tipo_instalacion"];
+        $fecha_disposicion = $data["fecha_disposicion"];
+        $estado = $data["estado"];
+        $embarcacion_menores = $data["embarcacion_menores"];
 
-    if ($respuesta) {
-        echo json_encode(["mensaje" => "Instalacion creada correctamente"]);
+        $respuesta = Instalacion::crearInstalacion($codigo, $puerto, $descripcion, $tipo_instalacion, $fecha_disposicion, $estado, $embarcacion_menores);
+
+        if ($respuesta) {
+            echo json_encode(["mensaje" => "Instalación creada correctamente"]);
+        } else {
+            echo json_encode(["error" => "Error al crear la nueva instalación"]);
+        }
     } else {
-        echo json_encode(["error" => "Error al crear la nueva instalacion"]);
+        // Si no se pudo decodificar el JSON
+        echo json_encode(["error" => "Datos JSON no válidos"]);
     }
 }
+?>

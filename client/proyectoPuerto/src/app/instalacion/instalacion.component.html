@@ -1,31 +1,33 @@
-<h1>Instalaciones</h1>
-
-<!--public int $id_instalacion;
-    public string $codigo;
-    public string $puerto;
-    public string $descripcion;
-    public string $tipo_instalacion;
-    public $fecha_disposicion;
-    public $estado;
-    public $embarcacion_menores;-->
 <h3>Crear nueva instalacion</h3>
-<label for="codigo">Codigo:</label><br>
-<input type="text" [(ngModel)]="codigo" name="codigo" id="codigo" required>
-<br><br>
-<label for="puerto">Puerto:</label><br>
-<input type="text" [(ngModel)]="puerto" name="puerto" id="puerto" required>
-<br><br>
-<label for="descripcion">Descripción:</label>
-<textarea name="descripcion" [(ngModule)]="descripcion" id="descripcion" cols="30" rows="10" required></textarea><br>
-<br><br>
-<label for="tipo_instalacion">Tipo de instalación:</label>
-<input type="text" name="tipo_instalacion" [(ngModule)]="tipo_instalacion" id="tipo_instalacion" required><br>
-<br><br>
-<label for="fecha_disposicion">Fecha de disposición</label>
-<input type="date" name="fecha_disposicion" [(ngModule)]="fecha_disposicion" id="fecha_disposicion" required><br>
-<br><br>
-<label for="estado">Instalacion en buen estado</label>
-<input type="checkbox" name="estado" [(ngModule)]="estado" id="estado"><br>
-<br><br>
-<label for="embarcacion_menores">Embarcación de menores</label>
-<input type="checkbox" name="embarcacion_menores" [(ngModule)]="embarcacion_menores" id="embarcacion_menores">
+<form #myForm="ngForm" (ngSubmit)="agregarInstalacion()">
+    <label for="codigo">Código:</label><br>
+    <input type="text" [(ngModel)]="codigo" name="codigo" id="codigo" required>
+    <br><br>
+  
+    <label for="puerto">Puerto:</label><br>
+    <input type="text" [(ngModel)]="puerto" name="puerto" id="puerto" required>
+    <br><br>
+  
+    <label for="descripcion">Descripción:</label><br>
+    <textarea name="descripcion" [(ngModel)]="descripcion" id="descripcion" cols="30" rows="10" required></textarea>
+    <br><br>
+  
+    <label for="tipo_instalacion">Tipo de instalación:</label><br>
+    <input type="text" name="tipo_instalacion" [(ngModel)]="tipo_instalacion" id="tipo_instalacion" required>
+    <br><br>
+  
+    <label for="fecha_disposicion">Fecha de disposición:</label><br>
+    <input type="date" name="fecha_disposicion" [(ngModel)]="fecha_disposicion" id="fecha_disposicion" required>
+    <br><br>
+  
+    <label for="estado">Instalación en buen estado</label>
+    <input type="checkbox" name="estado" [(ngModel)]="estado" id="estado">
+    <br><br>
+  
+    <label for="embarcacion_menores">Embarcación de menores</label>
+    <input type="checkbox" name="embarcacion_menores" [(ngModel)]="embarcacion_menores" id="embarcacion_menores">
+    <br><br>
+  
+    <button type="submit">Crear Instalación</button>
+  </form>
+  

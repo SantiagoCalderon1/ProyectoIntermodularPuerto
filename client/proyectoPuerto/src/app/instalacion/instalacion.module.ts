@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InstalacionComponent } from './instalacion.component';
-import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
-  declarations: [InstalacionComponent],
+  declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule
   ],
-  exports : [InstalacionComponent]
+  exports : []
 })
 export class InstalacionModule { }
