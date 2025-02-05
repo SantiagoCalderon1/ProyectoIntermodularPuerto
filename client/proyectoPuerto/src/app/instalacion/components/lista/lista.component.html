@@ -1,1 +1,27 @@
-<p>lista works!</p>
+<h1>Lista de Instalaciones</h1>
+<table border>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Fecha de disposición</th>
+            <th>Estado</th>
+            <th>Puerto</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let instalacion of instalaciones; let i = index">
+            <td>{{ instalacion.id_instalacion }}</td>
+            <td>{{ instalacion.codigo }}</td>
+            <td>{{ instalacion.descripcion }}</td>
+            <td>{{ instalacion.fecha_disposicion }}</td>
+            <td>{{ instalacion.estado }}</td>
+            <td>{{ instalacion.puerto }}</td>
+            <td><button (click)="eliminarInstalacion(instalacion.id_instalacion)">Eliminar</button></td>
+        </tr>
+    </tbody>
+</table>
+<p *ngIf="mensajeEliminacion == 1" style="color: greenyellow;">Instalación eliminada correctamente</p>
+<p *ngIf="mensajeEliminacion == 0" style="color: red;">Error al eliminar la instalación</p>

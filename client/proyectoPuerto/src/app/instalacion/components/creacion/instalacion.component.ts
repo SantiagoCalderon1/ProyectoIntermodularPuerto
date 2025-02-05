@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { InstalacionService } from './instalacion.service';
+import { InstalacionService } from '../../instalacion.service';
+import { ListaComponent } from '../lista/lista.component';
 
 @Component({
   selector: 'app-instalacion',
@@ -58,31 +59,5 @@ export class InstalacionComponent {
       }
     });
   }
-  eliminarInstalacion() {
-    console.log(this.id);
-    this.instalacionesService.deshecharInstalacion(this.id).subscribe({
-      next: (response) => {
-        if (response.error != "Error al eliminar la instalacion") {
-          console.log("Instalacion eliminada", response);
-          //falta eliminar la instalacion del array de instalaciones FALTA
-          // this.instalaciones.forEach((instalacion: any) => {
-          //   if(instalacion.id == this.id){
-          //     this.instalaciones
-          //   }
-          // });
-          this.mensajeEliminacion = 1;
-        } else {
-          console.log("Error al eliminar la instalacion", response.error);
-          this.mensajeEliminacion = 0;
-        }
-      },
-      error: (error) => {
-        console.log("Error al eliminar la instalacion", error);
-        this.mensajeEliminacion = 0;
-      },
-      complete: () => {
-        console.log("Petición completada");
-      }
-    })
-  }
+
 }

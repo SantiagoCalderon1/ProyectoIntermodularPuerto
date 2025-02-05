@@ -30,4 +30,13 @@ export class InstalacionService {
       tap(response => console.log("Respuesta del servidor:", response))
     );
   }
+
+  getInstalaciones(): Observable<any>{
+    console.log("entrando en getInstalaciones");
+    const headers = new HttpHeaders({ "Content-Type": "application/json" });
+
+    return this.http.get<any>(this.urlApi).pipe(
+      tap(response => console.log("Respuesta del servidor:", response))
+    )
+  }
 }
