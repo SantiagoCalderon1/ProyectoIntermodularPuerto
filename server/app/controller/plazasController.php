@@ -1,19 +1,16 @@
 <?php
-
-include '../model/plazasModel.php.php';
+include_once '../model/plazasModel.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-$db = new places();
+$db = new Places();
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $requestUri = explode("/", trim($_SERVER["REQUEST_URI"]));
 $requestBody = json_decode(file_get_contents("php://input"), true);
-
-$uri = explode('/', $request);
-$lastpart = $uri[count($uri) - 1] ?? null;
+echo json_encode($requestBody);
 
 switch ($requestMethod) {
     case "GET":
@@ -36,43 +33,17 @@ switch ($requestMethod) {
 
 function handleGet($db, $uri)
 {
-    if (end($uri) === "API.php") {
-        /* Todos los productos */
-        $products = $db->allProducts();
-        echo json_encode($products);
-    } elseif (is_numeric(end($uri))) {
-        /* Producto por la ip */
-        $id = (int) end($uri);
-        $product = $db->productById($id);
-        if ($product) {
-            echo json_encode($product);
-        } else {
-            echo json_encode(["error" => "Producto no encontrado"]);
-        }
-    } elseif (isset($_GET["id"])) {
-        /* Producto por GET */
-        $id = (int) $_GET["id"];
-        $product = $db->productById($id);
-        if ($product) {
-            echo json_encode($product);
-        } else {
-            echo json_encode(["error" => "Producto no encontrado"]);
-        }
-    } else {
-        echo json_encode("Ruta no valida");
-    }
+    $products = $db->showPlace(end($uri));
+    echo json_encode($products);
 }
 
 function handlePost($db, $data)
 {
-    if (isset($id) && isset($puerto) && isset($instalacion) && isset($fecha_inicio) && isset($titular) && isset($fecha_fin) && isset($nombre_embarcacion)) {
-        if ($db->insertNewPlace($data)) {
-            echo json_encode("Producto creado con exito");
-        } else {
-            echo json_encode("Error al crear el producto");
-        }
+    echo json_encode($data);
+    if ($db->insertNewPlace($data)) {
+        echo json_encode("Producto creado con exito");
     } else {
-        echo json_encode("Datos incompletos/erroneos");
+        echo json_encode("Error al crear el producto");
     }
 }
 

@@ -1,15 +1,34 @@
 <?php
 
-function openConnection()
+class Connection
 {
-    $mysqli = new mysqli('127.0.0.1', 'rufes', '1234', 'pruebas');
-    if ($mysqli->connect_errno) {
-        echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ")";
-    }
-    return $mysqli;
-}
+    private $connection;
 
-function closeConnection($conexion)
-{
-    $conexion->close();
+    public function __construct($host, $user, $key, $db)
+    {
+        $this->connection = new mysqli($host, $user, $key, $db);
+
+        if ($this->connection->connect_errno) {
+            die("Fallo al conectar a MySQL: " . $this->connection->connect_error);
+        }
+    }
+
+    public function closeConnection()
+    {
+        if ($this->connection) {
+            $this->connection->close();
+        }
+    }
+
+    public function dataQuery($sql)
+    {
+        $res = $this->connection->query($sql);
+        if ($res === true) {
+            return true;
+        } elseif ($res) {
+            return $res->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,49 +1,49 @@
 <?php
 include_once '../../config/conexion.php';
 
-abstract class places
+class Places
 {
-    static function showPlace(string $id = '')
+    private $conexion;
+
+    function __construct()
     {
-        $conexion = null;
-        $conexion = openConnection();
-        if (!empty($id)) {
-            $sql = "SELECT * FROM places WHERE id = '$id'";
-            $res = $conexion->query($sql);
-            $resArray = array();
-            if ($res) {
-                $resArray = $res->fetch_all(MYSQLI_ASSOC);
-            }
-        } else {
-            $sql = "SELECT * FROM places;";
-            $res = $conexion->query($sql);
-            $resArray = $res->fetch_all(MYSQLI_ASSOC);
-        }
-        return $resArray;
+        $this->conexion = new Connection('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
     }
 
-    static function insertNewPlace(array $input)
+    function showPlace(string $id = '')
     {
-        $id = $input['id'];
+        if (is_numeric($id)) {
+            $sql = "SELECT * FROM plaza_base WHERE id_plaza_base = '$id'";
+            return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM plaza_base";
+            return $this->conexion->dataQuery($sql);
+        }
+    }
+
+
+    function insertNewPlace(array $input)
+    {
+        $año = $input['año'];
         $puerto = $input['puerto'];
         $instalacion = $input['instalacion'];
         $fecha_inicio = $input['fecha_inicio'];
-        $titular = $input['titular'];
-        $fecha_fin = $input['fecha_fin'];
-        $nombre_embarcacion = $input['nombre_embarcacion'];
-        $conexion = null;
-        $conexion = openConnection();
-        $sql = "INSERT INTO places (id, puerto, instalacion, fecha_inicio, titular, fecha_fin, nombre_embarcacion) VALUES ( $id, $puerto, $instalacion, $fecha_inicio, $titular, $fecha_fin, $nombre_embarcacion);";
-        return $conexion->query($sql);
+        $datos_titular = $input['datos_titular'];
+        $datos_embarcacion = $input['datos_embarcacion'];
+        $datos_estancia = $input['datos_estancia'];
+        $sql = "INSERT INTO places (año, puerto, instalacion, fecha_inicio, datos_titular, datos_embarcacion, datos_estancia) VALUES ( $año, $puerto, $instalacion, $fecha_inicio, $datos_titular, $datos_embarcacion, $datos_estancia);";
+        return $this->conexion->dataQuery($sql);
     }
 
-    static function updatePlace(array $input)
+    function updatePlace(array $input)
     {
-        $conexion = null;
-        $conexion = openConnection();
+
         if (isset($input["id"])) {
             $id = (int) $input["id"];
             $updates = [];
+            if (isset($input["año"])) {
+                $updates[] = "año = '" . $input["año"] . "'";
+            }
             if (isset($input["puerto"])) {
                 $updates[] = "puerto = '" . $input["puerto"] . "'";
             }
@@ -53,18 +53,18 @@ abstract class places
             if (isset($input["fecha_inicio"])) {
                 $updates[] = "fecha_inicio = " . $input["fecha_inicio"];
             }
-            if (isset($input["titular"])) {
-                $updates[] = "titular = " . $input["titular"];
+            if (isset($input["datos_titular"])) {
+                $updates[] = "datos_titular = " . $input["datos_titular"];
             }
-            if (isset($input["fecha_fin"])) {
-                $updates[] = "fecha_fin = " . $input["fecha_fin"];
+            if (isset($input["datos_embarcacion"])) {
+                $updates[] = "datos_embarcacion = " . $input["datos_embarcacion"];
             }
-            if (isset($input["nombre_embarcacion"])) {
-                $updates[] = "nombre_embarcacion = " . $input["nombre_embarcacion"];
+            if (isset($input["datos_estancia"])) {
+                $updates[] = "datos_estancia = " . $input["datos_estancia"];
             }
             if (count($updates) > 0) {
-                $sql = "UPDATE plazas SET " . implode(", ", $updates) . " WHERE Id = $id";
-                if ($conexion->query($sql)) {
+                $sql = "UPDATE plazas SET " . implode(", ", $updates) . " WHERE id_plaza_base = $id";
+                if ($this->conexion->dataQuery($sql)) {
                     echo json_encode("plaza actualizado con éxito");
                 } else {
                     echo json_encode("Error al actualizar la plaza");
@@ -79,64 +79,11 @@ abstract class places
 
     function deletePlace(string $id)
     {
-        $conexion = null;
-        $conexion = openConnection();
         $sql = "DELETE FROM places WHERE Id = $id";
-        if ($conexion->query($sql)) {
-            echo json_encode("plaza eliminado con éxito");
+        if ($this->conexion->dataQuery($sql)) {
+            echo json_encode("plaza eliminada con éxito");
         } else {
             echo json_encode("Error al eliminar la plaza");
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    static function deleteUser(string $username)
-    {
-        $conexion = null;
-        try {
-            $conexion = openConnection();
-            $sql = "DELETE FROM users WHERE username = ?";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("s", $username);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            //throw $th;
-        } finally {
-            if ($conexion) {
-                closeConnection($conexion);
-            }
         }
     }
 }
