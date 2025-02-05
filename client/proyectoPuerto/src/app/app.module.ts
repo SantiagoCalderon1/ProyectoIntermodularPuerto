@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LayoutsModule } from './layouts/layouts.module';
 import { HomeComponent } from './home/home.component';
 import { LoginModule } from './login/login.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoginModule } from './login/login.module';
     AppRoutingModule,
     LayoutsModule,
     ReactiveFormsModule,
-    LoginModule
+    LoginModule,
+    UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

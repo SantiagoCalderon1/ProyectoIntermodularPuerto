@@ -1,31 +1,32 @@
-<div id="container-login" class="card" style="width: 18rem;">
-    <div class="card-body">
-        <h5 class="card-title">Sign in to your Account</h5>
-        <form [formGroup]="loginForm" (ngSubmit)="verifyUser()" novalidate>
-            <div class="col-md-4">
-                <label for="validationServer01" class="form-label">Email</label>
-                <input type="text" formControlName="username" class="form-control is-valid" id="validationServer01"
-                    required>
-                <div class="invalid-feedback">
-                    Por favor rellena los campos!
+<div id="container-login">
+    <div class="card" style="width: 20rem;">
+        <div class="card-body">
+            <h5 class="card-title">Sign in to your Account</h5>
+            <form [formGroup]="loginForm" (ngSubmit)="verifyUser()" novalidate>
+                <div class="col-md-4">
+                    <label for="validationServer01" class="form-label">Email</label>
+                    <input type="text" formControlName="username" class="form-control" id="validationServer01" required>
+                    <div class="invalid-feedback">
+                        Por favor rellena los campos!
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <label for="passwordInput" class="form-label">Password</label>
-                <div class="input-group">
-                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
-                        id="passwordInput" required>
-                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-                        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-                    </button>
+                <div class="col-md-4">
+                    <label for="passwordInput" class="form-label">Password</label>
+                    <div class="input-group">
+                        <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                            class="form-control" id="passwordInput" required>
+                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                        </button>
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor rellena los campos!
+                    </div>
                 </div>
-                <div class="invalid-feedback">
-                    Por favor rellena los campos!
+                <div class="col-12 btn-container">
+                    <button class="btn btn-primary" type="submit">Iniciar sesión</button>
                 </div>
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Iniciar sesión</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
