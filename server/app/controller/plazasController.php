@@ -10,7 +10,6 @@ $db = new Places();
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $requestUri = explode("/", trim($_SERVER["REQUEST_URI"]));
 $requestBody = json_decode(file_get_contents("php://input"), true);
-echo json_encode($requestBody);
 
 switch ($requestMethod) {
     case "GET":

@@ -8,6 +8,7 @@ class Places
     function __construct()
     {
         $this->conexion = new Connection('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+        // $this->conexion = new Connection('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
     }
 
     function showPlace(string $id = '')
