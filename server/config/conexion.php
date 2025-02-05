@@ -2,7 +2,9 @@
 
 function openConexion()
 {
-    $mysqli = new mysqli('127.0.0.1', 'phpmyadmin', '1234', 'x');
+    //$mysqli = new mysqli('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
+    $mysqli = new mysqli('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+
     if ($mysqli->connect_errno) {
         echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ")";
     }

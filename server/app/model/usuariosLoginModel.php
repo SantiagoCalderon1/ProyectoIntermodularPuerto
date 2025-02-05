@@ -1,7 +1,7 @@
 <?php
 include_once '../../config/conexion.php';
 
-abstract class usersLogin
+abstract class UsersLogin
 {
     /**
      * Verifica las credenciales de un usuario y determina si el inicio de sesión es válido.
@@ -9,6 +9,7 @@ abstract class usersLogin
      * @param string $username  El nombre de usuario proporcionado.
      * @param string $password  La contraseña ingresada.
      * @return bool  Devuelve true si las credenciales son correctas, de lo contrario, false.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
     static function checkUserLogin(string $username, string $password)
     {
@@ -18,7 +19,7 @@ abstract class usersLogin
         }
         try {
             $conexion = openConexion();
-            $sql = "SELECT password FROM usersLogin WHERE username = ?";
+            $sql = "SELECT password FROM usuariosLogin WHERE username = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $username);
             $stmt->execute();
@@ -27,9 +28,14 @@ abstract class usersLogin
             $user = $result->fetch_assoc(); // Devuelve un array asociativo o NULL si no existe el usuario
 
             // Verificar si el usuario existe y la contraseña es válida
-            return $user && password_verify($password, $user['password']);
+            //return $user && password_verify($password, $passwordHash);
+
+            if (!$user) {
+                return false;
+            }
+            return $user && $password === $user['password'];
         } catch (Exception $e) {
-            // error
+            return ["Exception" => "Error en checkUserLogin: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -37,20 +43,34 @@ abstract class usersLogin
         }
     }
 
+    /**
+     * Inserta un usuario.
+     * 
+     * @param string $username  El nombre de usuario proporcionado.
+     * @param string $password  La contraseña ingresada.
+     * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
     static function insertNewUserLogin(string $username, string $password)
     {
         $conexion = null;
         try {
+            if (empty($username) || empty($password)) {
+                return false;
+            }
             $conexion = openConexion();
-            // Hashear la contraseña antes de guardarla
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            // Hashear la contraseña
+            // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO usersLogin (username, password) VALUES (?, ?)";
+            $sql = "INSERT INTO usuariosLogin (username, password) VALUES (?, ?)";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ss", $username, $passwordHash);
-            return $stmt->execute();
+            // Hashear la contraseña 
+            //$stmt->bind_param("ss", $username, $passwordHash);
+            $stmt->bind_param("ss", $username, $password);
+            $stmt->execute();
+            return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            //throw $th;
+            return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -58,28 +78,45 @@ abstract class usersLogin
         }
     }
 
-    static function updateUserLogin(array $input, string $username)
+    /**
+     * Actualiza las credenciales de un usuario.
+     * 
+     * @param object $input  El objeto json que proporciona el usuario, contiene los datos nuevos y antiguos.
+     * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
+    static function updateUserLogin(object $input)
     {
         $conexion = null;
         try {
             $conexion = openConexion();
             $fields = [];
             $values = [];
-            foreach ($input as $key => $value) {
+
+            $propiedades = get_object_vars($input); // convierto el obj en array
+            $oldUsername = array_pop($propiedades);
+
+            foreach ($propiedades as $key => $value) {
                 $fields[] = "$key = ?";
                 $values[] = $value;
             }
-            $values[] = $username;
+            $values[] = $oldUsername;
 
-            $sql = "UPDATE usersLogin SET " . implode(", ", $fields) . " WHERE username = ?";
+            $sql = "UPDATE usuario SET usuario = ?  WHERE usuario = ?";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("ss", $propiedades['newUsername'], $oldUsername);
+            $stmt->execute();
+
+            $sql = "UPDATE usuariosLogin SET " . implode(", ", $fields) . " WHERE username = ?";
             $stmt = $conexion->prepare($sql);
             $types = str_repeat("s", count($values));
 
             // ...$values -> call_user_func_array para bind_param dinámico
             $stmt->bind_param($types, ...$values);
-            return $stmt->execute();
+            $stmt->execute();
+            return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            //throw $th;
+            return ["Exception" => "Error en updateUserLogin: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -87,17 +124,30 @@ abstract class usersLogin
         }
     }
 
+    /**
+     * Función para elimina a un usuario.
+     * 
+     * @param string $username  El nombre de usuario proporcionado.
+     * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
     static function deleteUserLogin(string $username)
     {
         $conexion = null;
         try {
+            if (empty($username)) {
+                return false;
+            }
+
             $conexion = openConexion();
-            $sql = "DELETE FROM usersLogin WHERE username = ?";
+            $sql = "DELETE FROM usuariosLogin WHERE username = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $username);
-            return $stmt->execute();
+            $stmt->execute();
+
+            return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            //throw $th;
+            return ["Exception" => "Error en deleteUserLogin: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);

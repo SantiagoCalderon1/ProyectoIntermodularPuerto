@@ -1,5 +1,11 @@
 <?php
 
+// url proyecto filezilla
+// https://uat-puerto.proyectos-2daw.es/app/controller/usuariosLoginController.php
+
+// url prueba thunder client
+// http://localhost:8080/server/app/controller/usuariosLoginController.php/login
+
 include '../model/usuariosLoginModel.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -16,7 +22,7 @@ $lastpart = $uri[count($uri) - 1] ?? null;
 
 switch ($method) {
     case 'POST':
-        if ($lastpart == 'login') {
+        if ($lastpart == 'login') {  // funciona
             checkUserLogin($input);
         }
 
@@ -32,86 +38,57 @@ switch ($method) {
         deleteUserLogin($input);
         break;
     default:
-        echoError('Error en el tipo de petición.');
+        echoResponse(false, 500, 'Error del servidor.');
         break;
 }
 
-function checkUserLogin(array $input)
+function checkUserLogin($input)
 {
-    $result = usersLogin::checkUserLogin($input['username'] ?? '', $input['password'] ?? '');
+    $result = UsersLogin::checkUserLogin($input->username ?? '', $input->password ?? '');
     if ($result) {
-        echo json_encode(
-            [
-                'success' => true,
-                'status' => 200,
-                'message' => 'Usuario autenticado correctamente',
-                //'data' => $result
-            ]
-        );
+        echoResponse(true, 200, 'Usuario autenticado correctamente.');
     } else {
-        echoError('Error al autenticar, verificar credenciales');
+        echoResponse(false, 404, 'Error al autenticar, verificar credenciales.');
     }
 }
 
-
-
-function insertNewUserLogin(array $input)
+function insertNewUserLogin($input)
 {
-    $result = usersLogin::insertNewUserLogin($input['username'] ?? '', $input['password'] ?? '');
+    $result = UsersLogin::insertNewUserLogin($input->username ?? '', $input->password ?? '');
     if ($result) {
-        echo json_encode(
-            [
-                'success' => true,
-                'status' => 200,
-                'message' => 'Usuario registrado correctamente',
-                //'data' => $result
-            ]
-        );
+        echoResponse(true, 201, 'Usuario registrado correctamente.');
     } else {
-        echoError('Error al registar el usuario, verificar credenciales');
+        echoResponse(false, 400, 'Error al registar el usuario, verificar credenciales.');
     }
 }
 
-function updateUserLogin(array $input)
+function updateUserLogin($input)
 {
-    $username = $input['username'] ?? '';
-    $result = usersLogin::updateUserLogin($input, $username);
+    $result = UsersLogin::updateUserLogin($input);
     if ($result) {
-        echo json_encode(
-            [
-                'success' => true,
-                'status' => 200,
-                'message' => 'Usuario actualizado correctamente',
-                //'data' => $result
-            ]
-        );
+        echoResponse(true, 200, 'Usuario actualizado correctamente.', $result);
     } else {
-        echoError('Error al registar el usuario, verificar credenciales');
+        echoResponse(false, 500, 'Error al actualizar el usuario.', $result);
     }
 }
 
-function deleteUserLogin(string $username)
+function deleteUserLogin($input)
 {
-    $result = usersLogin::deleteUserLogin($username);
+    $result = UsersLogin::deleteUserLogin($input->username ?? '');
     if ($result) {
-        echo json_encode(
-            [
-                'success' => true,
-                'status' => 200,
-                'message' => 'Usuario eliminado correctamente',
-                //'data' => $result
-            ]
-        );
+        echoResponse(true, 200, 'Usuario eliminado correctamente.', $result);
     } else {
-        echoError('Error al eliminar el usuario.');
+        echoResponse(false, 500, 'Error al eliminar el usuario.', $result);
     }
 }
 
-function echoError(string $message)
+function echoResponse(bool $success, int $status, string $message, ?string $exception = '', ?array $data = null)
 {
     echo json_encode([
-        "success" => false,
+        "success" => $success,
+        "status" => $status,
         "message" => $message,
-        "data" => null
+        "exception" => $exception,
+        "data" => $data
     ]);
 }
