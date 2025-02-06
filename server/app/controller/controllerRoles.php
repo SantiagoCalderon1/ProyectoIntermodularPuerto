@@ -22,7 +22,8 @@
             if ($respuesta) {
                 echo json_encode(
                     ['success' => true, 
-                    'message' => 'Rol actualizado con éxito'] 
+                    'message' => 'Rol actualizado con éxito',
+                    'data' => $respuesta] 
                 );
             } else {
                 echo json_encode(

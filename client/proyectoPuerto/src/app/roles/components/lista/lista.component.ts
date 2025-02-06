@@ -17,7 +17,7 @@ export class ListaComponent {
   ngOnInit() {
     this.listarolesService.obtengoRolesApi().subscribe({
       next: (resultado) => {
-        this.roles = resultado;
+        this.roles = resultado.data;
       },
       error: (error) => {
         console.error('Error:', error);
