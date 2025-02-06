@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+<<<<<<< HEAD
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -14,6 +15,13 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { FuncionalidadesModule } from './funcionalidades/funcionalidades.module';
 import { HttpClientModule } from '@angular/common/http';
+=======
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RolesModule } from './roles/roles.module';
+import { FormsModule } from '@angular/forms';
+>>>>>>> fb2587f (BackLog Terminado sin diseño)
 
 @NgModule({
   declarations: [
@@ -22,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
+<<<<<<< HEAD
     LayoutsModule,
     ReactiveFormsModule,
     LoginModule,
@@ -30,6 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
     ToastrModule.forRoot(),
     FuncionalidadesModule,// Adicionando el modulo de Funcionalidades
     HttpClientModule 
+=======
+    RolesModule,
+    FormsModule,
+    HttpClientModule
+>>>>>>> fb2587f (BackLog Terminado sin diseño)
   ],
   providers: [],
   bootstrap: [AppComponent]

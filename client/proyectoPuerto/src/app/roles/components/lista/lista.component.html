@@ -1,0 +1,15 @@
+<h1>Listado de Roles</h1>
+<table id="tbroles">
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+    </tr>
+    <tr *ngFor="let rol of roles">
+        <td>{{ rol.nombre_rol }}</td>
+        <td>{{ rol.descripcion }}</td>
+        <td>
+            <button [routerLink]="['/formulario',rol.id_rol]">Editar</button>
+        </td>
+    </tr>
+</table>
+<button (click)="descargarPDF()">Descargar Tabla en PDF</button>

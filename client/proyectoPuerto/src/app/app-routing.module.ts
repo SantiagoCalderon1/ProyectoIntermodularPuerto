@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+<<<<<<< HEAD
 import { LoginComponent } from './login/components/login/login.component';
 import { LogoutComponent } from './login/components/logout/logout.component';
 import { HomeComponent } from './home/home.component';
@@ -41,6 +42,16 @@ const routes: Routes = [
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
+=======
+import { ListaComponent } from './roles/components/lista/lista.component';
+import { FormularioComponent } from './roles/components/formulario/formulario.component';
+
+const routes: Routes = [
+  { path: 'roles', component: ListaComponent },
+  { path: 'formulario/:id', component: FormularioComponent },
+  { path: '', redirectTo: 'roles', pathMatch: 'full' }
+];
+>>>>>>> fb2587f (BackLog Terminado sin diseño)
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
