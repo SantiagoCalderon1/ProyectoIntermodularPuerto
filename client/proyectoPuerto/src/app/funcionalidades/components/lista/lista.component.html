@@ -1,0 +1,12 @@
+<h1>Listado de Funcionalidades</h1>
+<table id="tbfuncionalidades">
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+    </tr>
+    <tr *ngFor="let funcionalidad of funcionalidades">
+        <td>{{ funcionalidad.nombre_funcionalidad }}</td>
+        <td>{{ funcionalidad.Descripcion }}</td>
+    </tr>
+</table>
+<button (click)="descargarPDF()">Descargar Tabla en PDF</button>
