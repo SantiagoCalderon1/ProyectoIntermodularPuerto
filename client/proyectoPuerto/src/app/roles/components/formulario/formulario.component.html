@@ -1,0 +1,12 @@
+<form (ngSubmit)="modificaRol()">
+    <h1>ROL - {{idRol}}</h1>
+    <label for="nombre">Nombre:
+        <input type="text" id="nombre_rol" [(ngModel)]="rolact.nombre_rol" name="nombre_rol">
+    </label>
+    <br><br>
+    <label for="descripcion">Descripción:<br><br>
+        <textarea id="descripcion" [(ngModel)]="rolact.descripcion" name="descripcion"></textarea>
+    </label>
+    <br><br>
+    <input type="submit" value="Guardar">
+</form>
