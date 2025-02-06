@@ -38,10 +38,15 @@
             ],
             "styles": [
               "src/styles.css",
+<<<<<<< HEAD
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
+=======
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+>>>>>>> 3bf252e (Implementación de Toastr al backlog PBL-4)
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [

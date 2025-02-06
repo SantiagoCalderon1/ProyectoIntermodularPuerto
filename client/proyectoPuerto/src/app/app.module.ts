@@ -21,7 +21,12 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
+<<<<<<< HEAD
 >>>>>>> fb2587f (BackLog Terminado sin diseño)
+=======
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+>>>>>>> 3bf252e (Implementación de Toastr al backlog PBL-4)
 
 @NgModule({
   declarations: [
@@ -42,8 +47,14 @@ import { FormsModule } from '@angular/forms';
 =======
     RolesModule,
     FormsModule,
+<<<<<<< HEAD
     HttpClientModule
 >>>>>>> fb2587f (BackLog Terminado sin diseño)
+=======
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+>>>>>>> 3bf252e (Implementación de Toastr al backlog PBL-4)
   ],
   providers: [],
   bootstrap: [AppComponent]
