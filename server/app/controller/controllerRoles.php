@@ -12,9 +12,9 @@
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
             if(is_numeric($lastpart)){
-                echo json_encode(Roles::getAllRoles($lastpart));
+                echo json_encode(["data" => Roles::getAllRoles($lastpart)]);
             } else {
-                echo json_encode(Roles::getAllRoles());
+                echo json_encode(["data" => Roles::getAllRoles()]);
             }
             break;
         case 'PUT':
@@ -27,7 +27,8 @@
             } else {
                 echo json_encode(
                     ['success' => false, 
-                    'message' => 'No se encontró la id del rol'] 
+                    'message' => 'No se encontró la id del rol',
+                    'error' => $respuesta]
                 );
             }
             break;
