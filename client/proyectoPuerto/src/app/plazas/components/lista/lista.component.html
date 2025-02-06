@@ -7,16 +7,16 @@
     <th>Instalación</th>
     <th>Fecha inicio</th>
     <th>Titular</th>
-    <th>Nombre embarcación</th>
     <th>Estancia</th>
+    <th>Nombre embarcación</th>
   </tr>
   <tr *ngFor="let item of data">
-    <td>{{ item.ano }}</td>
+    <td>{{ item.anyo }}</td>
     <td>{{ item.puerto }}</td>
     <td>{{ item.instalacion }}</td>
     <td>{{ item.fecha_inicio }}</td>
-    <td>{{ item.titular }}</td>
-    <td>{{ item.nombre_embarcacion }}</td>
-    <td>{{ item.estancia }}</td>
+    <td>{{ item.datos_titular }}</td>
+    <td>{{ item.datos_estancia }}</td>
+    <td>{{ item.datos_embarcacion }}</td>
   </tr>
 </table>
