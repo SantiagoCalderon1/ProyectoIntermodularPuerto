@@ -16,8 +16,7 @@ export class InstalacionComponent {
   descripcion = "";
   tipo_instalacion = "";
   fecha_disposicion = "";
-  estado = null;
-  embarcacion_menores = null;
+  estado: any;
 
   mensajeCreacion = 2;
   mensajeEliminacion = 2;
@@ -40,12 +39,16 @@ export class InstalacionComponent {
       tipo_instalacion: this.tipo_instalacion,
       fecha_disposicion: this.fecha_disposicion,
       estado: this.estado,
-      embarcacion_menores: this.embarcacion_menores
     }
     console.log(nuevaInstalacion);
     this.instalacionesService.crearInstalacion(nuevaInstalacion).subscribe({
       next: (response) => {
         console.log("Instalación creada", response);
+        if(nuevaInstalacion["estado"] == 1){
+          nuevaInstalacion["estado"] = "BUENO";
+        }else{
+          nuevaInstalacion["estado"] = "MALO";
+        }
         this.instalaciones.push(nuevaInstalacion);
         this.mensajeCreacion = 1;
         console.log(this.instalaciones);

@@ -9,7 +9,7 @@ import { Instalacion } from '../instalacion';
   styleUrl: './lista.component.css'
 })
 export class ListaComponent {
-  constructor(private instalacionesService: InstalacionService,) { }
+  constructor(private instalacionesService: InstalacionService) { }
   mensajeEliminacion = 3;
   instalaciones: Instalacion[] = [];
   ngOnInit(): void {
@@ -20,6 +20,11 @@ this.listarInstalaciones();
     this.instalacionesService.getInstalaciones().subscribe({
       next: (response) => {
         response.forEach((instalacion: Instalacion) => {
+          if(response["estado"] == 1){
+            response["estado"] = "BUENO";
+          }else{
+            response["estado"] = "MALO";
+          }
           this.instalaciones = response;
         });
         console.log(response);

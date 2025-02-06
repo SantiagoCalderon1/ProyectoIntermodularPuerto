@@ -24,10 +24,6 @@
     <input type="checkbox" name="estado" [(ngModel)]="estado" id="estado">
     <br><br>
   
-    <label for="embarcacion_menores">Embarcación de menores</label>
-    <input type="checkbox" name="embarcacion_menores" [(ngModel)]="embarcacion_menores" id="embarcacion_menores">
-    <br><br>
-  
     <button type="submit">Crear Instalación</button>
     <p *ngIf="mensajeCreacion == 1" style="color: greenyellow;">Instalación creada correctamente</p>
     <p *ngIf="mensajeCreacion == 0" style="color: red;">Error al crear la instalación</p>
