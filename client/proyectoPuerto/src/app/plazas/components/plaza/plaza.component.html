@@ -1,1 +1,66 @@
-<p>plaza works!</p>
+<div class="container d-flex align-items-center justify-content-center contenedor-formulario">
+    <div class="col-10 col-md-8 card text-center my-3">
+        <div class="card-header titulos">{{ titulo }}</div>
+        <div class="card-body">
+            <h5 class="card-title">Introduce los datos de la Plaza</h5>
+            <form #plazaForm="ngForm" class="mt-4 text-start" (ngSubmit)="guardaPlaza()" novalidate>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6">
+                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control"
+                            [(ngModel)]="plazaact.fecha_inicio" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label for="puerto" class="form-label">Puerto</label>
+                        <input type="text" id="puerto" name="puerto" class="form-control" [(ngModel)]="plazaact.puerto"
+                            [readonly]="tipo == 2" (ngModelChange)="cambiado()" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <label for="instalacion" class="form-label">Instalación</label>
+                        <input type="number" id="instalacion" name="instalacion" class="form-control"
+                            [(ngModel)]="plazaact.instalacion" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="datos_titular" class="form-label">Datos Titular</label>
+                        <input type="text" id="datos_titular" name="datos_titular" class="form-control"
+                            [(ngModel)]="plazaact.datos_titular" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <label for="datos_embarcacion" class="form-label">Datos Embarcación</label>
+                        <input type="text" id="datos_embarcacion" name="datos_embarcacion" class="form-control"
+                            [(ngModel)]="plazaact.datos_embarcacion" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="datos_estancia" class="form-label">Datos Estancia</label>
+                        <textarea id="datos_estancia" name="datos_estancia" class="form-control"
+                            [(ngModel)]="plazaact.datos_estancia" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                        </textarea>
+
+                    </div>
+                </div>
+
+                <div class="my-3 text-center">
+                    <button name="cancelar" class="btn btn-secondary btn-lg me-3" [routerLink]="['/listaPlazas']">
+                        Cancelar
+                    </button>
+                    <input type="submit" class="btn btn-dark btn-lg" [value]="txtBtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

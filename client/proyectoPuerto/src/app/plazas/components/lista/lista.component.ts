@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../../api.service';
+import { PlazasService } from '../../plazas.service';
 
 @Component({
   selector: 'app-lista',
@@ -11,14 +11,14 @@ import { ApiService } from '../../api.service';
 export class ListaComponent {
   public data: any[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private plazaService: PlazasService) { }
 
   ngOnInit(): void {
     this.GET();
   }
 
   GET(): void {
-    this.apiService.getData().subscribe({
+    this.plazaService.obtengoPlazasApi().subscribe({
       next: (response) => {
         this.data = response;
       },

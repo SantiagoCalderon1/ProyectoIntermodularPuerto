@@ -1,22 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListaComponent } from './plazas/components/lista/lista.component';
+import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 
 const routes: Routes = [
-
-  // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   { path: 'listaPlazas', component: ListaComponent },
-  // {
-  //   path: 'empleados/:tipo/:id',
-  //   component: EmpleadoComponent,
-  //   canActivate: [loginGuard, empleadoGuard],
-  //   canDeactivate: [abandonarPaginaGuard],
-  // },
-
-  // Ruta por defecto (vacía) -> Redirigir a /welcome
-  { path: '', redirectTo: '/listaPlazas', pathMatch: 'full' },
-  // Ruta que no coincide con ninguna de las anteriores
-  { path: '**', redirectTo: '/listaPlazas', pathMatch: 'full' },
+  { path: 'plazas', component: PlazaComponent },
+  { path: '', redirectTo: '/plazas', pathMatch: 'full' },
+  { path: '**', redirectTo: '/plazas', pathMatch: 'full' },
 ];
 
 
