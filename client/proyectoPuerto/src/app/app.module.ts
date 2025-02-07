@@ -12,10 +12,12 @@ import { UsersModule } from './users/users.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
+import { FuncionalidadesModule } from './funcionalidades/funcionalidades.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,8 @@ import { ToastrModule } from 'ngx-toastr';
     UsersModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
+    FuncionalidadesModule,// Adicionando el modulo de Funcionalidades
+    HttpClientModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
