@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
 import { LoginComponent } from './login/components/login/login.component';
 import { LogoutComponent } from './login/components/logout/logout.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { UserListComponent } from './users/components/user-list/user-list.component';
 import { UserComponent } from './users/components/user/user.component';
+import { ListaComponent } from './roles/components/lista/lista.component';
+import { FormularioComponent } from './roles/components/formulario/formulario.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +28,9 @@ const routes: Routes = [
     canActivate: [authGuard],
     // canDeactivate: [abandonarPaginaGuard],
   },
+  { path: 'roles', component: ListaComponent },
+  { path: 'formulario/:id', component: FormularioComponent },
+  { path: '', redirectTo: 'roles', pathMatch: 'full' },
 
   // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   // {
@@ -42,16 +46,7 @@ const routes: Routes = [
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
 
-=======
-import { ListaComponent } from './roles/components/lista/lista.component';
-import { FormularioComponent } from './roles/components/formulario/formulario.component';
 
-const routes: Routes = [
-  { path: 'roles', component: ListaComponent },
-  { path: 'formulario/:id', component: FormularioComponent },
-  { path: '', redirectTo: 'roles', pathMatch: 'full' }
-];
->>>>>>> fb2587f (BackLog Terminado sin diseño)
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
