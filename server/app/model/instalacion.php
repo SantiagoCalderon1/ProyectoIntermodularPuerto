@@ -11,15 +11,19 @@ class Instalacion
     public $estado;
     public $embarcacion_menores;
     //funcion para obtener todas las intalaciones
-    public static function getInstalaciones()
+    public static function getInstalaciones($id = "")
     {
+        if ($id != "") {
+            $ssql = "SELECT * FROM `instalacion` WHERE `id_instalacion`='$id'";
+        }else{
+            $ssql = "SELECT * FROM `instalacion`";
+        }
         $conexion = conexion();
-        $ssql = "SELECT * FROM `instalacion`";
         $resultado = $conexion->query($ssql);
         return $resultado;
     }
     //funcion para crear nuevas instalaciones, devuelve true(todo fue bien) o false(algo fallo)
-    public static function crearInstalacion(string $codigo, string $puerto, string $descripcion, string $tipo_instalacion, $fecha_disposicion, $estado, $embarcacion_menores)
+    public static function crearInstalacion(string $codigo, string $puerto, string $descripcion, string $tipo_instalacion, $fecha_disposicion, $estado)
     {
         //embarcacion_menores no se llega a meter en la BBDD
         if ($estado) {
@@ -27,13 +31,8 @@ class Instalacion
         } else {
             $estado = 0;
         }
-        if ($embarcacion_menores) {
-            $embarcacion_menores = 1;
-        } else {
-            $embarcacion_menores = 0;
-        }
         $conexion = conexion();
-        $ssql = "INSERT INTO `instalacion` (`codigo`, `descripcion`, `fecha_disposicion`, `estado`, `puerto`) VALUES ('$codigo', '$descripcion', '$fecha_disposicion', '$estado', '$puerto')";
+        $ssql = "INSERT INTO `instalacion` (`codigo`, `descripcion`, `fecha_disposicion`, `estado`, `puerto`, `tipo_instalacion`) VALUES ('$codigo', '$descripcion', '$fecha_disposicion', '$estado', '$puerto', '$tipo_instalacion')";
         $resultado = $conexion->query($ssql);
         if ($resultado && $conexion->affected_rows > 0) {
             return true;
@@ -54,7 +53,7 @@ class Instalacion
         }
     }
     //funcion para actualizar instalaciones, pasamos por parametro el id(obligatorio) y el resto de datos como opcionales (se pueden actualizar o no), devuelve true(todo fue bien) o false(algo fallo)
-    public static function actualizarInstalaciones($id, string $codigo = "", string $puerto = "", string $descripcion = "", string $tipo_instalacion = "", $fecha_disposicion = "", $estado = "", $embarcacion_menores = "")
+    public static function actualizarInstalaciones($id, string $codigo = "", string $puerto = "", string $descripcion = "", string $tipo_instalacion = "", $fecha_disposicion = "", $estado = "")
     {
         $conexion = conexion();
         $dataActualizar = [];
@@ -63,24 +62,21 @@ class Instalacion
             $dataActualizar[] = "codigo='$codigo'";
         }
         if ($puerto != "") {
-            $dataActualizar[] = "codigo='$puerto'";
+            $dataActualizar[] = "puerto='$puerto'";
         }
         if ($descripcion != "") {
-            $dataActualizar[] = "codigo='$descripcion'";
+            $dataActualizar[] = "descripcion='$descripcion'";
         }
         if ($tipo_instalacion != "") {
-            $dataActualizar[] = "codigo='$tipo_instalacion'";
+            $dataActualizar[] = "tipo_instalacion='$tipo_instalacion'";
         }
         if ($fecha_disposicion != "") {
-            $dataActualizar[] = "codigo='$fecha_disposicion'";
+            $dataActualizar[] = "fecha_disposicion='$fecha_disposicion'";
         }
         if ($estado != "") {
-            $dataActualizar[] = "codigo='$estado'";
+            $dataActualizar[] = "estado='$estado'";
         }
-        if ($embarcacion_menores != "") {
-            $dataActualizar[] = "codigo='$embarcacion_menores'";
-        }
-        $ssql = "UPDATE `tablaNombre` SET " . implode(",", $dataActualizar) . " WHERE id='$id'";
+        $ssql = "UPDATE `instalacion` SET " . implode(",", $dataActualizar) . " WHERE id_instalacion='$id'";
         $resultado = $conexion->query($ssql);
         if ($resultado && $conexion->affected_rows > 0) {
             return true;

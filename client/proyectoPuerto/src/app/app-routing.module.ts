@@ -5,8 +5,10 @@ import { ListaComponent } from './instalacion/components/lista/lista.component';
 
 const routes: Routes = [
   //meter rutas
-  { path: "creacion", component: InstalacionComponent },
-  { path: "listado", component: ListaComponent }
+  { path: 'creacion', component: InstalacionComponent },
+  { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent },
+  { path: 'listado', component: ListaComponent },
+  { path: '', redirectTo: 'listado', pathMatch: 'full' }
 ];
 
 @NgModule({

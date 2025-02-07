@@ -9,7 +9,8 @@
             <th>Tipo de instalación</th>
             <th>Estado</th>
             <th>Puerto</th>
-            <th>Acción</th>
+            <th>Eliminar</th>
+            <th>Editar</th>
         </tr>
     </thead>
     <tbody>
@@ -21,9 +22,12 @@
             <td>{{ instalacion.tipo_instalacion }}</td>
             <td>{{ instalacion.estado }}</td>
             <td>{{ instalacion.puerto }}</td>
-            <td><button (click)="eliminarInstalacion(instalacion.id_instalacion)">Eliminar</button></td>
+            <td><button (click)="eliminarInstalacion(instalacion.id_instalacion)">Eliminar</button>
+            </td>
+            <td><button [routerLink]="['/creacion', instalacion.id_instalacion,1]">Editar</button></td>
         </tr>
     </tbody>
 </table>
+<button [routerLink]="['/creacion', 0 , 2]">Crear nueva instalacion</button>
 <p *ngIf="mensajeEliminacion == 1" style="color: greenyellow;">Instalación eliminada correctamente</p>
 <p *ngIf="mensajeEliminacion == 0" style="color: red;">Error al eliminar la instalación</p>

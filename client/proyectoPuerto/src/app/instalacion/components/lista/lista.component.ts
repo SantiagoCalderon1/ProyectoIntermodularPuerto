@@ -13,56 +13,53 @@ export class ListaComponent {
   mensajeEliminacion = 3;
   instalaciones: Instalacion[] = [];
   ngOnInit(): void {
-this.listarInstalaciones();
+    this.listarInstalaciones();
   }
 
   listarInstalaciones() {
     this.instalacionesService.getInstalaciones().subscribe({
       next: (response) => {
-        response.forEach((instalacion: Instalacion) => {
-          if(response["estado"] == 1){
-            response["estado"] = "BUENO";
-          }else{
-            response["estado"] = "MALO";
-          }
-          this.instalaciones = response;
+        this.instalaciones = response.map((instalacion: Instalacion) => { //array transformado
+          return {
+            ...instalacion, // Copia todos los valores originales
+            estado: instalacion.estado == 1 ? "BUENO" : "MALO" // Modifica solo el estado
+          };
         });
-        console.log(response);
+
+        console.log(this.instalaciones);
       },
       error: (error) => {
-        console.log(error);
+        console.log("Error al obtener instalaciones", error);
       },
       complete: () => {
-        console.log("Operacion compleatada");
+        console.log("Operación completada");
       }
-    })
+    });
   }
-  eliminarInstalacion(id:number) {
+
+  eliminarInstalacion(id: number) {
     console.log(id);
     this.instalacionesService.deshecharInstalacion(id).subscribe({
       next: (response) => {
         if (response.error != "Error al eliminar la instalacion") {
           console.log("Instalacion eliminada", response);
-          //falta eliminar la instalacion del array de instalaciones FALTA
-          // this.instalaciones.forEach((instalacion: any) => {
-          //   if(instalacion.id == this.id){
-          //     this.instalaciones
-          //   }
-          // });
           this.mensajeEliminacion = 1;
         } else {
           console.log("Error al eliminar la instalacion", response.error);
           this.mensajeEliminacion = 0;
         }
+        this.listarInstalaciones();
       },
       error: (error) => {
         console.log("Error al eliminar la instalacion", error);
         this.mensajeEliminacion = 0;
+        this.listarInstalaciones();
       },
       complete: () => {
         console.log("Petición completada");
+        this.listarInstalaciones();
       }
     })
-    this.listarInstalaciones();
+
   }
 }

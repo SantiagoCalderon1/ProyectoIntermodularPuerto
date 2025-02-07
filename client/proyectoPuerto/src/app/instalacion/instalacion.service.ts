@@ -31,7 +31,7 @@ export class InstalacionService {
     );
   }
 
-  getInstalaciones(): Observable<any>{
+  getInstalaciones(): Observable<any> {
     console.log("entrando en getInstalaciones");
     const headers = new HttpHeaders({ "Content-Type": "application/json" });
 
@@ -39,4 +39,19 @@ export class InstalacionService {
       tap(response => console.log("Respuesta del servidor:", response))
     )
   }
+
+  getInstalacion(idInstalacion: number): Observable<any> {
+    const URLIdModificar = this.urlApi + "?id_instalacion=" + idInstalacion;
+    return this.http.get<any>(URLIdModificar);
+  }
+
+  modifyInstalacion(instalacion: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.put<any>(this.urlApi, JSON.stringify(instalacion), { headers }).pipe(
+      // visualizar respuesta por consola
+      tap(response => console.log("Respuesta del servidor:", response))
+    );
+  }
 }
+

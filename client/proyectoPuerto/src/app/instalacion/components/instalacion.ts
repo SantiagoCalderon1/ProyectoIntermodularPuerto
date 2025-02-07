@@ -8,5 +8,4 @@ export class Instalacion{
                 public estado:number,
                 public puerto:string
             ){}
-
 }

@@ -8,19 +8,22 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
 import { ListaComponent } from './instalacion/components/lista/lista.component';
+import { CommonModule } from '@angular/common';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    InstalacionComponent,
-    ListaComponent
+
   ],
   imports: [
+    InstalacionModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    CommonModule
 
   ],
   providers: [],
