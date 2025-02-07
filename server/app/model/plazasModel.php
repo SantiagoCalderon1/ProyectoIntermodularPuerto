@@ -22,6 +22,13 @@ class Places
         }
     }
 
+    function showInstalations()
+    {
+            $sql = "SELECT codigo FROM instalacion";
+            return $this->conexion->dataQuery($sql);
+        
+    }
+
     function showInstalacionByPlace(string $id = '')
     {
         if (is_numeric($id)) {
@@ -38,7 +45,11 @@ class Places
     {
         $año = $input['año'];
         $puerto = $input['puerto'];
-        $instalacion = $input['instalacion'];
+        $instalacion = $input['instalacion'];/* nombre instalacion */
+
+        $sql = "SELECT id_instalacion FROM instalacion WHERE codigo = '$instalacion'";
+        $instalacion = $this->conexion->dataQuery($sql)[0]['id_instalacion'];
+
         $fecha_inicio = $input['fecha_inicio'];
         $datos_titular = $input['datos_titular'];
         $datos_embarcacion = $input['datos_embarcacion'];
@@ -60,26 +71,29 @@ class Places
                 $updates[] = "puerto = '" . $input["puerto"] . "'";
             }
             if (isset($input["instalacion"])) {
-                $updates[] = "instalacion = " . $input["instalacion"];
+                $instalacion = $input["instalacion"];
+                $sql = "SELECT id_instalacion FROM instalacion WHERE codigo = '$instalacion'";
+                $instalacion = $this->conexion->dataQuery($sql)[0]['id_instalacion'];
+                $updates[] = "instalacion = " . $instalacion;
             }
             if (isset($input["fecha_inicio"])) {
                 // "fecha_inicio" => "2025-02-03"
-                $updates[] = "fecha_inicio = '" . $input["fecha_inicio"]."'";
+                $updates[] = "fecha_inicio = '" . $input["fecha_inicio"] . "'";
             }
             if (isset($input["datos_titular"])) {
-                $updates[] = "datos_titular = '" . $input["datos_titular"]."'";
+                $updates[] = "datos_titular = '" . $input["datos_titular"] . "'";
             }
             if (isset($input["datos_embarcacion"])) {
-                $updates[] = "datos_embarcacion = '" . $input["datos_embarcacion"]."'";
+                $updates[] = "datos_embarcacion = '" . $input["datos_embarcacion"] . "'";
             }
             if (isset($input["datos_estancia"])) {
-                $updates[] = "datos_estancia = '" . $input["datos_estancia"]."'";
+                $updates[] = "datos_estancia = '" . $input["datos_estancia"] . "'";
             }
             if (count($updates) > 0) {
                 $sql = "UPDATE plaza_base SET " . implode(", ", $updates) . " WHERE id_plaza_base = $id";
-                
+
                 if ($this->conexion->dataQuery($sql)) {
-                    echo json_encode("plaza actualizada con éxito");
+                    echo json_encode("OK");
                 } else {
                     echo json_encode("Error al actualizar la plaza");
                 }
@@ -95,7 +109,7 @@ class Places
     {
         $sql = "DELETE FROM plaza_base WHERE id_plaza_base = $id";
         if ($this->conexion->dataQuery($sql)) {
-            echo json_encode("plaza eliminada con éxito");
+            echo json_encode("OK");
         } else {
             echo json_encode("Error al eliminar la plaza");
         }

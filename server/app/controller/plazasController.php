@@ -32,17 +32,20 @@ switch ($requestMethod) {
 
 function handleGet($db, $uri)
 {
-    $products = $db->showPlace(end($uri));
-    $res = [];
-    // Modificar para que instalacion sea igual al codigo de la instalacion
+    if (end($uri) === "inst") {
+        $products = $db->showInstalations();
+        echo json_encode($products);
+    } else {
+        $products = $db->showPlace(end($uri));
+        $res = [];
+        foreach ($products as $product) {
+            $cod = $db->showInstalacionByPlace($product["instalacion"]);
+            $product["instalacion"] = $cod[0]["codigo"];
+            $res[] = $product;
+        }
 
-    foreach ($products as $product) {
-        $cod = $db->showInstalacionByPlace($product["instalacion"]);
-        $product["instalacion"] = $cod[0]["codigo"];
-        $res[] = $product;
+        echo json_encode($res);
     }
-
-    echo json_encode($res);
 }
 
 function handlePost($db, $data)
@@ -50,14 +53,14 @@ function handlePost($db, $data)
     // $data = [
     //     "año" => "2023",
     //     "puerto" => "Puerto de Barcelona",
-    //     "instalacion" => "3",
+    //     "instalacion" => "ej",
     //     "fecha_inicio" => "2025-03-02",
     //     "datos_titular" => "Juan Pérez",
     //     "datos_embarcacion" => "Embarcación Azul",
     //     "datos_estancia" => "Estancia prolongada"
     // ];
     if ($db->insertNewPlace($data)) {
-        echo json_encode("Producto creado con exito");
+        echo json_encode("OK");
     } else {
         echo json_encode("Error al crear el producto");
     }
@@ -70,9 +73,6 @@ function handlePut($db, $data)
 
 function handleDelete($db, $data)
 {
-    $data = [
-        "id" => "3"
-    ];
     if (isset($data["id"])) {
         $id = (int) $data["id"];
         $db->deletePlace($id);

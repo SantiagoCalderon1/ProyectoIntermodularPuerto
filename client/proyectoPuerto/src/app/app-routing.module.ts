@@ -6,8 +6,9 @@ import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 const routes: Routes = [
   { path: 'listaPlazas', component: ListaComponent },
   { path: 'plazas', component: PlazaComponent },
-  { path: '', redirectTo: '/plazas', pathMatch: 'full' },
-  { path: '**', redirectTo: '/plazas', pathMatch: 'full' },
+  { path: 'plazas/:tipo/:id', component: PlazaComponent,},
+  { path: '', redirectTo: '/listaPlazas', pathMatch: 'full' },
+  { path: '**', redirectTo: '/listaPlazas', pathMatch: 'full' },
 ];
 
 

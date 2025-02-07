@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { PlazasService } from '../../plazas.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-lista',
@@ -26,5 +28,14 @@ export class ListaComponent {
         console.error('Error en la solicitud', error);
       }
     });
+  }
+
+  descargarPDF() {
+    const doc = new jsPDF();
+    doc.text('Tabla Exportada', 14, 10);
+    autoTable(doc, {
+      html: '#tbempleados',
+    });
+    doc.save('tabla.pdf');
   }
 }
