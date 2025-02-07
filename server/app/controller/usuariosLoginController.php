@@ -18,7 +18,8 @@ $input = json_decode(file_get_contents('php://input'));
 $request = trim($_SERVER['REQUEST_URI'], '/');
 
 $uri = explode('/', $request);
-$lastpart = $uri[count($uri) - 1] ?? null;
+$lastpart = end($uri);
+$penultimatePart = $uri[count($uri) - 2] ?? null;
 
 switch ($method) {
     case 'POST':
@@ -32,7 +33,9 @@ switch ($method) {
         break;
     case 'PUT':
     case 'PATCH':
-        updateUserLogin($input);
+        if ($penultimatePart == 'update') {
+            updateUserLogin($input, $lastpart);
+        }
         break;
     case 'DELETE':
         deleteUserLogin($input);
@@ -44,7 +47,7 @@ switch ($method) {
 
 function checkUserLogin($input)
 {
-    $result = UsersLogin::checkUserLogin($input->username ?? '', $input->password ?? '');
+    $result = UsersLogin::checkUserLogin($input);
     if ($result) {
         echoResponse(true, 200, 'Usuario autenticado correctamente.');
     } else {
@@ -54,7 +57,7 @@ function checkUserLogin($input)
 
 function insertNewUserLogin($input)
 {
-    $result = UsersLogin::insertNewUserLogin($input->username ?? '', $input->password ?? '');
+    $result = UsersLogin::insertNewUserLogin($input->username ?? '',$input->email ?? '', $input->password ?? '');
     if ($result) {
         echoResponse(true, 201, 'Usuario registrado correctamente.');
     } else {
@@ -62,9 +65,9 @@ function insertNewUserLogin($input)
     }
 }
 
-function updateUserLogin($input)
+function updateUserLogin($input, $lastpart)
 {
-    $result = UsersLogin::updateUserLogin($input);
+    $result = UsersLogin::updateUserLogin($input, $lastpart);
     if ($result) {
         echoResponse(true, 200, 'Usuario actualizado correctamente.', $result);
     } else {

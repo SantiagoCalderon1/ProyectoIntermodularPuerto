@@ -18,42 +18,35 @@ $input = json_decode(file_get_contents('php://input'));
 $request = trim($_SERVER['REQUEST_URI'], '/');
 
 $uri = explode('/', $request);
-$lastpart = $uri[count($uri) - 1] ?? null;
+$lastpart = end($uri);
 $penultimatePart = $uri[count($uri) - 2] ?? null;
 
 switch ($method) {
     case 'GET':  // funciona
-        if ($lastpart == 'users') {
-            getAllUser();
-        }
-
         if ($penultimatePart == 'user') {
             $username = $lastpart;
             getAllUser($username);
         }
 
+        if ($lastpart == 'users') {
+            getAllUser();
+        }
         break;
     case 'POST': //funciona
-
-        // { prueba con thunder client
-        //     "usuario": "santi",
-        //     "nombre": "santiago",
-        //     "email": "123@456.com",
-        //     "idioma": "ES",
-        //     "habilitado": "1",
-        //     "rol": 1
-        //   }
-
         if ($lastpart == 'insert') {
             insertNewUser($input);
         }
         break;
     case 'PUT':
     case 'PATCH':  //funciona
-        updateUser($input);
+        if ($penultimatePart == 'update') {
+            updateUser($input, $lastpart);
+        }
         break;
     case 'DELETE':
-        deleteUser($input);
+        if ($penultimatePart == 'delete') {
+            deleteUser($lastpart);
+        }
         break;
     default:
         echoResponse(false, 500, 'Error del servidor.');
@@ -82,9 +75,9 @@ function insertNewUser($input)
     }
 }
 
-function updateUser($input)
+function updateUser($input, $username)
 {
-    $result = Users::updateUser($input);
+    $result = Users::updateUser($input, $username);
     if ($result) {
         echoResponse(true, 200, 'Usuario actualizado correctamente.');
     } else {
@@ -93,14 +86,14 @@ function updateUser($input)
     }
 }
 
-function deleteUser($input)
+function deleteUser(string $username = '')
 {
-    $result = Users::deleteUser($input->username ?? '');
+    $result = Users::deleteUser($username);
     if ($result) {
         echoResponse(true, 200, 'Usuario eliminado correctamente.');
     } else {
         $exception = $result['Exception'] ?? '';
-        echoResponse(false, 500, 'Error al eliminar el usuario.', $exception);
+        echoResponse(false, 500, 'Error al eliminar el usuario con username .', $exception);
     }
 }
 

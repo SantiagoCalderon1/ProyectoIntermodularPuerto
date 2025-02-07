@@ -13,17 +13,17 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [authGuard], activar esto cuando termine con home
+    canActivate: [authGuard]
   },
 
   {
     path: 'users', component: UserListComponent,
-    // canActivate: [loginGuard] 
+    canActivate: [authGuard]
   },
   {
-    path: 'users/:tipo/:username',
+    path: 'users/:option/:username',
     component: UserComponent,
-    // canActivate: [loginGuard, empleadoGuard],
+    canActivate: [authGuard],
     // canDeactivate: [abandonarPaginaGuard],
   },
 
@@ -35,7 +35,7 @@ const routes: Routes = [
   //   canDeactivate: [abandonarPaginaGuard],
   // },
 
-  // Ruta por defecto (vacía) -> Redirigir a /welcome
+  // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Ruta que no coincide con ninguna de las anteriores
   { path: '**', redirectTo: '/login', pathMatch: 'full' },

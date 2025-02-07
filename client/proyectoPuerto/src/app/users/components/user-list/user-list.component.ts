@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../../users.service';
+import { Config } from 'datatables.net';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-user-list',
@@ -10,13 +13,37 @@ import { UsersService } from '../../users.service';
 })
 export class UserListComponent {
   public title: string = "Usuarios";
-
-  users: any[] = [];
-  
+  public users: any[] = [];
+  public dtOptions: Config = {};
+  public selectedUser: string = '';
   public filterSearch: string = '';
+
   constructor(private _userService: UsersService) { }
 
   ngOnInit() {
+    this.selectedUser = '';
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        processing: "Procesando...",
+        lengthMenu: "Mostrar _MENU_ registros",
+        zeroRecords: "No se encontraron resultados",
+        emptyTable: "Ningún dato disponible en esta tabla",
+        infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+        infoFiltered: "(filtrado de un total de _MAX_ registros)",
+        search: "Buscar:",
+        loadingRecords: "Cargando...",
+        paginate: {
+          first: "Primero",
+          last: "Último",
+          next: "Siguiente",
+          previous: "Anterior"
+        },
+        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+      },
+    };
+
+
     this._userService.getAllUser().subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
@@ -33,5 +60,23 @@ export class UserListComponent {
         console.log('Operación completada.');
       },
     });
+  }
+
+  descargarPDF() {
+    const doc = new jsPDF();
+    doc.text('Tabla de usuarios.', 14, 10);
+    autoTable(doc, {
+      html: '#tableUsers',
+      startY: 20,
+    });
+    doc.save('tablaUsers.pdf');
+  }
+
+  selectUser(username: string, event: any) {
+    if (event.target.checked) {
+      this.selectedUser = username;
+    } else {
+      this.selectedUser = '';
+    }
   }
 }

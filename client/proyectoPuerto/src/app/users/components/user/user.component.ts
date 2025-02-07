@@ -1,12 +1,242 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UsersService } from '../../users.service';
+import { ToastrService } from 'ngx-toastr';
+import { User } from '../../user';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
   standalone: false,
-  
+
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  public title:string = "Usuarios";
+  @ViewChild('userForm', { static: true }) userForm: NgForm | undefined;
+
+  public title: string = "Usuarios";
+  public username: string = '';
+  public selectedUser: string = '';
+  public option: string = '';
+  public tituloConfirmacion: string = '';
+  public formStatus: boolean = false;
+
+  public currentUser: User = {
+    usuario: '',
+    nombre: '',
+    email: '',
+    idioma: '',
+    habilitado: 0,
+    rol: 0
+  };
+
+  constructor(
+    private _aroute: ActivatedRoute,
+    private _usersService: UsersService,
+    private _route: Router,
+    private toastr: ToastrService
+  ) { }
+
+
+
+  ngOnInit() {
+    this._aroute.params.subscribe(params => {
+      this.username = params['username'];
+      this.option = params['option'];
+      this.tituloConfirmacion = this.createTitle(params['option']);
+
+
+      if (this.username) {
+        this.getUser(this.username);
+      }
+    });
+  }
+
+  createTitle(option: string) {
+    switch (option) {
+      case 'Insert':
+        return "Insertando un nuevo usuario";
+      case 'Update':
+        return "Actualizando al usuario - " + this.username;
+      case 'Delete':
+        return "Eliminando al usuario - " + this.username;
+      default:
+        return "";
+    }
+  }
+
+  private getUser(username: string) {
+    this._usersService.getUser(username).subscribe({
+      next: (response) => {
+        if (response.success) { // esto debe ser true
+          this.currentUser = response.data[0];
+        } else {
+          this.toastr.error(response.message);
+        }
+      },
+      error: (error) => {
+        this.toastr.error(error, 'Error al obtener el empleado');
+      },
+      complete: () => {
+        console.log('Operación completada.');
+      },
+    });
+  }
+
+  manageForm() {
+    console.log(this.currentUser);
+    switch (this.option) {
+      case 'Insert':
+        this.insertNewUser();
+        break;
+      case 'Update':
+        this.updateUser();
+        break;
+      case 'Delete':
+        this.deleteUser();
+        break;
+      default:
+        this.toastr.error(
+          'El formulario tiene campos inválidos',
+          'Error de validación'
+        );
+        this._route.navigate(['/users']);
+        break;
+    }
+
+  }
+
+  insertNewUser() {
+    this._usersService
+      .insertNewUser(this.currentUser)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.toastr.success(
+              'Se ha añadido a ' + this.currentUser.nombre,
+              'Ususario agregado correctamente!', { positionClass: 'toast-top-right' }
+            );
+            this.resetForm();
+            this._route.navigate(['/users']);
+          } else {
+            this.toastr.error(
+              response.message
+            );
+          }
+        },
+        error: (error) => {
+          this.toastr.error(
+            error.message
+          );
+        },
+        complete: () => {
+          console.log('Operación terminada.');
+        },
+      });
+  }
+
+  updateUser() {
+    console.log('username ' + this.username + ' user ' + JSON.stringify(this.currentUser));
+    this._usersService
+      .updateUser(this.username, this.currentUser)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.toastr.success(
+              'Se ha actualizado a ' + this.currentUser.nombre,
+              'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
+            );
+            this.resetForm();
+            this._route.navigate(['/users']);
+          } else {
+            this.toastr.error(
+              response?.message
+            );
+          }
+        },
+        error: (error) => {
+          console.log(error);
+
+          this.toastr.error(
+            error.message
+          );
+        },
+        complete: () => {
+          console.log('Operación terminada.');
+        },
+      });
+  }
+
+  deleteUser() {
+    this._usersService
+      .deleteUser(this.currentUser.usuario)
+      .subscribe({
+        next: (response) => {
+          if (response && response.success) {
+            this.toastr.success(
+              'Se ha eliminado a ' + this.currentUser.nombre,
+              'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
+            );
+            this.resetForm();
+            this._route.navigate(['/users']);
+          } else {
+            this.toastr.error(
+              response.message
+            );
+
+          }
+        },
+        error: (error) => {
+          this.toastr.error(
+            error.message
+          );
+        },
+        complete: () => {
+          console.log('Operación eliminar terminada.');
+        },
+      });
+  }
+
+  cancelForm(event: Event): void {
+    this.resetForm();
+    event.preventDefault();
+    this._route.navigate(['/users'], { queryParams: {} });
+  }
+
+  changedForm(): void {
+
+    this.formStatus = !this.formStatus;
+    console.log("Datos del usuario seleccionado: " + this.currentUser);
+
+    if (this.currentUser.habilitado) {
+      this.currentUser.habilitado = 1;
+    } else {
+      this.currentUser.habilitado = 0;
+    }
+  }
+
+  resetForm(): void {
+    Object.assign(this.currentUser, {
+      usuario: '',
+      nombre: '',
+      email: '',
+      idioma: '',
+      habilitado: 0,
+      rol: 0
+    });
+
+    if (this.userForm) {
+      this.userForm.resetForm();
+    }
+  }
+
+  canDeactivateForm(): boolean {
+    if (this.formStatus) {
+      return confirm(
+        'Tienes cambios sin registrar. ¿Estás seguro de que quieres salir?'
+      );
+    }
+    return true;
+  }
 }

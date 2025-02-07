@@ -11,17 +11,22 @@ abstract class UsersLogin
      * @return bool  Devuelve true si las credenciales son correctas, de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function checkUserLogin(string $username, string $password)
+    static function checkUserLogin(object $input)
     {
         $conexion = null;
-        if (empty($username) || empty($password)) {
+        //if ((empty($input->username) || empty($input->email)) && empty($input->password)) {
+        if (empty($input->username) || empty($input->password)) {
+
             return false;
         }
         try {
+
             $conexion = openConexion();
-            $sql = "SELECT password FROM usuariosLogin WHERE username = ?";
+            //$sql = "SELECT password FROM usuariosLogin WHERE username = ? OR email = ?";
+            $sql = "SELECT password FROM usuariosLogin WHERE username = ? ";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("s", $username);
+            //$stmt->bind_param("ss", $input->username, $input->email);
+            $stmt->bind_param("s", $input->username);
             $stmt->execute();
 
             $result = $stmt->get_result();
@@ -33,7 +38,7 @@ abstract class UsersLogin
             if (!$user) {
                 return false;
             }
-            return $user && $password === $user['password'];
+            return $user && $input->password === $user['password'];
         } catch (Exception $e) {
             return ["Exception" => "Error en checkUserLogin: Excepción - " . $e->getMessage()];
         } finally {
@@ -51,7 +56,7 @@ abstract class UsersLogin
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function insertNewUserLogin(string $username, string $password)
+    static function insertNewUserLogin(string $username, string $email, string $password)
     {
         $conexion = null;
         try {
@@ -62,11 +67,11 @@ abstract class UsersLogin
             // Hashear la contraseña
             // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO usuariosLogin (username, password) VALUES (?, ?)";
+            $sql = "INSERT INTO usuariosLogin (username, email, password) VALUES (?, ?, ?)";
             $stmt = $conexion->prepare($sql);
             // Hashear la contraseña 
             //$stmt->bind_param("ss", $username, $passwordHash);
-            $stmt->bind_param("ss", $username, $password);
+            $stmt->bind_param("sss", $username, $password, $email);
             $stmt->execute();
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
@@ -85,33 +90,31 @@ abstract class UsersLogin
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function updateUserLogin(object $input)
+    static function updateUserLogin(object $input,  string $oldUsername)
     {
         $conexion = null;
         try {
             $conexion = openConexion();
             $fields = [];
             $values = [];
+            $types = '';
 
-            $propiedades = get_object_vars($input); // convierto el obj en array
-            $oldUsername = array_pop($propiedades);
-
-            foreach ($propiedades as $key => $value) {
+            foreach ($input as $key => $value) {
                 $fields[] = "$key = ?";
                 $values[] = $value;
-            }
-            $values[] = $oldUsername;
 
-            $sql = "UPDATE usuario SET usuario = ?  WHERE usuario = ?";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ss", $propiedades['newUsername'], $oldUsername);
-            $stmt->execute();
+                $types .= UsersLogin::getTypesBind($value);
+            }
+
+            $values[] = $oldUsername;
+            $types .= UsersLogin::getTypesBind($oldUsername);
+
+            $values[] = $oldUsername;
 
             $sql = "UPDATE usuariosLogin SET " . implode(", ", $fields) . " WHERE username = ?";
             $stmt = $conexion->prepare($sql);
-            $types = str_repeat("s", count($values));
+            $stmt->bind_param($types, ...$values);
 
-            // ...$values -> call_user_func_array para bind_param dinámico
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
             return ($stmt->affected_rows > 0);
@@ -152,6 +155,25 @@ abstract class UsersLogin
             if ($conexion) {
                 closeConexion($conexion);
             }
+        }
+    }
+
+    /**
+     * Función para elimina a un usuario.
+     * 
+     * @param string $value, el valor de una propiedad del array input.
+     * @return chart  Devuelve una letra correspondinete al tipo de dato.
+     */
+    static private function getTypesBind($value)
+    {
+        if (is_int($value)) {
+            return 'i'; // Entero
+        } elseif (is_double($value)) {
+            return 'd'; // Doble
+        } elseif (is_string($value)) {
+            return 's'; // String
+        } elseif (is_null($value)) {
+            return 's'; //  NULL como string (por si acaso)
         }
     }
 }

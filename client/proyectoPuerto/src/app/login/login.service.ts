@@ -1,25 +1,48 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:8080/server/app/controller/usuariosLoginController.php'; 
+  urlApi = "http://localhost:8080/server/app/controller/usuariosLoginController.php";
 
-  constructor(private http: HttpClient) {}
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
+  constructor(private http: HttpClient) { }
 
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token'); 
+    return !!localStorage.getItem('token');
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(this.apiUrl, { username, password });
+  login(password: string, username?: string, email?: string,): Observable<any> {
+    const body = {
+      "username": username,
+      //"email": email,
+      "password": password
+    }
+    return this.http.post<any>(`${this.urlApi}/login`, JSON.stringify(body), this.httpOptions);
   }
 
-  logout() {
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  isLogin(): boolean {
+    return this.getToken() !== null;
+  }
+
+  logout(): void {
     localStorage.removeItem('token');
   }
 }

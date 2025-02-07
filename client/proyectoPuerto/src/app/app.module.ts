@@ -9,6 +9,9 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { HomeComponent } from './home/home.component';
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { UsersModule } from './users/users.module';
     LayoutsModule,
     ReactiveFormsModule,
     LoginModule,
-    UsersModule
+    UsersModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
