@@ -34,7 +34,7 @@ export class ListaComponent {
     const doc = new jsPDF();
     doc.text('Tabla Exportada', 14, 10);
     autoTable(doc, {
-      html: '#tbempleados',
+      html: '#tableAuthorizations',
     });
     doc.save('tabla.pdf');
   }
