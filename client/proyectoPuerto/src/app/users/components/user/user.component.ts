@@ -4,6 +4,7 @@ import { UsersService } from '../../users.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user';
 import { NgForm } from '@angular/forms';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-user',
@@ -17,10 +18,18 @@ export class UserComponent {
 
   public title: string = "Usuarios";
   public username: string = '';
-  public selectedUser: string = '';
   public option: string = '';
   public tituloConfirmacion: string = '';
   public formStatus: boolean = false;
+
+  public selectedUser: User = {
+    usuario: '',
+    nombre: '',
+    email: '',
+    idioma: '',
+    habilitado: 0,
+    rol: 0
+  };
 
   public currentUser: User = {
     usuario: '',
@@ -34,6 +43,8 @@ export class UserComponent {
   constructor(
     private _aroute: ActivatedRoute,
     private _usersService: UsersService,
+    private _appService: AppService,
+
     private _route: Router,
     private toastr: ToastrService
   ) { }
@@ -41,14 +52,17 @@ export class UserComponent {
 
 
   ngOnInit() {
+    this._appService.user$.subscribe(currentUser => {
+      this.currentUser = currentUser;
+      console.log(this.currentUser);
+    });
+
     this._aroute.params.subscribe(params => {
       this.username = params['username'];
       this.option = params['option'];
       this.tituloConfirmacion = this.createTitle(params['option']);
-
-
       if (this.username) {
-        this.getUser(this.username);
+        this.getSelectedUser(this.username);
       }
     });
   }
@@ -66,17 +80,17 @@ export class UserComponent {
     }
   }
 
-  private getUser(username: string) {
+  private getSelectedUser(username: string) {
     this._usersService.getUser(username).subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
-          this.currentUser = response.data[0];
+          this.selectedUser = response.data[0];
         } else {
           this.toastr.error(response.message);
         }
       },
       error: (error) => {
-        this.toastr.error(error, 'Error al obtener el empleado');
+        this.toastr.error(error, 'Error al obtener el usuario');
       },
       complete: () => {
         console.log('Operación completada.');
@@ -85,7 +99,7 @@ export class UserComponent {
   }
 
   manageForm() {
-    console.log(this.currentUser);
+    console.log(this.selectedUser);
     switch (this.option) {
       case 'Insert':
         this.insertNewUser();
@@ -109,12 +123,12 @@ export class UserComponent {
 
   insertNewUser() {
     this._usersService
-      .insertNewUser(this.currentUser)
+      .insertNewUser(this.selectedUser)
       .subscribe({
         next: (response) => {
           if (response.success) {
             this.toastr.success(
-              'Se ha añadido a ' + this.currentUser.nombre,
+              'Se ha añadido a ' + this.selectedUser.nombre,
               'Ususario agregado correctamente!', { positionClass: 'toast-top-right' }
             );
             this.resetForm();
@@ -137,17 +151,16 @@ export class UserComponent {
   }
 
   updateUser() {
-    console.log('username ' + this.username + ' user ' + JSON.stringify(this.currentUser));
+    console.log('username ' + this.username + ' user ' + JSON.stringify(this.selectedUser));
     this._usersService
-      .updateUser(this.username, this.currentUser)
+      .updateUser(this.username, this.selectedUser)
       .subscribe({
         next: (response) => {
           if (response.success) {
             this.toastr.success(
-              'Se ha actualizado a ' + this.currentUser.nombre,
+              'Se ha actualizado a ' + this.selectedUser.nombre,
               'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this.resetForm();
             this._route.navigate(['/users']);
           } else {
             this.toastr.error(
@@ -156,8 +169,6 @@ export class UserComponent {
           }
         },
         error: (error) => {
-          console.log(error);
-
           this.toastr.error(
             error.message
           );
@@ -170,12 +181,12 @@ export class UserComponent {
 
   deleteUser() {
     this._usersService
-      .deleteUser(this.currentUser.usuario)
+      .deleteUser(this.selectedUser.usuario)
       .subscribe({
         next: (response) => {
           if (response && response.success) {
             this.toastr.success(
-              'Se ha eliminado a ' + this.currentUser.nombre,
+              'Se ha eliminado a ' + this.selectedUser.nombre,
               'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
             this.resetForm();
@@ -184,7 +195,6 @@ export class UserComponent {
             this.toastr.error(
               response.message
             );
-
           }
         },
         error: (error) => {
@@ -205,19 +215,16 @@ export class UserComponent {
   }
 
   changedForm(): void {
-
     this.formStatus = !this.formStatus;
-    console.log("Datos del usuario seleccionado: " + this.currentUser);
-
-    if (this.currentUser.habilitado) {
-      this.currentUser.habilitado = 1;
+    if (this.selectedUser.habilitado) {
+      this.selectedUser.habilitado = 1;
     } else {
-      this.currentUser.habilitado = 0;
+      this.selectedUser.habilitado = 0;
     }
   }
 
   resetForm(): void {
-    Object.assign(this.currentUser, {
+    Object.assign(this.selectedUser, {
       usuario: '',
       nombre: '',
       email: '',
@@ -225,7 +232,6 @@ export class UserComponent {
       habilitado: 0,
       rol: 0
     });
-
     if (this.userForm) {
       this.userForm.resetForm();
     }

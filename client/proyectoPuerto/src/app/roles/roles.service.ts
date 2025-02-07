@@ -7,7 +7,7 @@ import { Rol } from './rol';
   providedIn: 'root'
 })
 export class RolesService {
-  urlApi = 'http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/controllerRoles.php';
+  urlApi = 'http://localhost:8080/server/app/controller/controllerRoles.php';
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient
 
   httpOptions = {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UsersService } from '../users/users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,15 @@ import { Observable } from 'rxjs';
 export class LoginService {
   urlApi = "http://localhost:8080/server/app/controller/usuariosLoginController.php";
 
+  currentUsername: string = '';
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient, private _usersService: UsersService) { }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
@@ -44,5 +46,7 @@ export class LoginService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
   }
+
 }

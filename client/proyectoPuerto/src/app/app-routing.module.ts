@@ -6,7 +6,9 @@ import { HomeComponent } from './home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { UserListComponent } from './users/components/user-list/user-list.component';
 import { UserComponent } from './users/components/user/user.component';
-import { ListaComponent } from './roles/components/lista/lista.component';
+import { ListaComponent as listaRoles } from './roles/components/lista/lista.component';
+import { ListaComponent as listaFuncionalidad } from './funcionalidades/components/lista/lista.component';
+
 import { FormularioComponent } from './roles/components/formulario/formulario.component';
 
 const routes: Routes = [
@@ -15,23 +17,46 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [authGuard]
+    // canActivate: [authGuard],
+    data: { allowedRoles: ['administrador', 'gerencia_puerto', 'policia_aduanas', 'guarda_muelles'] }
   },
 
   {
+    path: 'listaPlazas',
+    component: HomeComponent,
+    // canActivate: [authGuard],
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+  },
+
+
+  {
     path: 'users', component: UserListComponent,
-    canActivate: [authGuard]
+    // canActivate: [authGuard],
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
   },
   {
     path: 'users/:option/:username',
     component: UserComponent,
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
     // canDeactivate: [abandonarPaginaGuard],
   },
-  { path: 'roles', component: ListaComponent },
-  { path: 'formulario/:id', component: FormularioComponent },
-  { path: '', redirectTo: 'roles', pathMatch: 'full' },
+  {
+    path: 'roles', component: listaRoles,
+    // canActivate: [authGuard],
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+  },
+  {
+    path: 'formulario/:id', component: FormularioComponent,
+    // canActivate: [authGuard], 
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+  },
 
+  {
+    path: 'funcionalidades', component: listaFuncionalidad,
+    // canActivate: [authGuard], 
+    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+  },
   // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   // {
   //   path: 'empleados/:tipo/:id',

@@ -3,6 +3,8 @@ import { UsersService } from '../../users.service';
 import { Config } from 'datatables.net';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { AppService } from '../../../app.service';
+import { User } from '../../user';
 
 @Component({
   selector: 'app-user-list',
@@ -18,10 +20,26 @@ export class UserListComponent {
   public selectedUser: string = '';
   public filterSearch: string = '';
 
-  constructor(private _userService: UsersService) { }
+  public currentUser: User = {
+    usuario: '',
+    nombre: '',
+    email: '',
+    idioma: '',
+    habilitado: 0,
+    rol: 0
+  };
+
+  constructor(private _userService: UsersService, private _appService: AppService,
+  ) { }
 
   ngOnInit() {
+    this._appService.user$.subscribe(currentUser => {
+      this.currentUser = currentUser;
+      console.log(this.currentUser);
+    });
+
     this.selectedUser = '';
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       language: {

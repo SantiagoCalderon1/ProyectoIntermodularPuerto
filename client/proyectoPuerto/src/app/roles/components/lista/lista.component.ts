@@ -24,6 +24,7 @@ export class ListaComponent {
       }
     });
   }
+  
   descargarPDF() {
     const doc = new jsPDF(); // Crear instancia de jsPDF
     // Agregar título o texto opcional

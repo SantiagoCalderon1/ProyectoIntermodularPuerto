@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FuncionalidadesService {
-  urlApi = 'http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/controllerFuncionalidades.php';
+  urlApi = 'http://localhost:8080/server/app/controller/controllerFuncionalidades.php';
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient
 
   obtengoFuncionalidadesApi(): Observable<any> {

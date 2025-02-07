@@ -1,16 +1,22 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { LoginService } from '../login/login.service';
-import { inject } from '@angular/core';
+import { Observable } from 'rxjs';
+
+export class authGuard implements CanActivate {
+
+  constructor(private _loginService: LoginService, private _router: Router) { }
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | Observable<boolean> | Promise<boolean> {
 
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const _router = inject(Router);
-  const _loginService = inject(LoginService);
-
-  if (!_loginService.isLoggedIn()) {
-    _router.navigateByUrl('/login');
-    return false;
+    if (this._loginService.isLoggedIn()) {
+      return true;
+    } else {
+      this._router.navigate(['/login']); // Redirige si no tiene permisos
+      return false;
+    }
   }
-
-  return true;
-};
+}

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from './user';
 import { Observable } from 'rxjs';
+import { LoginService } from '../login/login.service';
 
 
 @Injectable({
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
   urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
+
 
   httpOptions = {
     headers: new HttpHeaders({

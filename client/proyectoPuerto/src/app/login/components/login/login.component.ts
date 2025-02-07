@@ -3,6 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpHeaders } from '@angular/common/http';
+import { UsersService } from '../../../users/users.service';
+import { User } from '../../../users/user';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +15,28 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  showPassword: boolean = false;
-  titleForm: string = '';
-  subTitleForm: string = '';
-  leyendForm: string = '';
-  typeForm: string = 'register';
-  leyendBtn: string = 'Iniciar Sesión';
+  public showPassword: boolean = false;
+  public titleForm: string = '';
+  public subTitleForm: string = '';
+  public leyendForm: string = '';
+  public typeForm: string = 'register';
+  public leyendBtn: string = 'Iniciar Sesión';
   public loginForm: FormGroup;
   public registerForm: FormGroup;
 
+  currentUsername: string = '';
 
-  constructor(private fb: FormBuilder, private _route: Router, private toastr: ToastrService, private _loginService: LoginService) {
+  public currentUser: User = {
+    usuario: '',
+    nombre: '',
+    email: '',
+    idioma: '',
+    habilitado: 0,
+    rol: 0
+  };
+
+
+  constructor(private fb: FormBuilder, private _route: Router, private toastr: ToastrService, private _loginService: LoginService, private _appService: AppService) {
     this.loginForm = new FormGroup({
       // Campos del formulario de login
       usernameLogin: new FormControl('', Validators.required),
@@ -52,7 +66,7 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  changeDataForm(typeForm :string) {
+  changeDataForm(typeForm: string) {
     if (typeForm == 'login') {
       this.typeForm = 'login';
       this.titleForm = 'Hola, Bienvenido de nuevo!';
@@ -88,22 +102,23 @@ export class LoginComponent {
   }
 
   onRegister() {
-
   }
 
   onLogin() {
     if (this.loginForm.valid) {
       console.log('Datos enviados:', this.loginForm.get('usernameLogin')?.value, this.loginForm.get('passwordLogin')?.value);
 
+      let password = this.loginForm.get('passwordLogin')?.value;
+      let username = this.loginForm.get('usernameLogin')?.value;
+
+      // primero va la password y despues el username
       this._loginService.login(
-        this.loginForm.get('passwordLogin')?.value,
-        this.loginForm.get('usernameLogin')?.value
+        password, username
       ).subscribe({
         next: (response) => {
           if (response.success) { // esto debe ser true
-            this._loginService.saveToken('12345')
-            console.log('Login exitoso', response);
-
+            this._appService.setCurrentUser(username);
+            
             this.toastr.success(
               'Se ha iniciado sesión Correctamente',
               'Se ha iniciado sesión Correctamente!', { positionClass: 'toast-top-right' }
