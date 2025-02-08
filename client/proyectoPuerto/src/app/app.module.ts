@@ -16,6 +16,7 @@ import { FuncionalidadesModule } from './funcionalidades/funcionalidades.module'
 import { HttpClientModule } from '@angular/common/http';
 import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
+import { PlazasModule } from './plazas/plazas.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     LoginModule,
     UsersModule,
+    PlazasModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
     FuncionalidadesModule,// Adicionando el modulo de Funcionalidades

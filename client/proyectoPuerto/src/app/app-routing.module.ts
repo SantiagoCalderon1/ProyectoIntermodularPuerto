@@ -11,6 +11,8 @@ import { ListaComponent as listaFuncionalidad } from './funcionalidades/componen
 
 import { FormularioComponent } from './roles/components/formulario/formulario.component';
 
+import { ListaComponent as listaPlazasComponents} from './plazas/components/lista/lista.component';
+import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -19,13 +21,6 @@ const routes: Routes = [
     component: HomeComponent,
     // canActivate: [authGuard],
     data: { allowedRoles: ['administrador', 'gerencia_puerto', 'policia_aduanas', 'guarda_muelles'] }
-  },
-
-  {
-    path: 'listaPlazas',
-    component: HomeComponent,
-    // canActivate: [authGuard],
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
   },
 
 
@@ -57,6 +52,10 @@ const routes: Routes = [
     // canActivate: [authGuard], 
     data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
   },
+
+  { path: 'listaPlazas', component: listaPlazasComponents },
+  { path: 'plazas', component: PlazaComponent },
+  { path: 'plazas/:tipo/:id', component: PlazaComponent,},
   // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   // {
   //   path: 'empleados/:tipo/:id',
