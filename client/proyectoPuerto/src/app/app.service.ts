@@ -7,24 +7,22 @@ import { UsersService } from './users/users.service';
   providedIn: 'root'
 })
 export class AppService {
-  urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
 
-  private userSubject = new BehaviorSubject<any | null>(null);
-  public user$: Observable<any | null> = this.userSubject.asObservable();
-
+  private currentRolSubject = new BehaviorSubject<number | null>(null);
+  rol$ = this.currentRolSubject.asObservable();
 
   constructor(private _usersService: UsersService) {
   }
 
-  setCurrentUser(username: string) {
+  setCurrentRol(username: string) {
     this._usersService.getUser(username).subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
-          this.userSubject.next(response.data[0]); // Se almacena solo en memoria
+          this.currentRolSubject.next(response.data[0].rol); // Se almacena solo en memoria
         }
       },
       error: (error) => {
-        console.log(error, 'Error al obtener el usuario');
+        console.log(error, 'Error al obtener el rol del usuario');
       },
       complete: () => {
         console.log('Operación completada.');
@@ -32,12 +30,12 @@ export class AppService {
     });
   }
 
-  unsetCurrentUser() {
-    this.userSubject.next(null);
+  unsetCurrentRol() {
+    this.currentRolSubject.next(null);
   }
 
-  getUser(): any | null {
-    return this.userSubject.value;
+  getCurrentRol(): number | null {
+    return this.currentRolSubject.value;
   }
 
 }

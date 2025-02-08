@@ -26,8 +26,8 @@
                                 <td>{{ rol.nombre_rol }}</td>
                                 <td>{{ rol.descripcion }}</td>
                                 <td>
-                                    <button [disabled]="roles.length === 0" class="btn btn-warning"
-                                        [routerLink]="['/formulario',rol.id_rol]" [disabled]="!rol.id_rol">
+                                    <button class="btn btn-warning" [routerLink]="['/formulario',rol.id_rol]"
+                                        [disabled]="!rol.id_rol">
                                         <i class="fa-solid fa-pen"></i> Editar Rol
                                     </button>
                                 </td>

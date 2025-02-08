@@ -15,18 +15,17 @@ abstract class UsersLogin
     {
         $conexion = null;
         //if ((empty($input->username) || empty($input->email)) && empty($input->password)) {
-        if (empty($input->username) || empty($input->password)) {
-
+        if ((empty($input->usuario)) || empty($input->password)) {
             return false;
         }
         try {
 
             $conexion = openConexion();
             //$sql = "SELECT password FROM usuariosLogin WHERE username = ? OR email = ?";
-            $sql = "SELECT password FROM usuariosLogin WHERE username = ? ";
+            $sql = "SELECT password FROM usuariosLogin WHERE usuario = ? or email = ? ";
             $stmt = $conexion->prepare($sql);
-            //$stmt->bind_param("ss", $input->username, $input->email);
-            $stmt->bind_param("s", $input->username);
+            $stmt->bind_param("ss", $input->usuario, $input->usuario);
+            //$stmt->bind_param("s", $input->usuario);
             $stmt->execute();
 
             $result = $stmt->get_result();
@@ -56,23 +55,50 @@ abstract class UsersLogin
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function insertNewUserLogin(string $username, string $email, string $password)
+    static function insertNewUserLogin(object $input)
     {
         $conexion = null;
         try {
-            if (empty($username) || empty($password)) {
+            if (empty($input)) {
                 return false;
             }
             $conexion = openConexion();
+
             // Hashear la contraseña
             // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $fields = [];
+            $values = [];
+            $types = '';
+            $password = '';
 
-            $sql = "INSERT INTO usuariosLogin (username, email, password) VALUES (?, ?, ?)";
+            if (property_exists($input, 'password')) {
+                $password = $input->password;
+                unset($input->password);
+            }
+
+            //var_dump($input);
+
+            foreach ($input as $key => $value) {
+                $fields[] = $key;
+                $values[] = $value;
+
+                $types .= UsersLogin::getTypesBind($value);
+            }
+
+            //var_dump($fields);
+            //var_dump($values);
+
+            $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?)";
             $stmt = $conexion->prepare($sql);
-            // Hashear la contraseña 
-            //$stmt->bind_param("ss", $username, $passwordHash);
-            $stmt->bind_param("sss", $username, $password, $email);
+            $stmt->bind_param($types, ...$values);
             $stmt->execute();
+
+            $sql = "INSERT INTO usuariosLogin (usuario, email, password) VALUES (?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
+
+            $stmt->bind_param("sss", $input->usuario, $input->email, $password);
+            $stmt->execute();
+
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
@@ -111,7 +137,7 @@ abstract class UsersLogin
 
             $values[] = $oldUsername;
 
-            $sql = "UPDATE usuariosLogin SET " . implode(", ", $fields) . " WHERE username = ?";
+            $sql = "UPDATE usuariosLogin SET " . implode(", ", $fields) . " WHERE usuario = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
 

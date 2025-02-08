@@ -3,6 +3,7 @@ import { Rol } from '../../rol';
 import { RolesService } from '../../roles.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { AppService } from '../../../app.service';
 
 
 @Component({
@@ -14,7 +15,9 @@ import autoTable from 'jspdf-autotable';
 export class ListaComponent {
   constructor(private listarolesService: RolesService) { }
   roles: Rol[] = [];
+
   ngOnInit() {
+
     this.listarolesService.obtengoRolesApi().subscribe({
       next: (resultado) => {
         this.roles = resultado.data;
@@ -24,7 +27,7 @@ export class ListaComponent {
       }
     });
   }
-  
+
   descargarPDF() {
     const doc = new jsPDF(); // Crear instancia de jsPDF
     // Agregar título o texto opcional

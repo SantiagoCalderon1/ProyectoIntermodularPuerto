@@ -19,21 +19,10 @@ export class LoginComponent {
   public titleForm: string = '';
   public subTitleForm: string = '';
   public leyendForm: string = '';
-  public typeForm: string = 'register';
+  public typeForm: string = 'login';
   public leyendBtn: string = 'Iniciar Sesión';
   public loginForm: FormGroup;
   public registerForm: FormGroup;
-
-  currentUsername: string = '';
-
-  public currentUser: User = {
-    usuario: '',
-    nombre: '',
-    email: '',
-    idioma: '',
-    habilitado: 0,
-    rol: 0
-  };
 
 
   constructor(private fb: FormBuilder, private _route: Router, private toastr: ToastrService, private _loginService: LoginService, private _appService: AppService) {
@@ -51,15 +40,11 @@ export class LoginComponent {
       name: new FormControl('', Validators.required),
       selectIdioma: new FormControl('', Validators.required),
       passwordRegister: new FormControl('', [Validators.required]),
-
-      // Valores ocultos
-      rol: new FormControl(1),
-      habilitado: new FormControl(0)
     });
   }
 
   ngOnInit(): void {
-    this.changeDataForm('register');
+    this.changeDataForm('login');
   }
 
   togglePasswordVisibility() {
@@ -102,6 +87,57 @@ export class LoginComponent {
   }
 
   onRegister() {
+    if (this.registerForm.valid) {
+      let newUser = {
+        "usuario": this.registerForm.get('usernameRegister')?.value,
+        "nombre": this.registerForm.get('name')?.value,
+        "email": this.registerForm.get('email')?.value,
+        "idioma": this.registerForm.get('selectIdioma')?.value,
+        "habilitado": 0,
+        "rol": 0,
+        "password": this.registerForm.get('passwordRegister')?.value
+      };
+
+      this._loginService.register(newUser).subscribe({
+        next: (response) => {
+          if (response.success) { // esto debe ser true
+            this.toastr.success(
+              'Se ha solicitado el registro Correctamente',
+              'Se ha solicitado el registro Correctamente, se debe esperar a que el admin acepte el registro!', { positionClass: 'toast-top-right' }
+            );
+            this.registerForm.setValue({
+              email: '',
+              usernameRegister: '',
+              name: '',
+              selectIdioma: '',
+              passwordRegister: '',
+            });
+            this._route.navigate(['/login']);
+          } else {
+            this.toastr.error(
+              'Error al solicitar el registro.',
+              'Verifique las credenciales!', { positionClass: 'toast-top-right' }
+            );
+            console.log(response.message);
+
+            this.registerForm.setValue({
+              email: '',
+              usernameRegister: '',
+              name: '',
+              selectIdioma: '',
+              passwordRegister: '',
+            });
+            this._route.navigate(['/login']);
+          }
+        },
+        error: (error) => {
+          this.toastr.error(error, 'Error al registrarse.');
+        },
+        complete: () => {
+          console.log('Operación completada.');
+        },
+      });
+    }
   }
 
   onLogin() {
@@ -117,8 +153,7 @@ export class LoginComponent {
       ).subscribe({
         next: (response) => {
           if (response.success) { // esto debe ser true
-            this._appService.setCurrentUser(username);
-            
+            this._appService.setCurrentRol(username);
             this.toastr.success(
               'Se ha iniciado sesión Correctamente',
               'Se ha iniciado sesión Correctamente!', { positionClass: 'toast-top-right' }

@@ -26,14 +26,21 @@
                                 Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/users']"
-                                [routerLinkActive]="['active']">Usuarios</a>
+                            <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']">Usuarios</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/roles']"
-                                [routerLinkActive]="['active']">Roles</a>
+                            <a class="nav-link" [routerLink]="['/plazasBase']" [routerLinkActive]="['active']">Plazas
+                                bases</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" *ngIf=" rol === 4">
+                            <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']">Roles</a>
+                        </li>
+                        <li class="nav-item" *ngIf=" rol === 4">
+                            <a class="nav-link" [routerLink]="['/instalacion']"
+                                [routerLinkActive]="['active']">Instalaciones</a>
+                        </li>
+                        <li class="nav-item" *ngIf="rol === 4">
                             <a class="nav-link" [routerLink]="['/funcionalidades']"
                                 [routerLinkActive]="['active']">Funcionalidades</a>
                         </li>

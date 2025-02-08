@@ -57,7 +57,8 @@ function checkUserLogin($input)
 
 function insertNewUserLogin($input)
 {
-    $result = UsersLogin::insertNewUserLogin($input->username ?? '',$input->email ?? '', $input->password ?? '');
+    $result = UsersLogin::insertNewUserLogin($input);
+
     if ($result) {
         echoResponse(true, 201, 'Usuario registrado correctamente.');
     } else {

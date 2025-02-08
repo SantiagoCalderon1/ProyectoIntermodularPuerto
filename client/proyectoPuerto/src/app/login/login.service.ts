@@ -25,11 +25,16 @@ export class LoginService {
 
   login(password: string, username?: string, email?: string,): Observable<any> {
     const body = {
-      "username": username,
+      "usuario": username,
       //"email": email,
       "password": password
     }
     return this.http.post<any>(`${this.urlApi}/login`, JSON.stringify(body), this.httpOptions);
+  }
+
+  register(body: any) {
+    
+    return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(body), this.httpOptions);
   }
 
   getToken(): string | null {

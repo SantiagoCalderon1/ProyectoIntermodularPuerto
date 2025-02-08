@@ -14,6 +14,7 @@ import autoTable from 'jspdf-autotable';
 export class ListaComponent {
   constructor(private _funcionalidadesService: FuncionalidadesService) { }
   funcionalidades: Funcionalidad[] = [];
+  
   ngOnInit() {
     this._funcionalidadesService.obtengoFuncionalidadesApi().subscribe({
       next: (resultado) => {

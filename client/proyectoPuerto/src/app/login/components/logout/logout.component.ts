@@ -16,7 +16,7 @@ export class LogoutComponent {
 
   ngOnInit() {
     this._loginService.logout();
-    this._appService.unsetCurrentUser();
+    this._appService.unsetCurrentRol();
     this.toastr.success('Has salido la aplicación correctamente', 'Hasta pronto');
   }
 

@@ -19,24 +19,18 @@ export class UserListComponent {
   public dtOptions: Config = {};
   public selectedUser: string = '';
   public filterSearch: string = '';
+  rol: number | null = null;
 
-  public currentUser: User = {
-    usuario: '',
-    nombre: '',
-    email: '',
-    idioma: '',
-    habilitado: 0,
-    rol: 0
-  };
+
 
   constructor(private _userService: UsersService, private _appService: AppService,
   ) { }
 
   ngOnInit() {
-    this._appService.user$.subscribe(currentUser => {
-      this.currentUser = currentUser;
-      console.log(this.currentUser);
+    this._appService.rol$.subscribe(rol => {
+      this.rol = rol;
     });
+
 
     this.selectedUser = '';
 

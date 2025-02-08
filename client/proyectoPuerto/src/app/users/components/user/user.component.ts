@@ -31,14 +31,6 @@ export class UserComponent {
     rol: 0
   };
 
-  public currentUser: User = {
-    usuario: '',
-    nombre: '',
-    email: '',
-    idioma: '',
-    habilitado: 0,
-    rol: 0
-  };
 
   constructor(
     private _aroute: ActivatedRoute,
@@ -52,10 +44,7 @@ export class UserComponent {
 
 
   ngOnInit() {
-    this._appService.user$.subscribe(currentUser => {
-      this.currentUser = currentUser;
-      console.log(this.currentUser);
-    });
+
 
     this._aroute.params.subscribe(params => {
       this.username = params['username'];
