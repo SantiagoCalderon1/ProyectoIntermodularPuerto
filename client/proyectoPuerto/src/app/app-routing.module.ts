@@ -13,6 +13,11 @@ import { FormularioComponent } from './roles/components/formulario/formulario.co
 
 import { ListaComponent as listaPlazasComponents } from './plazas/components/lista/lista.component';
 import { PlazaComponent } from './plazas/components/plaza/plaza.component';
+
+import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
+import { ListaComponent as instalacionListaComponent } from './instalacion/components/lista/lista.component';
+
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -51,6 +56,12 @@ const routes: Routes = [
   { path: 'listaPlazas', component: listaPlazasComponents, canActivate: [authGuard] },
   { path: 'plazas', component: PlazaComponent, canActivate: [authGuard] },
   { path: 'plazas/:tipo/:id', component: PlazaComponent, canActivate: [authGuard] },
+
+
+  { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },
+  { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
+  { path: 'listado', component: instalacionListaComponent, canActivate: [authGuard] },
+
   // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   // {
   //   path: 'empleados/:tipo/:id',

@@ -1,0 +1,35 @@
+<h3>Crear nueva instalacion</h3>
+<form #crear="ngForm" (ngSubmit)="agregarInstalacion()">
+  <label for="codigo">Código:</label><br>
+  <input type="text" [(ngModel)]="instalacionAct.codigo" name="codigo" id="codigo" required>
+  <br><br>
+
+  <label for="puerto">Puerto:</label><br>
+  <input type="text" [(ngModel)]="instalacionAct.puerto" name="puerto" id="puerto" required>
+  <br><br>
+
+  <label for="descripcion">Descripción:</label><br>
+  <textarea name="descripcion" [(ngModel)]="instalacionAct.descripcion" id="descripcion" cols="30" rows="10"
+    required></textarea>
+  <br><br>
+
+  <label for="tipo_instalacion">Tipo de instalación:</label><br>
+  <input type="text" name="tipo_instalacion" [(ngModel)]="instalacionAct.tipo_instalacion" id="tipo_instalacion"
+    required>
+  <br><br>
+
+  <label for="fecha_disposicion">Fecha de disposición:</label><br>
+  <input type="date" name="fecha_disposicion" [(ngModel)]="instalacionAct.fecha_disposicion" id="fecha_disposicion"
+    required>
+  <br><br>
+
+  <label for="estado">Instalación en buen estado</label>
+  <input type="checkbox" name="estado" [(ngModel)]="instalacionAct.estado" id="estado">
+  <br><br>
+
+  <button type="submit">Guardar Instalación</button>
+  <button [routerLink]="['/listado']">Listar instalaciones</button>
+  <p *ngIf="mensajeCreacion == 1" style="color: greenyellow;">Instalación guardada correctamente</p>
+  <p *ngIf="mensajeCreacion == 0" style="color: red;">Error al guardar la instalación</p>
+
+</form>
