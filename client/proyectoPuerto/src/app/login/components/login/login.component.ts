@@ -27,7 +27,14 @@ export class LoginComponent {
 
 
 
-  constructor(private fb: FormBuilder, private _route: Router, private toastr: ToastrService, private _loginService: LoginService, private _appService: AppService) {
+  constructor(
+    private fb: FormBuilder,
+    private _route: Router,
+    private toastr: ToastrService,
+    private _loginService: LoginService,
+    private _appService: AppService,
+    private cdRef: ChangeDetectorRef
+  ) {
     this.loginForm = new FormGroup({
       // Campos del formulario de login
       usernameLogin: new FormControl('', Validators.required),
@@ -52,16 +59,18 @@ export class LoginComponent {
 
 
   verificarSesion() {
-    const storedToken = localStorage.getItem('tokenRemember');
-    if (storedToken === '123456789') {
+    if (localStorage.getItem('tokenRemember') == '123456789') {
       this.loginForm.patchValue({
         usernameLogin: localStorage.getItem('username'),
         rememberme: true
       });
+      this._route.navigate(['/home']);
+      this.toastr.success('Se ha iniciado sesión correctamente (recuerda sesión)', '¡Bienvenido!', { positionClass: 'toast-top-right' });
       this.loginForm.controls['passwordLogin'].setValue('');
     } else {
-      this.loginForm.reset();
+      //console.log('No hay sesión recordada');
     }
+    this.cdRef.detectChanges();
   }
 
   changePasswordVisibility() {
@@ -135,7 +144,6 @@ export class LoginComponent {
               'Error al solicitar el registro.',
               'Verifique las credenciales!', { positionClass: 'toast-top-right' }
             );
-            console.log(response.message);
 
             this.registerForm.setValue({
               email: '',
@@ -149,96 +157,38 @@ export class LoginComponent {
         },
         error: (error) => {
           this.toastr.error(error, 'Error al registrarse.');
-        },
-        complete: () => {
-          console.log('Operación completada.');
-        },
+        }
       });
     }
   }
 
   onLogin() {
     if (this.loginForm.valid) {
-      console.log('Datos enviados:', this.loginForm.get('usernameLogin')?.value, this.loginForm.get('passwordLogin')?.value);
-
       let username = this.loginForm.get('usernameLogin')?.value;
       let password = this.loginForm.get('passwordLogin')?.value;
       let rememberme = this.loginForm.get('rememberme')?.value;
 
-      if (!rememberme) {
-        localStorage.removeItem('tokenRemember');
-        localStorage.removeItem('username');
-      }
-
-      const tokenRemember = localStorage.getItem('tokenRemember');
-      if (tokenRemember == '123456789') {
-        this.setCurrentRol(username);
-        console.log('Sesión iniciada con "Remember me" sin necesidad de contraseña');
-        this._route.navigate(['/home']);
-        this.toastr.success('Se ha iniciado sesión correctamente (recuerda sesión)', '¡Bienvenido!', { positionClass: 'toast-top-right' });
-        return;
-      } else {
-
-
-        this._loginService.login(
-          username, password
-        ).subscribe({
-          next: (response) => {
-            if (response.success) { // esto debe ser true
-              console.log(' success : ' + response.success);
-
-              this.setCurrentRol(username);
-              this.toastr.success(
-                'Se ha iniciado sesión Correctamente', 'Bienvenido!', { positionClass: 'toast-top-right' }
-              );
-
-              if (rememberme) {
-                localStorage.setItem('tokenRemember', '123456789');
-                localStorage.setItem('username', username);
-              }
-              console.log('antes de enviar a home');
-
+      this._loginService.login(
+        username, password
+      ).subscribe({
+        next: (response) => {
+          if (response.success) { // esto debe ser true
+            this._loginService.setCurrentRol(username);
+            this._loginService.setTokenRemember(username, rememberme);
+            this.toastr.success(
+              'Se ha iniciado sesión Correctamente', 'Bienvenido!', { positionClass: 'toast-top-right' }
+            );
+            setTimeout(() => {
               this._route.navigate(['/home']);
-            } else {
-              this.toastr.error(
-                'Error al iniciar sesión.',
-                'Verifique las credenciales!', { positionClass: 'toast-top-right' }
-              );
-              console.log(response.message);
-              this.loginForm.setValue({
-                usernameLogin: '',
-                passwordLogin: '',
-                rememberme: false
-              });
-              this._route.navigate(['/login']);
-            }
-          },
-          error: (error) => {
-            this.toastr.error(error, 'Error al identificarse.');
+            }, 500);
           }
-        });
-
-      }
-
+        },
+        error: (error) => {
+          this.toastr.error(error, 'Error al identificarse.');
+        }
+      });
     } else {
-      console.log('Formulario inválido');
+      //console.log('Formulario inválido');
     }
   }
-
-  setCurrentRol(username: string) {
-    this._loginService.getUser(username).subscribe({
-      next: (response) => {
-        if (response.success) { // esto debe ser true
-          this._appService.setRol(response.data[0].rol);
-        }
-      },
-      error: (error) => {
-        console.log(error, 'Error al obtener el rol del usuario');
-      },
-      complete: () => {
-        console.log('Operación completada.');
-      },
-    });
-  }
-
 }

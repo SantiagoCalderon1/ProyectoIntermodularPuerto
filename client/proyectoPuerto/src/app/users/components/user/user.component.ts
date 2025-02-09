@@ -99,15 +99,12 @@ export class UserComponent {
       },
       error: (error) => {
         this.toastr.error(error, 'Error al obtener el usuario');
-      },
-      complete: () => {
-        console.log('Operación completada.');
-      },
+      }
     });
   }
 
   manageForm() {
-    console.log(this.selectedUser);
+    //console.log(this.selectedUser);
     switch (this.option) {
       case 'Insert':
         this.insertNewUser();
@@ -153,10 +150,7 @@ export class UserComponent {
           this.toastr.error(
             error.message
           );
-        },
-        complete: () => {
-          console.log('Operación terminada.');
-        },
+        }
       });
   }
 
@@ -183,7 +177,7 @@ export class UserComponent {
   }
 
   updateUser() {
-    console.log('username ' + this.username + ' user ' + JSON.stringify(this.selectedUser));
+    //console.log('username ' + this.username + ' user ' + JSON.stringify(this.selectedUser));
     this._usersService
       .updateUser(this.username, this.selectedUser)
       .subscribe({
@@ -204,10 +198,7 @@ export class UserComponent {
           this.toastr.error(
             error.message
           );
-        },
-        complete: () => {
-          console.log('Operación terminada.');
-        },
+        }
       });
   }
 
@@ -233,10 +224,7 @@ export class UserComponent {
           this.toastr.error(
             error.message
           );
-        },
-        complete: () => {
-          console.log('Operación eliminar terminada.');
-        },
+        }
       });
   }
 

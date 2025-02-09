@@ -1,35 +1,62 @@
-<h3>Crear nueva instalacion</h3>
-<form #crear="ngForm" (ngSubmit)="agregarInstalacion()">
-  <label for="codigo">Código:</label><br>
-  <input type="text" [(ngModel)]="instalacionAct.codigo" name="codigo" id="codigo" required>
-  <br><br>
+<div id="container-create-installation" class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="col-7 col-md-10 col-lg-8">
+        <div class="card text-start shadow-lg">
+            <div class="card-header title text-center">
+                <h2 class="fs-4">Crear Nueva Instalación</h2>
+            </div>
+            <div class="card-body">
+                <form #crear="ngForm" (ngSubmit)="agregarInstalacion()">
+                    <div class="mb-3">
+                        <label for="codigo" class="form-label">Código:</label>
+                        <input type="text" class="form-control" [(ngModel)]="instalacionAct.codigo" name="codigo"
+                            id="codigo" required>
+                    </div>
 
-  <label for="puerto">Puerto:</label><br>
-  <input type="text" [(ngModel)]="instalacionAct.puerto" name="puerto" id="puerto" required>
-  <br><br>
+                    <div class="mb-3">
+                        <label for="puerto" class="form-label">Puerto:</label>
+                        <input type="text" class="form-control" [(ngModel)]="instalacionAct.puerto" name="puerto"
+                            id="puerto" required>
+                    </div>
 
-  <label for="descripcion">Descripción:</label><br>
-  <textarea name="descripcion" [(ngModel)]="instalacionAct.descripcion" id="descripcion" cols="30" rows="10"
-    required></textarea>
-  <br><br>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <textarea class="form-control" [(ngModel)]="instalacionAct.descripcion" name="descripcion"
+                            id="descripcion" rows="3" required></textarea>
+                    </div>
 
-  <label for="tipo_instalacion">Tipo de instalación:</label><br>
-  <input type="text" name="tipo_instalacion" [(ngModel)]="instalacionAct.tipo_instalacion" id="tipo_instalacion"
-    required>
-  <br><br>
+                    <div class="mb-3">
+                        <label for="tipo_instalacion" class="form-label">Tipo de instalación:</label>
+                        <input type="text" class="form-control" name="tipo_instalacion"
+                            [(ngModel)]="instalacionAct.tipo_instalacion" id="tipo_instalacion" required>
+                    </div>
 
-  <label for="fecha_disposicion">Fecha de disposición:</label><br>
-  <input type="date" name="fecha_disposicion" [(ngModel)]="instalacionAct.fecha_disposicion" id="fecha_disposicion"
-    required>
-  <br><br>
+                    <div class="mb-3">
+                        <label for="fecha_disposicion" class="form-label">Fecha de disposición:</label>
+                        <input type="date" class="form-control" name="fecha_disposicion"
+                            [(ngModel)]="instalacionAct.fecha_disposicion" id="fecha_disposicion" required>
+                    </div>
 
-  <label for="estado">Instalación en buen estado</label>
-  <input type="checkbox" name="estado" [(ngModel)]="instalacionAct.estado" id="estado">
-  <br><br>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="instalacionAct.estado"
+                            name="estado" id="estado">
+                        <label class="form-check-label" for="estado">Instalación en buen estado</label>
+                    </div>
 
-  <button type="submit">Guardar Instalación</button>
-  <button [routerLink]="['/listado']">Listar instalaciones</button>
-  <p *ngIf="mensajeCreacion == 1" style="color: greenyellow;">Instalación guardada correctamente</p>
-  <p *ngIf="mensajeCreacion == 0" style="color: red;">Error al guardar la instalación</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa-solid fa-save"></i> Guardar Instalación
+                        </button>
+                        <button class="btn btn-secondary" [routerLink]="['/instalacion']">
+                            <i class="fa-solid fa-list"></i> Listar Instalaciones
+                        </button>
+                    </div>
+                </form>
 
-</form>
+                <!-- Mensajes de estado -->
+                <p *ngIf="mensajeCreacion == 1" class="text-success text-center mt-3">Instalación guardada correctamente
+                </p>
+                <p *ngIf="mensajeCreacion == 0" class="text-danger text-center mt-3">Error al guardar la instalación</p>
+            </div>
+        </div>
+    </div>
+</div>

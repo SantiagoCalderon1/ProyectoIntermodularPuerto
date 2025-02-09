@@ -16,11 +16,16 @@ export class LogoutComponent {
 
   ngOnInit() {
     localStorage.removeItem('token');
-    
+    localStorage.removeItem('tokenRemember');
+    localStorage.removeItem('username');
+
+
     this.toastr.success('Has salido la aplicación correctamente', 'Hasta pronto');
   }
 
   loginAgain() {
-    this._route.navigate(['/login']);
+    this._route.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
   }
 }

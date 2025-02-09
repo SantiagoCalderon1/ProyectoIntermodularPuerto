@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsersService } from '../users/users.service';
+import { AppService } from '../app.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,12 @@ export class LoginService {
     })
   }
 
-  constructor(private http: HttpClient, private _usersService: UsersService) { }
+  constructor(private http: HttpClient, private _usersService: UsersService,    private _appService: AppService,) { }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('tokenRemember') || !!localStorage.getItem('token') ;
+    return  !!localStorage.getItem('token');
   }
+
   getUser(username: string): Observable<any> {
     return this.http.get(`${this.urlApi}/user/${username}`);
   }
@@ -36,6 +38,29 @@ export class LoginService {
 
   register(body: any) {
     return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(body), this.httpOptions);
+  }
+
+  setTokenRemember(username: string, rememberme: boolean) {
+    if (rememberme) {
+      localStorage.setItem('tokenRemember', '123456789');
+      localStorage.setItem('username', username);
+    } else {
+      localStorage.removeItem('tokenRemember');
+      localStorage.removeItem('username');
+    }
+  }
+
+  setCurrentRol(username: string) {
+    this.getUser(username).subscribe({
+      next: (response) => {
+        if (response.success) { // esto debe ser true
+          this._appService.setRol(response.data[0].rol);
+        }
+      },
+      error: (error) => {
+        //console.log(error, 'Error al obtener el rol del usuario');
+      }
+    });
   }
 
 }

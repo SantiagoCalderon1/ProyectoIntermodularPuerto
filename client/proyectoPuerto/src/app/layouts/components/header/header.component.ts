@@ -19,7 +19,6 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this._appService.rol$.subscribe(rol => {
-      console.log('en header comp se ha rescatado el rol ' + rol);
       this.rol = rol;
     });
   }

@@ -1,33 +1,67 @@
-<h1>Lista de Instalaciones</h1>
-<table border>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Código</th>
-            <th>Descripción</th>
-            <th>Fecha de disposición</th>
-            <th>Tipo de instalación</th>
-            <th>Estado</th>
-            <th>Puerto</th>
-            <th>Eliminar</th>
-            <th>Editar</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let instalacion of instalaciones; let i = index">
-            <td>{{ instalacion.id_instalacion }}</td>
-            <td>{{ instalacion.codigo }}</td>
-            <td>{{ instalacion.descripcion }}</td>
-            <td>{{ instalacion.fecha_disposicion }}</td>
-            <td>{{ instalacion.tipo_instalacion }}</td>
-            <td>{{ instalacion.estado }}</td>
-            <td>{{ instalacion.puerto }}</td>
-            <td><button (click)="eliminarInstalacion(instalacion.id_instalacion)">Eliminar</button>
-            </td>
-            <td><button [routerLink]="['/creacion', instalacion.id_instalacion,1]">Editar</button></td>
-        </tr>
-    </tbody>
-</table>
-<button [routerLink]="['/creacion', 0 , 2]">Crear nueva instalacion</button>
-<p *ngIf="mensajeEliminacion == 1" style="color: greenyellow;">Instalación eliminada correctamente</p>
-<p *ngIf="mensajeEliminacion == 0" style="color: red;">Error al eliminar la instalación</p>
+<div id="container-installations-list" class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="col-7 col-md-10 col-lg-12">
+        <div class="card text-start shadow-lg">
+            <div class="card-header title text-center">
+                <h2 class="fs-4">Lista de Instalaciones</h2>
+            </div>
+            <div class="card-body">
+                <!-- Botones Responsivos -->
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                    <button class="btn btn-success" [routerLink]="['/creacion', 0 , 2]">
+                        <i class="fa-solid fa-plus"></i> Crear nueva instalación
+                    </button>
+                </div>
+
+                <!-- Mensaje si no hay instalaciones -->
+                <div *ngIf="instalaciones" class="w-100">
+                    <h5 *ngIf="instalaciones.length < 1" class="text-center text-muted mt-3">
+                        No hay información disponible.
+                    </h5>
+
+                    <!-- Tabla Responsiva -->
+                    <div *ngIf="instalaciones.length > 0" id="container-table" class="table-responsive">
+                        <table class="table text-center table-striped table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Fecha de disposición</th>
+                                    <th>Tipo de instalación</th>
+                                    <th>Estado</th>
+                                    <th>Puerto</th>
+                                    <th>Eliminar</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let instalacion of instalaciones; let i = index">
+                                    <td>{{ instalacion.id_instalacion }}</td>
+                                    <td>{{ instalacion.codigo }}</td>
+                                    <td>{{ instalacion.descripcion }}</td>
+                                    <td>{{ instalacion.fecha_disposicion }}</td>
+                                    <td>{{ instalacion.tipo_instalacion }}</td>
+                                    <td>{{ instalacion.estado }}</td>
+                                    <td>{{ instalacion.puerto }}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" (click)="eliminarInstalacion(instalacion.id_instalacion)">
+                                            <i class="fa-solid fa-trash"></i>Eliminar 
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" [routerLink]="['/creacion', instalacion.id_instalacion,1]">
+                                            <i class="fa-solid fa-pen"></i>Editar 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Mensajes de eliminación -->
+                <p *ngIf="mensajeEliminacion == 1" class="text-success text-center">Instalación eliminada correctamente</p>
+                <p *ngIf="mensajeEliminacion == 0" class="text-danger text-center">Error al eliminar la instalación</p>
+            </div>
+        </div>
+    </div>
+</div>

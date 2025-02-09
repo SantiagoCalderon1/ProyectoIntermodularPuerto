@@ -4,6 +4,7 @@ import { ListaComponent } from '../lista/lista.component';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Instalacion } from '../instalacion';
 
+
 @Component({
   selector: 'app-instalacion',
   standalone: false,
@@ -70,6 +71,7 @@ export class InstalacionComponent {
           console.log("response");
           console.log(response);
           this.mensajeCreacion = 1;
+          this.route.navigate(['/listado']);
         },
         error: (error) => {
           console.log("error");

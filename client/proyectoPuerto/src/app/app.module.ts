@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
 import { PlazasModule } from './plazas/plazas.module';
+import { InstalacionModule } from './instalacion/instalacion.module';
 
 
 @NgModule({
@@ -33,10 +34,11 @@ import { PlazasModule } from './plazas/plazas.module';
     PlazasModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
-    FuncionalidadesModule,// Adicionando el modulo de Funcionalidades
+    FuncionalidadesModule,
     HttpClientModule ,
     RolesModule,
     FormsModule,
+    InstalacionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

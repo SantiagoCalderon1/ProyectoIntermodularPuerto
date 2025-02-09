@@ -4,6 +4,7 @@ import { LoginComponent } from './login/components/login/login.component';
 import { LogoutComponent } from './login/components/logout/logout.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './guards/auth.guard';
+
 import { UserListComponent } from './users/components/user-list/user-list.component';
 import { UserComponent } from './users/components/user/user.component';
 import { ListaComponent as listaRoles } from './roles/components/lista/lista.component';
@@ -15,11 +16,11 @@ import { ListaComponent as listaPlazasComponents } from './plazas/components/lis
 import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
-import { ListaComponent as instalacionListaComponent } from './instalacion/components/lista/lista.component';
+import { ListaComponent as listaInstalacionComponent } from './instalacion/components/lista/lista.component';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent},
   {
     path: 'logout', component: LogoutComponent, canActivate: [authGuard]
   },
@@ -60,15 +61,7 @@ const routes: Routes = [
 
   { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
-  { path: 'listado', component: instalacionListaComponent, canActivate: [authGuard] },
-
-  // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
-  // {
-  //   path: 'empleados/:tipo/:id',
-  //   component: EmpleadoComponent,
-  //   canActivate: [loginGuard, empleadoGuard],
-  //   canDeactivate: [abandonarPaginaGuard],
-  // },
+  { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

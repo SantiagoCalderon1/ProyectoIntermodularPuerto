@@ -79,17 +79,14 @@ export class UserListComponent {
           this.usersHabilitados = this.users.filter(user => user.habilitado == 1);
           this.usersNoHabilitados = this.users.filter(user => user.habilitado == 0);
 
-          console.log(response.data);
+          //console.log(response.data);
         } else {
           console.error('Error:', response.exception);
         }
       },
       error: (error) => {
         console.error('Error al recibir datos:', error);
-      },
-      complete: () => {
-        console.log('Operación completada.');
-      },
+      }
     });
   }
 

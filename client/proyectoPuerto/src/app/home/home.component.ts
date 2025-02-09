@@ -15,8 +15,6 @@ export class HomeComponent {
     ) { }
   ngOnInit(): void {
     this._appService.rol$.subscribe(rol => {
-      console.log('en home comp se ha rescatado el rol ' + rol);
-
       this.rol = rol;
     });
   }
