@@ -17,7 +17,6 @@ export class ListaComponent {
   roles: Rol[] = [];
 
   ngOnInit() {
-
     this.listarolesService.obtengoRolesApi().subscribe({
       next: (resultado) => {
         this.roles = resultado.data;

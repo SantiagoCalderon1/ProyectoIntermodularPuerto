@@ -11,51 +11,46 @@ import { ListaComponent as listaFuncionalidad } from './funcionalidades/componen
 
 import { FormularioComponent } from './roles/components/formulario/formulario.component';
 
-import { ListaComponent as listaPlazasComponents} from './plazas/components/lista/lista.component';
+import { ListaComponent as listaPlazasComponents } from './plazas/components/lista/lista.component';
 import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
+  {
+    path: 'logout', component: LogoutComponent, canActivate: [authGuard]
+  },
   {
     path: 'home',
     component: HomeComponent,
-    // canActivate: [authGuard],
-    data: { allowedRoles: ['administrador', 'gerencia_puerto', 'policia_aduanas', 'guarda_muelles'] }
+    canActivate: [authGuard]
   },
 
 
   {
     path: 'users', component: UserListComponent,
-    // canActivate: [authGuard],
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+    canActivate: [authGuard]
   },
   {
     path: 'users/:option/:username',
     component: UserComponent,
-    // canActivate: [authGuard],
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
-    // canDeactivate: [abandonarPaginaGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'roles', component: listaRoles,
-    // canActivate: [authGuard],
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+    canActivate: [authGuard]
   },
   {
     path: 'formulario/:id', component: FormularioComponent,
-    // canActivate: [authGuard], 
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+    canActivate: [authGuard]
   },
 
   {
     path: 'funcionalidades', component: listaFuncionalidad,
-    // canActivate: [authGuard], 
-    data: { allowedRoles: ['administrador', 'gerencia_puerto'] }
+    canActivate: [authGuard]
   },
 
-  { path: 'listaPlazas', component: listaPlazasComponents },
-  { path: 'plazas', component: PlazaComponent },
-  { path: 'plazas/:tipo/:id', component: PlazaComponent,},
+  { path: 'listaPlazas', component: listaPlazasComponents, canActivate: [authGuard] },
+  { path: 'plazas', component: PlazaComponent, canActivate: [authGuard] },
+  { path: 'plazas/:tipo/:id', component: PlazaComponent, canActivate: [authGuard] },
   // { path: 'empleados', component: ListaComponent, canActivate: [loginGuard] },
   // {
   //   path: 'empleados/:tipo/:id',

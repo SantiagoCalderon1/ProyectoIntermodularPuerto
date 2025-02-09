@@ -28,14 +28,14 @@ export class UsersService {
     return this.http.get(`${this.urlApi}/user/${username}`);
   }
 
-  insertNewUser(user: User): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(user), this.httpOptions);
+  insertNewUser(data: any): Observable<any> {
+    return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(data), this.httpOptions);
   }
 
-  updateUser(username: string, user: User): Observable<any> {
-    console.log(JSON.stringify(user));
+  updateUser(username: string, data: any): Observable<any> {
+    console.log(JSON.stringify(data));
     console.log(`${this.urlApi}/update/${username}`);
-    return this.http.put<any>(`${this.urlApi}/update/${username}`, JSON.stringify(user), this.httpOptions);
+    return this.http.put<any>(`${this.urlApi}/update/${username}`, JSON.stringify(data), this.httpOptions);
   }
 
   deleteUser(username: string): Observable<any> {

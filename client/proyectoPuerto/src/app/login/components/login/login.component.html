@@ -4,7 +4,7 @@
             <h1>{{ titleForm}}</h1>
         </div>
         <div class="card-body">
-            <form #userForm="ngForm" (ngSubmit)="manageForm() " novalidate>
+            <form #userForm="ngForm" (ngSubmit)="manageForm()" novalidate>
                 <h5 class="text-center "> {{ subTitleForm }}</h5>
                 <div class="social-icons text-center py-3">
                     <a href="#" class="btn btn-outline-dark ">
@@ -47,14 +47,13 @@
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <div class="input-group">
-                <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="passwordLogin"
-                    required>
-                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="passwordLogin">
+                <button class="btn btn-outline-secondary" type="button" (click)="changePasswordVisibility()">
                     <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                 </button>
             </div>
         </div>
-        <div class="">
+        <div class="d-flex justify-content-start align-items-center my-4">
             <input class="form-check-input me-2 form-control" type="checkbox" formControlName="rememberme">
             <label class="form-check-label" for="rememberme">
                 Recuerdame
@@ -106,7 +105,7 @@
             <div class="input-group">
                 <input [type]="showPassword ? 'text' : 'password'" class="form-control"
                     formControlName="passwordRegister" required>
-                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                <button class="btn btn-outline-secondary" type="button" (click)="changePasswordVisibility()">
                     <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                 </button>
             </div>

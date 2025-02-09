@@ -4,7 +4,8 @@ import { Config } from 'datatables.net';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { AppService } from '../../../app.service';
-import { User } from '../../user';
+import { Rol } from '../../../roles/rol';
+import { RolesService } from '../../../roles/roles.service';
 
 @Component({
   selector: 'app-user-list',
@@ -16,14 +17,22 @@ import { User } from '../../user';
 export class UserListComponent {
   public title: string = "Usuarios";
   public users: any[] = [];
+  public roles: Rol[] = [];
+
+
+
+  public usersHabilitados: any[] = [];
+  public usersNoHabilitados: any[] = [];
+
   public dtOptions: Config = {};
   public selectedUser: string = '';
   public filterSearch: string = '';
   rol: number | null = null;
 
+  public activeTab: string = 'habilitados'; // Pestaña por defecto
 
 
-  constructor(private _userService: UsersService, private _appService: AppService,
+  constructor(private _userService: UsersService, private listarolesService: RolesService, private _appService: AppService
   ) { }
 
   ngOnInit() {
@@ -31,6 +40,14 @@ export class UserListComponent {
       this.rol = rol;
     });
 
+    this.listarolesService.obtengoRolesApi().subscribe({
+      next: (resultado) => {
+        this.roles = resultado.data;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
 
     this.selectedUser = '';
 
@@ -55,11 +72,13 @@ export class UserListComponent {
       },
     };
 
-
     this._userService.getAllUser().subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
           this.users = response.data;
+          this.usersHabilitados = this.users.filter(user => user.habilitado == 1);
+          this.usersNoHabilitados = this.users.filter(user => user.habilitado == 0);
+
           console.log(response.data);
         } else {
           console.error('Error:', response.exception);
@@ -74,6 +93,11 @@ export class UserListComponent {
     });
   }
 
+
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+
   descargarPDF() {
     const doc = new jsPDF();
     doc.text('Tabla de usuarios.', 14, 10);
@@ -85,10 +109,7 @@ export class UserListComponent {
   }
 
   selectUser(username: string, event: any) {
-    if (event.target.checked) {
-      this.selectedUser = username;
-    } else {
-      this.selectedUser = '';
-    }
+    this.selectedUser = event.target.checked ? username : '';
   }
+
 }

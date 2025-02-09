@@ -23,9 +23,7 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 
 switch ($method) {
     case 'POST':
-        if ($lastpart == 'login') {  // funciona
-            checkUserLogin($input);
-        }
+        
 
         if ($lastpart == 'insert') {
             insertNewUserLogin($input);
@@ -45,15 +43,7 @@ switch ($method) {
         break;
 }
 
-function checkUserLogin($input)
-{
-    $result = UsersLogin::checkUserLogin($input);
-    if ($result) {
-        echoResponse(true, 200, 'Usuario autenticado correctamente.');
-    } else {
-        echoResponse(false, 404, 'Error al autenticar, verificar credenciales.');
-    }
-}
+
 
 function insertNewUserLogin($input)
 {

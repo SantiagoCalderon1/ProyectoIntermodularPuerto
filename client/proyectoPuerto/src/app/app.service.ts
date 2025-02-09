@@ -7,35 +7,26 @@ import { UsersService } from './users/users.service';
   providedIn: 'root'
 })
 export class AppService {
+  private rolSubject = new BehaviorSubject<number | null>(null);
+  rol$ = this.rolSubject.asObservable();
 
-  private currentRolSubject = new BehaviorSubject<number | null>(null);
-  rol$ = this.currentRolSubject.asObservable();
-
-  constructor(private _usersService: UsersService) {
+  constructor() {
+    this.loadRol();
   }
 
-  setCurrentRol(username: string) {
-    this._usersService.getUser(username).subscribe({
-      next: (response) => {
-        if (response.success) { // esto debe ser true
-          this.currentRolSubject.next(response.data[0].rol); // Se almacena solo en memoria
-        }
-      },
-      error: (error) => {
-        console.log(error, 'Error al obtener el rol del usuario');
-      },
-      complete: () => {
-        console.log('Operación completada.');
-      },
-    });
+  loadRol() {
+    const storedRol = localStorage.getItem('token');
+    const rol = storedRol ? parseInt(storedRol, 10) : null;
+    this.rolSubject.next(rol);
   }
 
-  unsetCurrentRol() {
-    this.currentRolSubject.next(null);
+  setRol(rol: number) {
+    localStorage.setItem('token', rol.toString());
+    this.rolSubject.next(rol);
   }
 
-  getCurrentRol(): number | null {
-    return this.currentRolSubject.value;
+  logout() {
+    localStorage.removeItem('token');
+    this.rolSubject.next(null);
   }
-
 }

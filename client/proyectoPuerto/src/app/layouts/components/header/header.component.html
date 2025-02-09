@@ -15,10 +15,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <form class="d-flex mt-3" role="search">
+                    <!-- <form class="d-flex mt-3" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    </form> -->
 
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
                         <li class="nav-item">
@@ -33,14 +33,14 @@
                             <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']">Plazas
                                 bases</a>
                         </li>
-                        <li class="nav-item" *ngIf=" rol === 4">
+                        <li class="nav-item" *ngIf="rol == 4">
                             <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']">Roles</a>
                         </li>
-                        <li class="nav-item" *ngIf=" rol === 4">
+                        <li class="nav-item" *ngIf=" rol == 4">
                             <a class="nav-link" [routerLink]="['/instalacion']"
                                 [routerLinkActive]="['active']">Instalaciones</a>
                         </li>
-                        <li class="nav-item" *ngIf="rol === 4">
+                        <li class="nav-item" *ngIf="rol == 4">
                             <a class="nav-link" [routerLink]="['/funcionalidades']"
                                 [routerLinkActive]="['active']">Funcionalidades</a>
                         </li>

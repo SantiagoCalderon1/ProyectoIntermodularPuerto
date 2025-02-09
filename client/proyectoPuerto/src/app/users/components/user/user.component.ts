@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../users.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../../user';
 import { NgForm } from '@angular/forms';
 import { AppService } from '../../../app.service';
+import { Rol } from '../../../roles/rol';
+import { RolesService } from '../../../roles/roles.service';
 
 @Component({
   selector: 'app-user',
@@ -15,6 +17,7 @@ import { AppService } from '../../../app.service';
 })
 export class UserComponent {
   @ViewChild('userForm', { static: true }) userForm: NgForm | undefined;
+  @ViewChild('passwordInput') passwordInput!: ElementRef;
 
   public title: string = "Usuarios";
   public username: string = '';
@@ -22,10 +25,14 @@ export class UserComponent {
   public tituloConfirmacion: string = '';
   public formStatus: boolean = false;
 
+  public roles: Rol[] = [];
+  rol: number | null = null;
+
   public selectedUser: User = {
     usuario: '',
     nombre: '',
     email: '',
+    password: '',
     idioma: '',
     habilitado: 0,
     rol: 0
@@ -36,15 +43,25 @@ export class UserComponent {
     private _aroute: ActivatedRoute,
     private _usersService: UsersService,
     private _appService: AppService,
+    private listarolesService: RolesService,
 
     private _route: Router,
     private toastr: ToastrService
   ) { }
 
-
-
   ngOnInit() {
+    this._appService.rol$.subscribe(rol => {
+      this.rol = rol;
+    });
 
+    this.listarolesService.obtengoRolesApi().subscribe({
+      next: (resultado) => {
+        this.roles = resultado.data;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
 
     this._aroute.params.subscribe(params => {
       this.username = params['username'];
@@ -64,6 +81,8 @@ export class UserComponent {
         return "Actualizando al usuario - " + this.username;
       case 'Delete':
         return "Eliminando al usuario - " + this.username;
+      case 'Habilitar':
+        return "Habilitando al usuario - " + this.username;
       default:
         return "";
     }
@@ -99,6 +118,9 @@ export class UserComponent {
       case 'Delete':
         this.deleteUser();
         break;
+      case 'Habilitar':
+        this.selectedUser.habilitado = 1;
+        this.updateUser(); break;
       default:
         this.toastr.error(
           'El formulario tiene campos inválidos',
@@ -107,7 +129,6 @@ export class UserComponent {
         this._route.navigate(['/users']);
         break;
     }
-
   }
 
   insertNewUser() {
@@ -137,6 +158,28 @@ export class UserComponent {
           console.log('Operación terminada.');
         },
       });
+  }
+
+  generatePassword() {
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '.!@#$%&*_-+=?';
+
+    function getRandomChar(chars: string): string {
+      return chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    let password = '';
+    for (let i = 0; i < 3; i++) {
+      password += getRandomChar(letters);
+      password += getRandomChar(numbers);
+      password += getRandomChar(symbols);
+    }
+
+    // asi se mezclam los caracteres
+    password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+    this.selectedUser.password = password;
   }
 
   updateUser() {
@@ -217,6 +260,7 @@ export class UserComponent {
       usuario: '',
       nombre: '',
       email: '',
+      password: '',
       idioma: '',
       habilitado: 0,
       rol: 0

@@ -5,6 +5,46 @@ abstract class Users
 {
 
     /**
+     * Verifica las credenciales de un usuario y determina si el inicio de sesión es válido.
+     * 
+     * @param string $username  El nombre de usuario proporcionado.
+     * @param string $password  La contraseña ingresada.
+     * @return bool  Devuelve true si las credenciales son correctas, de lo contrario, false.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
+    static function checkUserLogin(object $input)
+    {
+        $conexion = null;
+        if ((empty($input->usuario))) {
+            return false;
+        }
+        try {
+            $conexion = openConexion();
+
+            $sql = "SELECT password,rol FROM usuario WHERE usuario = ? or email = ? ";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bind_param("ss", $input->usuario, $input->usuario);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc(); // Devuelve un array asociativo o NULL si no existe el usuario
+
+            // Verificar si el usuario existe y la contraseña es válida
+            //return $user && password_verify($password, $passwordHash);
+            if (!$user) {
+                return false;
+            }
+            return $user && $input->password == $user['password'] && $user['rol'] != 0;
+        } catch (Exception $e) {
+            return ["Exception" => "Error en checkUserLogin: Excepción - " . $e->getMessage()];
+        } finally {
+            if ($conexion) {
+                closeConexion($conexion);
+            }
+        }
+    }
+
+    /**
      * Obtiene a un usuario si se le pasa un id, en otro caso los obtiene a todos.
      * 
      * @param string $username  El nombre de usuario proporcionado, por defecto vacío.
@@ -44,14 +84,17 @@ abstract class Users
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function insertNewUser($input)
+    static function insertNewUser(object $input)
     {
         $conexion = null;
         try {
-            $conexion = openConexion();
             if (empty($input)) {
                 return false;
             }
+            $conexion = openConexion();
+
+            // Hashear la contraseña
+            // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $fields = [];
             $values = [];
             $types = '';
@@ -60,13 +103,14 @@ abstract class Users
                 $fields[] = $key;
                 $values[] = $value;
 
-                $types .= users::getTypesBind($value);
+                $types .= Users::getTypesBind($value);
             }
 
-            $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?,?)";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
+
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
@@ -76,6 +120,7 @@ abstract class Users
             }
         }
     }
+
 
     /**
      * Actualiza las credenciales de un usuario.
@@ -100,7 +145,7 @@ abstract class Users
 
                 $types .= users::getTypesBind($value);
             }
-            
+
             $values[] = $oldUsername;
             $types .= users::getTypesBind($oldUsername);
 

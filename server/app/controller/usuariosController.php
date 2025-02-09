@@ -36,6 +36,9 @@ switch ($method) {
         if ($lastpart == 'insert') {
             insertNewUser($input);
         }
+        if ($lastpart == 'login') {  // funciona
+            checkUserLogin($input);
+        }
         break;
     case 'PUT':
     case 'PATCH':  //funciona
@@ -51,6 +54,16 @@ switch ($method) {
     default:
         echoResponse(false, 500, 'Error del servidor.');
         break;
+}
+
+function checkUserLogin($input)
+{
+    $result = Users::checkUserLogin($input);
+    if ($result) {
+        echoResponse(true, 200, 'Usuario autenticado correctamente.');
+    } else {
+        echoResponse(false, 404, 'Error al autenticar, verificar credenciales.');
+    }
 }
 
 function getAllUser(string $username = '')

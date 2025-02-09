@@ -15,8 +15,8 @@ export class LogoutComponent {
   constructor(private _loginService: LoginService, private _appService: AppService, private _route: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this._loginService.logout();
-    this._appService.unsetCurrentRol();
+    localStorage.removeItem('token');
+    
     this.toastr.success('Has salido la aplicación correctamente', 'Hasta pronto');
   }
 

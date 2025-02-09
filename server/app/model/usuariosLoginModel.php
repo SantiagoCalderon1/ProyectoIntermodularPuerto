@@ -3,50 +3,7 @@ include_once '../../config/conexion.php';
 
 abstract class UsersLogin
 {
-    /**
-     * Verifica las credenciales de un usuario y determina si el inicio de sesión es válido.
-     * 
-     * @param string $username  El nombre de usuario proporcionado.
-     * @param string $password  La contraseña ingresada.
-     * @return bool  Devuelve true si las credenciales son correctas, de lo contrario, false.
-     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
-     */
-    static function checkUserLogin(object $input)
-    {
-        $conexion = null;
-        //if ((empty($input->username) || empty($input->email)) && empty($input->password)) {
-        if ((empty($input->usuario)) || empty($input->password)) {
-            return false;
-        }
-        try {
-
-            $conexion = openConexion();
-            //$sql = "SELECT password FROM usuariosLogin WHERE username = ? OR email = ?";
-            $sql = "SELECT password FROM usuariosLogin WHERE usuario = ? or email = ? ";
-            $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("ss", $input->usuario, $input->usuario);
-            //$stmt->bind_param("s", $input->usuario);
-            $stmt->execute();
-
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc(); // Devuelve un array asociativo o NULL si no existe el usuario
-
-            // Verificar si el usuario existe y la contraseña es válida
-            //return $user && password_verify($password, $passwordHash);
-
-            if (!$user) {
-                return false;
-            }
-            return $user && $input->password === $user['password'];
-        } catch (Exception $e) {
-            return ["Exception" => "Error en checkUserLogin: Excepción - " . $e->getMessage()];
-        } finally {
-            if ($conexion) {
-                closeConexion($conexion);
-            }
-        }
-    }
-
+    
     /**
      * Inserta un usuario.
      * 

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppService } from '../../../app.service';
+
 
 @Component({
   selector: 'app-header',
@@ -12,14 +12,14 @@ import { AppService } from '../../../app.service';
 })
 export class HeaderComponent {
   breadcrumb: string[] = [];
-
   rol: number | null = null;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private _appService: AppService,
+  constructor(private router: Router, private _appService: AppService
   ) { }
 
   ngOnInit(): void {
     this._appService.rol$.subscribe(rol => {
+      console.log('en header comp se ha rescatado el rol ' + rol);
       this.rol = rol;
     });
   }
