@@ -7,7 +7,11 @@ import { Rol } from './rol';
   providedIn: 'root'
 })
 export class RolesService {
-  urlApi = 'http://localhost:8080/server/app/controller/controllerRoles.php';
+  //url local
+  //urlApi = 'http://localhost:8080/server/app/controller/controllerRoles.php';
+  
+  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/controllerRoles.php";
+
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient
 
   httpOptions = {

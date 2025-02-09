@@ -8,7 +8,11 @@ import { AppService } from '../app.service';
   providedIn: 'root'
 })
 export class LoginService {
-  urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
+  
+  //url local
+  //urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
+  
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/usuariosController.php";
 
   currentUsername: string = '';
 

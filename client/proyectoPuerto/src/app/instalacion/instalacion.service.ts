@@ -6,8 +6,13 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class InstalacionService {
+
   //private urlApi = "http://localhost/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
-  private urlApi = "http://localhost:8080/server/app/controller/instalacionController.php";
+  
+  //url local
+  //private urlApi = "http://localhost:8080/server/app/controller/instalacionController.php";
+  
+  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/instalacionController.php";
 
 
   constructor(private http: HttpClient) { }
