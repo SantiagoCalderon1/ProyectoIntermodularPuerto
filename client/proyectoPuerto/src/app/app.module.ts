@@ -1,33 +1,47 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListaComponent } from './plazas/components/lista/lista.component';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
-import { PlazasModule } from './plazas/plazas.module';
+import { LayoutsModule } from './layouts/layouts.module';
+import { HomeComponent } from './home/home.component';
+import { LoginModule } from './login/login.module';
+import { UsersModule } from './users/users.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
+import { FuncionalidadesModule } from './funcionalidades/funcionalidades.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RolesModule } from './roles/roles.module';
+import { FormsModule } from '@angular/forms';
+import { PlazasModule } from './plazas/plazas.module';
+import { InstalacionModule } from './instalacion/instalacion.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
-    BrowserAnimationsModule,
+    AppRoutingModule,
+    LayoutsModule,
     ReactiveFormsModule,
-    RouterModule,
+    LoginModule,
+    UsersModule,
     PlazasModule,
-    HttpClientModule,
+    BrowserAnimationsModule, 
     ToastrModule.forRoot(),
+    FuncionalidadesModule,
+    HttpClientModule ,
+    RolesModule,
     FormsModule,
+    InstalacionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

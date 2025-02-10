@@ -12,7 +12,7 @@
                     </button>
                     <button class="btn btn-success" [routerLink]="['/plazas', 0, 0]">
                         <i class="fa-solid fa-square-plus"></i> Nueva Autorización
-                    </button>      
+                    </button>
                 </div>
 
                 <!-- Mensaje si no hay datos -->
@@ -23,7 +23,8 @@
 
                     <!-- Tabla Responsiva -->
                     <div *ngIf="data.length > 0" id="container-table" class="table-responsive">
-                        <table id="tableAuthorizations" class="table text-center table-striped table-hover table-bordered">
+                        <table id="tableAuthorizations"
+                            class="table text-center table-striped table-hover table-bordered">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Año</th>
@@ -61,7 +62,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     </div>

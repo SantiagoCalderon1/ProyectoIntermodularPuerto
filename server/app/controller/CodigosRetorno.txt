@@ -1,0 +1,20 @@
+codigos de error 
+
+
+Operación	Código  HTTP	                Descripción
+SELECT	    200     OK	                    Datos obtenidos correctamente
+SELECT	    404     Not Found	            No se encontraron los datos
+
+INSERT	    201     Created	                Registro creado correctamente
+INSERT	    400     Bad Request	            Datos inválidos o faltantes
+INSERT	    409     Conflict	            Conflicto de datos (ej., duplicado)
+
+UPDATE	    200     OK	Recurso             actualizado correctamente
+UPDATE	    400     Bad Request	            Datos inválidos o faltantes
+UPDATE	    404     Not Found	            Recurso no encontrado
+UPDATE	    500     Internal Server Error	Error del servidor
+
+DELETE	    200     OK	                    Recurso eliminado correctamente
+DELETE	    404     Not Found	            Recurso no encontrado
+DELETE	    500     Internal Server Error	Error del servidor
+DELETE	    409     Conflict	            No se puede eliminar debido a dependencias

@@ -1,0 +1,28 @@
+header{
+    height: 10vh;
+}
+/* 
+nav .navbar{
+} */
+
+nav .breadcrumb{
+    background-color: rgb(234, 234, 234);
+    height: 4vh;
+    width: 100%;
+
+    padding-left: 10px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.breadcrumb-item a{
+    text-decoration: none;
+    color: #000;
+}
+
+.breadcrumb-item.active > a{
+    text-decoration:underline ;
+    color: #000;
+}

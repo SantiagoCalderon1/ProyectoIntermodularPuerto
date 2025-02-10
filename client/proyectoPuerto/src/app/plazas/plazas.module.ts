@@ -4,6 +4,8 @@ import { PlazaComponent } from './components/plaza/plaza.component';
 import { ListaComponent } from './components/lista/lista.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -14,9 +16,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    DataTablesModule,
+    RouterModule,
     FormsModule,
-    RouterModule
-  ],
-  exports: [RouterModule]
+  ]
 })
 export class PlazasModule { }

@@ -4,6 +4,7 @@ import { Plaza } from '../../plazas';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlazasService } from '../../plazas.service';
 import { ToastrService } from 'ngx-toastr';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-plaza',
@@ -13,19 +14,23 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PlazaComponent {
   @ViewChild('plazaForm', { static: false }) plazaForm: NgForm | undefined;
-  
+
   public plazaact: Plaza = { id: 0, año: 0, puerto: '', instalacion: '', fecha_inicio: '', datos_titular: '', datos_embarcacion: '', datos_estancia: '' };
   public titulo: string = 'Nueva Plaza';
   public tipo: number = 0;
   public id: number = 0;
   public txtBtn: string = 'Guardar';
   public formularioCambiado: boolean = false;
-  
+  rol: number | null = null;
+
   public instalaciones: any[] = []; // Lista de instalaciones
 
-  constructor(private _aroute: ActivatedRoute, private _plazasService: PlazasService, private _route: Router, private toastr: ToastrService) { }
+  constructor(private _aroute: ActivatedRoute, private _plazasService: PlazasService, private _route: Router, private toastr: ToastrService, private _appService: AppService) { }
 
   ngOnInit() {
+    this._appService.rol$.subscribe(rol => {
+      this.rol = rol;
+    });
     this.tipo = +this._aroute.snapshot.params['tipo'];
     this.id = +this._aroute.snapshot.params['id'];
 

@@ -1,34 +1,19 @@
 <?php
 
-class Connection
+function openConexion()
+{   
+    //url local
+    //$mysqli = new mysqli('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+    
+    $mysqli = new mysqli('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
+
+    if ($mysqli->connect_errno) {
+        echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ")";
+    }
+    return $mysqli;
+}
+
+function closeConexion($conexion)
 {
-    private $connection;
-
-    public function __construct($host, $user, $key, $db)
-    {
-        $this->connection = new mysqli($host, $user, $key, $db);
-
-        if ($this->connection->connect_errno) {
-            die("Fallo al conectar a MySQL: " . $this->connection->connect_error);
-        }
-    }
-
-    public function closeConnection()
-    {
-        if ($this->connection) {
-            $this->connection->close();
-        }
-    }
-
-    public function dataQuery($sql)
-    {
-        $res = $this->connection->query($sql);
-        if ($res === true) {
-            return true;
-        } elseif ($res) {
-            return $res->fetch_all(MYSQLI_ASSOC);
-        } else {
-            return false;
-        }
-    }
+    $conexion->close();
 }

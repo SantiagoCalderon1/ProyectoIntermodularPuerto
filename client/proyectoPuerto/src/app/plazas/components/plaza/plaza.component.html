@@ -8,9 +8,9 @@
                 <div class="row mb-3">
                     <div class="col-12 col-md-6">
                         <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                        <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control" placeholder="yyyy-mm-dd"
-                            [(ngModel)]="plazaact.fecha_inicio" [readonly]="tipo == 2" (ngModelChange)="cambiado()"
-                            required>
+                        <input type="text" id="fecha_inicio" name="fecha_inicio" class="form-control"
+                            placeholder="yyyy/mm/dd" [(ngModel)]="plazaact.fecha_inicio" [readonly]="tipo == 2"
+                            (ngModelChange)="cambiado()" required>
                     </div>
 
                     <div class="col-12 col-md-6">
@@ -23,14 +23,15 @@
                 <div class="row mb-3">
                     <div class="col-12 col-md-4">
                         <label for="instalacion" class="form-label">Instalación</label>
-                        <select id="instalacion" name="instalacion" class="form-control" 
-                            [(ngModel)]="plazaact.instalacion" [disabled]="tipo == 2" (ngModelChange)="cambiado()" required>
+                        <select id="instalacion" name="instalacion" class="form-control"
+                            [(ngModel)]="plazaact.instalacion" [disabled]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
                             <option *ngFor="let inst of instalaciones" [value]="inst.codigo">
                                 {{ inst.codigo }}
                             </option>
                         </select>
                     </div>
-                    
+
 
                     <div class="col-12 col-md-4">
                         <label for="datos_titular" class="form-label">Datos Titular</label>
@@ -59,9 +60,10 @@
                 </div>
 
                 <div class="my-3 text-center">
-                    <button name="cancelar" class="btn btn-secondary btn-lg me-3" [routerLink]="['/listaPlazas']">
-                        Cancelar
-                    </button>
+                    <div name="cancelar" class="btn btn-secondary btn-lg me-3">
+                        <a [routerLink]="['/listaPlazas']">Cancelar</a>
+                    </div>
+
                     <input type="submit" class="btn btn-dark btn-lg" [value]="txtBtn">
                 </div>
             </form>
