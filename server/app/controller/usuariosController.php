@@ -6,7 +6,7 @@
 // url prueba thunder client
 //http://localhost:8080/server/app/controller/usuariosController.php/user/anna_s
 
-include '../model/UsuariosModel.php';
+include '../model/usuariosModel.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -69,7 +69,7 @@ function checkUserLogin($input)
 function getAllUser(string $username = '')
 {
     $result = Users::getAllUsers($username);
-    if (!empty($result)) {
+    if ($result) {
         echoResponse(true, 200, 'Usuario/s obtenido/s correctamente.', '', $result);
     } else {
         $exception = $result['Exception'] ?? '';

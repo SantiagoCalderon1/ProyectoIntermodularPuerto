@@ -12,7 +12,7 @@ export class InstalacionService {
   //url local
   //private urlApi = "http://localhost:8080/server/app/controller/instalacionController.php";
   
-  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/instalacionController.php";
+  urlApi = "https://puerto.proyectos-2daw.es/app/controller/instalacionController.php";
 
 
   constructor(private http: HttpClient) { }

@@ -18,10 +18,10 @@ export class ListaComponent {
   constructor(private plazaService: PlazasService, private _appService: AppService) { }
 
   ngOnInit(): void {
-
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
+
     this.GET();
   }
 

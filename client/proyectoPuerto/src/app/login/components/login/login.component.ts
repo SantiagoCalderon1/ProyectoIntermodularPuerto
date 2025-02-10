@@ -131,19 +131,6 @@ export class LoginComponent {
               'Se ha solicitado el registro Correctamente',
               'Se ha solicitado el registro Correctamente, se debe esperar a que el admin acepte el registro!', { positionClass: 'toast-top-right' }
             );
-            this.registerForm.setValue({
-              email: '',
-              usernameRegister: '',
-              name: '',
-              selectIdioma: '',
-              passwordRegister: '',
-            });
-            this._route.navigate(['/login']);
-          } else {
-            this.toastr.error(
-              'Error al solicitar el registro.',
-              'Verifique las credenciales!', { positionClass: 'toast-top-right' }
-            );
 
             this.registerForm.setValue({
               email: '',
@@ -152,6 +139,21 @@ export class LoginComponent {
               selectIdioma: '',
               passwordRegister: '',
             });
+
+            this._route.navigate(['/login']);
+          } else {
+            this.toastr.error(
+              'Error al solicitar el registro.',
+              'Verifique las credenciales!', { positionClass: 'toast-top-right' }
+            );
+            this.registerForm.setValue({
+              email: '',
+              usernameRegister: '',
+              name: '',
+              selectIdioma: '',
+              passwordRegister: '',
+            });
+            
             this._route.navigate(['/login']);
           }
         },
