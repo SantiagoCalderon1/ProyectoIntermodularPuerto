@@ -21,6 +21,7 @@ export class ListaComponent {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
+    console.log(this.data);
 
     this.GET();
   }
@@ -28,6 +29,7 @@ export class ListaComponent {
   GET(): void {
     this.plazaService.obtengoPlazasApi().subscribe({
       next: (response) => {
+        console.log(response);
         this.data = response;
       },
       error: (error) => {

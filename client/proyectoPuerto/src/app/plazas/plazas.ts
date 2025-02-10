@@ -1,6 +1,6 @@
 export class Plaza {
     constructor(
-    public id: number,
+    public id_plaza_base: number,
     public año: number,
     public puerto: string,
     public instalacion: string,

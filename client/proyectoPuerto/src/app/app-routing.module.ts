@@ -56,7 +56,7 @@ const routes: Routes = [
 
   { path: 'listaPlazas', component: listaPlazasComponents, canActivate: [authGuard] },
   { path: 'plazas', component: PlazaComponent, canActivate: [authGuard] },
-  { path: 'plazas/:tipo/:id', component: PlazaComponent, canActivate: [authGuard] },
+  { path: 'plazas/:tipo/:id_plaza_base', component: PlazaComponent, canActivate: [authGuard] },
 
 
   { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },

@@ -1,4 +1,4 @@
-s<?php
+<?php
 include_once '../model/plazasModel.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -35,6 +35,7 @@ function handleGet($db, $uri)
     if (end($uri) === "inst") {
         $products = $db->showInstalations();
         echo json_encode($products);
+        
     } else {
         $products = $db->showPlace(end($uri));
         $res = [];
