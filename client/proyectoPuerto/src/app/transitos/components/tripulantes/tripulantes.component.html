@@ -129,9 +129,7 @@
             <!-- Fecha Caducidad Documento -->
             <div class="col-md-6">
                 <label for="inputFechaCadDocumento" class="form-label">Fecha de Caducidad del documento:</label>
-                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento"
-                    name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento"
-                    (ngModelChange)="changedForm()">
+                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento" name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento" (ngModelChange)="changedForm()">
             </div>
 
             <!-- Fecha Caducidad Documento -->
@@ -141,7 +139,7 @@
             </div>
 
 
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <label for="fileUpload">Subir documento de identidad (PDF o Imagen):</label>
                 <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*,application/pdf">
 
@@ -150,13 +148,13 @@
                 <canvas #canvasElement style="display: none;"></canvas>
                 <button *ngIf="mostrandoCamara" (click)="capturarFoto()">Capturar</button>
 
-                <!-- Mostrar previsualización si es imagen -->
+                 Mostrar previsualización si es imagen 
                 <img *ngIf="esImagen" [src]="filePreview" alt="Previsualización" style="max-width: 200px;">
-                <!-- Mostrar enlace si es PDF -->
+                 Mostrar enlace si es PDF
                 <a *ngIf="esPDF" [href]="filePreview" target="_blank">Ver PDF</a>
 
                 <button (click)="guardarEnBD()">Guardar</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </ng-template>

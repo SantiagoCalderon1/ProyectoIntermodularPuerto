@@ -24,11 +24,10 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 switch ($method) {
     case 'GET':  // funciona
         if ($penultimatePart == 'tripulante') {
-            $username = $lastpart;
-            getAllTripulantes($username);
+            getAllTripulantes($lastpar);
         }
 
-        if ($lastpart == 'tripulantes') {
+        if ($lastpart == 'tripulantes') { //funciona
             getAllTripulantes();
         }
         break;
