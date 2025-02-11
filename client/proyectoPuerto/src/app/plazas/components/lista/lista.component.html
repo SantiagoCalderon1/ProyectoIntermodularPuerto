@@ -43,14 +43,14 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Instalación</th>
-                                    <th>Acciones</th>
+                                    <th *ngIf="rol==3 || rol==4">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of dataPlaces">
                                     <td>{{ item.nombre }}</td>
                                     <td>{{ item.instalacion }}</td>
-                                    <td>
+                                    <td *ngIf="rol==3 || rol==4">
                                         <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="tooltip"
                                             title="Modificar registro {{ item.id_plaza_base }}"
                                             [routerLink]="['/plazas', 1, item.id_plaza_base]">
@@ -116,8 +116,8 @@
                             <tbody>
                                 <tr *ngFor="let item of dataReservations">
                                     <td>{{ item.plaza }}</td>
-                                    <td>{{ item.titular.nombre }} {{ item.titular.apellidos }}</td>
-                                    <td>{{ item.embarcacion.nombre }}</td>
+                                    <td>{{ item.titular }}</td>
+                                    <td>{{ item.embarcacion }}</td>
                                     <td>{{ item.fecha_ini }}</td>
                                     <td>{{ item.fecha_fin }}</td>
                                     <td>

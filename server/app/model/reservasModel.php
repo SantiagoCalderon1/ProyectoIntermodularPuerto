@@ -101,4 +101,14 @@ class Reservations
             echo json_encode("Error al eliminar la plaza");
         }
     }
+
+    function showUser($id){
+        $sql = "SELECT nombre, apellidos FROM titular WHERE id_titular = '$id'";
+            return $this->conexion->dataQuery($sql);
+    }
+
+    function showBoat($id){
+        $sql = "SELECT nombre FROM embarcaciones WHERE id_embarcacion = '$id'";
+            return $this->conexion->dataQuery($sql);
+    }
 }

@@ -33,7 +33,16 @@ switch ($requestMethod) {
 function handleGet($db, $uri)
 {
     $products = $db->showReservation(end($uri));
-        echo json_encode($products);
+    $res = [];
+        foreach ($products as $product) {
+            $user = $db->showUser($product["titular"]);
+            $product["titular"] = $user[0]["nombre"] . " " . $user[0]["apellidos"];
+            $boat = $db->showBoat($product["embarcacion"]);
+            $product["embarcacion"] = $boat[0]["nombre"];
+            $res[] = $product;
+        }
+
+        echo json_encode($res);
 }
 
 function handlePost($db, $data)
