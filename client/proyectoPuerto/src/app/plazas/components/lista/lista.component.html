@@ -27,25 +27,15 @@
                             class="table text-center table-striped table-hover table-bordered">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>Año</th>
-                                    <th>Puerto</th>
+                                    <th>Nombre</th>
                                     <th>Instalación</th>
-                                    <th>Fecha inicio</th>
-                                    <th>Titular</th>
-                                    <th>Estancia</th>
-                                    <th>Nombre embarcación</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of data">
-                                    <td>{{ item.anyo }}</td>
-                                    <td>{{ item.puerto }}</td>
+                                    <td>{{ item.nombre }}</td>
                                     <td>{{ item.instalacion }}</td>
-                                    <td>{{ item.fecha_inicio }}</td>
-                                    <td>{{ item.datos_titular }}</td>
-                                    <td>{{ item.datos_estancia }}</td>
-                                    <td>{{ item.datos_embarcacion }}</td>
                                     <td>
                                         <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="tooltip"
                                             title="Modificar registro {{ item.id_plaza_base }}"

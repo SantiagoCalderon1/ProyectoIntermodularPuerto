@@ -35,7 +35,6 @@ function handleGet($db, $uri)
     if (end($uri) === "inst") {
         $products = $db->showInstalations();
         echo json_encode($products);
-        
     } else {
         $products = $db->showPlace(end($uri));
         $res = [];
@@ -51,15 +50,11 @@ function handleGet($db, $uri)
 
 function handlePost($db, $data)
 {
-    // $data = [
-    //     "año" => "2023",
-    //     "puerto" => "Puerto de Barcelona",
-    //     "instalacion" => "ej",
-    //     "fecha_inicio" => "2025-03-02",
-    //     "datos_titular" => "Juan Pérez",
-    //     "datos_embarcacion" => "Embarcación Azul",
-    //     "datos_estancia" => "Estancia prolongada"
-    // ];
+    //$data = [
+    //    "id_plaza_base" => "1",
+    //    "instalacion" => "INST001",
+    //    "nombre" => "INST001-PL001"
+    //];
     if ($db->insertNewPlace($data)) {
         echo json_encode("OK");
     } else {

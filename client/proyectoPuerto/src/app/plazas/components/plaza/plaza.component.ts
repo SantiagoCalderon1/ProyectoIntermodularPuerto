@@ -15,7 +15,7 @@ import { AppService } from '../../../app.service';
 export class PlazaComponent {
   @ViewChild('plazaForm', { static: false }) plazaForm: NgForm | undefined;
 
-  public plazaact: Plaza = { id_plaza_base: 0, año: 0, puerto: '', instalacion: '', fecha_inicio: '', datos_titular: '', datos_embarcacion: '', datos_estancia: '' };
+  public plazaact: Plaza = { id_plaza_base: 0, nombre: '', instalacion: ''};
   public titulo: string = 'Nueva Plaza';
   public tipo: number = 0;
   public id_plaza_base: number = 0;

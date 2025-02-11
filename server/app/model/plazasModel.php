@@ -8,9 +8,9 @@ class Places
     function __construct()
     {
         //url local
-        //$this->conexion = new Connection('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+        $this->conexion = new Connection('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
         
-        $this->conexion = new Connection('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
+        //$this->conexion = new Connection('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
     }
 
     function showPlace(string $id = '')
@@ -19,7 +19,7 @@ class Places
             $sql = "SELECT * FROM plaza_base WHERE id_plaza_base = '$id'";
             return $this->conexion->dataQuery($sql);
         } else {
-            $sql = "SELECT * FROM plaza_base";
+            $sql = "SELECT * FROM plaza_base ORDER BY instalacion";
             return $this->conexion->dataQuery($sql);
         }
     }
@@ -44,51 +44,30 @@ class Places
 
     function insertNewPlace(array $input)
     {
-        $año = $input['año'];
-        $puerto = $input['puerto'];
+        $nombre = $input['nombre'];
         $instalacion = $input['instalacion'];/* nombre instalacion */
 
         $sql = "SELECT id_instalacion FROM instalacion WHERE codigo = '$instalacion'";
         $instalacion = $this->conexion->dataQuery($sql)[0]['id_instalacion'];
 
-        $fecha_inicio = $input['fecha_inicio'];
-        $datos_titular = $input['datos_titular'];
-        $datos_embarcacion = $input['datos_embarcacion'];
-        $datos_estancia = $input['datos_estancia'];
-        $sql = "INSERT INTO plaza_base (anyo, puerto, instalacion, fecha_inicio, datos_titular, datos_embarcacion, datos_estancia) VALUES ( $año, '$puerto', $instalacion, '$fecha_inicio', '$datos_titular', '$datos_embarcacion', '$datos_estancia');";
+        $sql = "INSERT INTO plaza_base (nombre, instalacion) VALUES ('$nombre', $instalacion);";
         return $this->conexion->dataQuery($sql);
     }
 
     function updatePlace(array $input)
     {
 
-        if (isset($input["id"])) {
-            $id = (int) $input["id"];
+        if (isset($input["id_plaza_base"])) {
+            $id = (int) $input["id_plaza_base"];
             $updates = [];
-            if (isset($input["año"])) {
-                $updates[] = "anyo = " . $input["año"];
-            }
-            if (isset($input["puerto"])) {
-                $updates[] = "puerto = '" . $input["puerto"] . "'";
-            }
             if (isset($input["instalacion"])) {
                 $instalacion = $input["instalacion"];
                 $sql = "SELECT id_instalacion FROM instalacion WHERE codigo = '$instalacion'";
                 $instalacion = $this->conexion->dataQuery($sql)[0]['id_instalacion'];
                 $updates[] = "instalacion = " . $instalacion;
             }
-            if (isset($input["fecha_inicio"])) {
-                // "fecha_inicio" => "2025-02-03"
-                $updates[] = "fecha_inicio = '" . $input["fecha_inicio"] . "'";
-            }
-            if (isset($input["datos_titular"])) {
-                $updates[] = "datos_titular = '" . $input["datos_titular"] . "'";
-            }
-            if (isset($input["datos_embarcacion"])) {
-                $updates[] = "datos_embarcacion = '" . $input["datos_embarcacion"] . "'";
-            }
-            if (isset($input["datos_estancia"])) {
-                $updates[] = "datos_estancia = '" . $input["datos_estancia"] . "'";
+            if (isset($input["nombre"])) {
+                $updates[] = "nombre = '" . $input["nombre"] . "'";
             }
             if (count($updates) > 0) {
                 $sql = "UPDATE plaza_base SET " . implode(", ", $updates) . " WHERE id_plaza_base = $id";

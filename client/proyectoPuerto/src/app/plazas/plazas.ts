@@ -1,11 +1,6 @@
 export class Plaza {
     constructor(
     public id_plaza_base: number,
-    public año: number,
-    public puerto: string,
-    public instalacion: string,
-    public fecha_inicio: string /* fecha */,
-    public datos_titular: string,
-    public datos_embarcacion: string,
-    public datos_estancia: string,) { }
+    public nombre: string,
+    public instalacion: string,) { }
 }

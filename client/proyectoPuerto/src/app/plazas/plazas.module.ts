@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from '../app-routing.module';
+import { ReservasComponent } from './components/reservas/reservas.component';
 
 
 
 @NgModule({
   declarations: [
     PlazaComponent,
-    ListaComponent
+    ListaComponent,
+    ReservasComponent
   ],
   imports: [
     CommonModule,
