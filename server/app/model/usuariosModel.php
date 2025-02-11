@@ -92,7 +92,6 @@ abstract class Users
                 return false;
             }
             $conexion = openConexion();
-
             // Hashear la contraseña
             // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $fields = [];
@@ -102,15 +101,12 @@ abstract class Users
             foreach ($input as $key => $value) {
                 $fields[] = $key;
                 $values[] = $value;
-
                 $types .= Users::getTypesBind($value);
             }
-
             $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?,?)";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
@@ -195,7 +191,7 @@ abstract class Users
     }
 
     /**
-     * Función para elimina a un usuario.
+     * Función para obtener el tipo de un dato, se usa para bind_param.
      * 
      * @param string $value, el valor de una propiedad del array input.
      * @return chart  Devuelve una letra correspondinete al tipo de dato.

@@ -29,6 +29,7 @@ export class InstalacionComponent {
     console.log(this.idMod);
     this.traeInstalacion(this.idMod);
   }
+
   traeInstalacion(id: number): void {
     this.instalacionesService.getInstalacion(id).subscribe({
       next: (response) => {
@@ -55,6 +56,7 @@ export class InstalacionComponent {
       console.log("Error, inputs sin rellenar");
       return
     }
+
     const nuevaInstalacion = {
       id_instalacion: this.idMod,
       codigo: this.instalacionAct.codigo,
@@ -62,9 +64,13 @@ export class InstalacionComponent {
       descripcion: this.instalacionAct.descripcion,
       tipo_instalacion: this.instalacionAct.tipo_instalacion,
       fecha_disposicion: this.instalacionAct.fecha_disposicion,
-      estado: this.instalacionAct.estado,
+      estado: this.instalacionAct.estado ? 1 : 0,
     }
+
+
     console.log(nuevaInstalacion);
+
+
     if (this.tipo == 1) {
       this.instalacionesService.modifyInstalacion(nuevaInstalacion).subscribe({
         next: (response) => {

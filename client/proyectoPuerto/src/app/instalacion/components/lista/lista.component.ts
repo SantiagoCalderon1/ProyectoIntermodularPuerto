@@ -19,7 +19,6 @@ export class ListaComponent {
   listarInstalaciones() {
     this.instalacionesService.getInstalaciones().subscribe({
       next: (response) => {
-        console.log(response);
         this.instalaciones = response.map((instalacion: Instalacion) => { //array transformado
           return {
             ...instalacion, // Copia todos los valores originales

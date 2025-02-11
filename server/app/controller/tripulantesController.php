@@ -6,7 +6,7 @@
 // url prueba thunder client
 //http://localhost:8080/server/app/controller/usuariosController.php/user/anna_s
 
-include '../model/usuariosModel.php';
+include '../model/tripulantesModel.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -23,32 +23,29 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 
 switch ($method) {
     case 'GET':  // funciona
-        if ($penultimatePart == 'user') {
+        if ($penultimatePart == 'tripulante') {
             $username = $lastpart;
-            getAllUser($username);
+            getAllTripulantes($username);
         }
 
-        if ($lastpart == 'users') {
-            getAllUser();
+        if ($lastpart == 'tripulantes') {
+            getAllTripulantes();
         }
         break;
     case 'POST': //funciona
         if ($lastpart == 'insert') {
-            insertNewUser($input);
-        }
-        if ($lastpart == 'login') {  // funciona
-            checkUserLogin($input);
+            insertNewTripulante($input);
         }
         break;
     case 'PUT':
     case 'PATCH':  //funciona
         if ($penultimatePart == 'update') {
-            updateUser($input, $lastpart);
+            updateTripulante($input, $lastpart);
         }
         break;
     case 'DELETE':
         if ($penultimatePart == 'delete') {
-            deleteUser($lastpart);
+            deleteTripulante($lastpart);
         }
         break;
     default:
@@ -56,57 +53,47 @@ switch ($method) {
         break;
 }
 
-function checkUserLogin($input)
+function getAllTripulantes(string $numeroDocumento = '')
 {
-    $result = Users::checkUserLogin($input);
+    $result = Tripulantes::getAllTripulantes($numeroDocumento);
     if ($result) {
-        echoResponse(true, 200, 'Usuario autenticado correctamente.');
-    } else {
-        echoResponse(false, 404, 'Error al autenticar, verificar credenciales.');
-    }
-}
-
-function getAllUser(string $username = '')
-{
-    $result = Users::getAllUsers($username);
-    if ($result) {
-        echoResponse(true, 200, 'Usuario/s obtenido/s correctamente.', '', $result);
+        echoResponse(true, 200, 'Tripulante/s obtenido/s correctamente.', '', $result);
     } else {
         $exception = $result['Exception'] ?? '';
-        echoResponse(false, 404, 'Error al obtener los usuarios.', $exception);
+        echoResponse(false, 404, 'Error al obtener los tripulantes.', $exception);
     }
 }
 
-function insertNewUser($input)
+function insertNewTripulante($input)
 {
-    $result = Users::insertNewUser($input);
+    $result = Tripulantes::insertNewTripulante($input);
     if ($result) {
-        echoResponse(true, 201, 'Usuario registrado correctamente.');
+        echoResponse(true, 201, 'Tripulante registrado correctamente.');
     } else {
         $exception = $result['Exception'] ?? '';
-        echoResponse(false, 400, 'Error al registar el usuario.', $exception);
+        echoResponse(false, 400, 'Error al registar el tripulante.', $exception);
     }
 }
 
-function updateUser($input, $username)
+function updateTripulante($input, $numeroDocumento)
 {
-    $result = Users::updateUser($input, $username);
+    $result = Tripulantes::updateTripulante($input, $numeroDocumento);
     if ($result) {
-        echoResponse(true, 200, 'Usuario actualizado correctamente.');
+        echoResponse(true, 200, 'Tripulante actualizado correctamente.');
     } else {
         $exception = $result['Exception'] ?? '';
         echoResponse(false, 500, 'Error al actualizar el usuario.', $exception);
     }
 }
 
-function deleteUser(string $username = '')
+function deleteTripulante(string $numeroDocumento = '')
 {
-    $result = Users::deleteUser($username);
+    $result = Tripulantes::deleteTripulante($numeroDocumento);
     if ($result) {
-        echoResponse(true, 200, 'Usuario eliminado correctamente.');
+        echoResponse(true, 200, 'Tripulante eliminado correctamente.');
     } else {
         $exception = $result['Exception'] ?? '';
-        echoResponse(false, 500, 'Error al eliminar el usuario.', $exception);
+        echoResponse(false, 500, 'Error al eliminar el tripulante.', $exception);
     }
 }
 

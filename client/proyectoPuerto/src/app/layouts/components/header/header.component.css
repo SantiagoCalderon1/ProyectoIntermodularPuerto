@@ -1,9 +1,6 @@
-header{
-    height: 10vh;
+header nav{
+    height: 100px;
 }
-/* 
-nav .navbar{
-} */
 
 nav .breadcrumb{
     background-color: rgb(234, 234, 234);

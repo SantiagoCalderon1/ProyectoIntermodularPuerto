@@ -7,13 +7,18 @@ import { Observable, tap } from 'rxjs';
 })
 export class InstalacionService {
 
+
   //private urlApi = "http://localhost/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
   
   //url local
-  //private urlApi = "http://localhost:8080/server/app/controller/instalacionController.php";
+  //private urlApi = "http://localhost:8080/ProyectoIntermodularPuerto%20local/server/app/controller/instalacionController.php";
   
-  urlApi = "https://puerto.proyectos-2daw.es/app/controller/instalacionController.php";
+  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/instalacionController.php"; //urlPrueba
 
+  //private urlApiLocal = "http://localhost:8080/ProyectoIntermodularPuerto/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
+  // insertNewUser(data: any): Observable<any> {
+  //   return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(data), this.httpOptions);
+  // }
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +31,8 @@ export class InstalacionService {
       tap(response => console.log("Respuesta del servidor:", response))
     );
   }
+
+
 
   deshecharInstalacion(id: number): Observable<any> {
     console.log("entrando en deshecharInstalacion");
@@ -61,4 +68,3 @@ export class InstalacionService {
     );
   }
 }
-

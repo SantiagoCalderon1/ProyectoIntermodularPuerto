@@ -38,7 +38,7 @@ export class LoginComponent {
     this.loginForm = new FormGroup({
       // Campos del formulario de login
       usernameLogin: new FormControl('', Validators.required),
-      passwordLogin: new FormControl(),
+      passwordLogin: new FormControl(''),
       rememberme: new FormControl(false),
     });
 
@@ -48,7 +48,7 @@ export class LoginComponent {
       usernameRegister: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       selectIdioma: new FormControl('', Validators.required),
-      passwordRegister: new FormControl('', [Validators.required]),
+      passwordRegister: new FormControl('', Validators.required),
     });
   }
 
@@ -123,37 +123,23 @@ export class LoginComponent {
         "habilitado": 0,
         "rol": 0
       };
-
+      console.log('Contenido del nuevo usuario = ' + newUser);
+      
       this._loginService.register(newUser).subscribe({
         next: (response) => {
           if (response.success) { // esto debe ser true
             this.toastr.success(
               'Se ha solicitado el registro Correctamente',
-              'Se ha solicitado el registro Correctamente, se debe esperar a que el admin acepte el registro!', { positionClass: 'toast-top-right' }
+              'Debes esperar a que el admin acepte el registro!', { positionClass: 'toast-top-right' }
             );
-
-            this.registerForm.setValue({
-              email: '',
-              usernameRegister: '',
-              name: '',
-              selectIdioma: '',
-              passwordRegister: '',
-            });
-
+            this.registerForm.reset();
             this._route.navigate(['/login']);
           } else {
             this.toastr.error(
               'Error al solicitar el registro.',
-              'Verifique las credenciales!', { positionClass: 'toast-top-right' }
+              'Verifique los campos!', { positionClass: 'toast-top-right' }
             );
-            this.registerForm.setValue({
-              email: '',
-              usernameRegister: '',
-              name: '',
-              selectIdioma: '',
-              passwordRegister: '',
-            });
-            
+            this.registerForm.reset();
             this._route.navigate(['/login']);
           }
         },

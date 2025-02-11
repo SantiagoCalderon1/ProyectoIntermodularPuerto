@@ -1,0 +1,162 @@
+<div class="container d-flex align-items-center justify-content-center user-form">
+    <div class="col-8 col-md-10 col-lg-12 card text-center">
+        <div class="card-header d-flex justify-content-center align-items-center p-3">
+            <h5>{{ tituloConfirmacion }}</h5>
+        </div>
+        <div class="card-body p-4 shadow-lg rounded-4">
+            <form #tripulanteForm="ngForm" class="mt-4 text-start" (ngSubmit)="manageForm()" novalidate
+                class="row gx-3 gy-2 align-items-center">
+                <div [ngSwitch]="option">
+                    <div *ngSwitchCase="'Insert'">
+                        <ng-container *ngTemplateOutlet="contentForm"></ng-container>
+                    </div>
+                    <div *ngSwitchCase="'Update'">
+                        <ng-container *ngTemplateOutlet="contentForm"></ng-container>
+                    </div>
+                    <div *ngSwitchCase="'Delete'">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>¿Está seguro de eliminar al tripulante {{ selectedTripulante.nombre }} con Número de
+                                    identificación {{selectedTripulante.numeroDocumento}}?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-3 gy-3 justify-content-between">
+                    <div class="col-6">
+                        <button name="cancelar" class="btn btn-danger px-4 "
+                            (click)="cancelForm($event)">Cancelar</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success px-4">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #contentForm>
+    <div class="">
+        <div class="row gx-3 gy-3">
+            <!-- Tripulante -->
+            <!-- Nombre -->
+            <div class="col-md-6">
+                <label for="inputNombre" class="form-label">Nombre: </label>
+                <input type="text" class="form-control rounded-pill" id="inputNombre" name="inputNombre"
+                    [(ngModel)]="selectedTripulante.nombre" (ngModelChange)="changedForm()">
+            </div>
+            <!-- Apellidos -->
+            <div class="col-md-6">
+                <label for="inputApellidos" class="form-label">Apellidos: </label>
+                <input type="text" class="form-control rounded-pill" id="inputApellidos" name="inputApellidos"
+                    [(ngModel)]="selectedTripulante.apellidos" (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- tipoDocumento -->
+            <div class="col-md-6">
+                <label for="selectTipoDocumento" class="form-label">Tipo de documento:</label>
+                <select class="form-select rounded-pill" id="selectTipoDocumento" name="selectTipoDocumento"
+                    [(ngModel)]="selectedTripulante.tipoDocumento" (ngModelChange)="changedForm()">
+                    <option value="" disabled selected>DNI, NIE, Pasaporte</option>
+                    <option value="1">DNI</option>
+                    <option value="2">NIE</option>
+                    <option value="3">Pasaporte</option>
+                </select>
+            </div>
+
+            <!-- Número documento -->
+            <div class="col-md-6">
+                <label for="inputNumeroDocumento" class="form-label">Número de documento: </label>
+                <input type="text" class="form-control rounded-pill" id="inputNumeroDocumento" name="inputApellidos"
+                    [(ngModel)]="selectedTripulante.numeroDocumento" (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- Nacionalidad -->
+            <div class="col-md-6">
+                <label for="inputNacionalidad" class="form-label">Nacionalidad</label>
+                <input type="text" class="form-control rounded-pill" id="inputNacionalidad" name="inputNacionalidad"
+                    [(ngModel)]="selectedTripulante.nacionalidad" (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- genero -->
+            <div class="col-md-6">
+                <label for="selectGenero" class="form-label">Genero:</label>
+                <select class="form-select rounded-pill" id="selectGenero" name="selectGenero"
+                    [(ngModel)]="selectedTripulante.genero" (ngModelChange)="changedForm()">
+                    <option value="" disabled selected>DNI, NIE, Pasaporte</option>
+                    <option value="1">Hombre</option>
+                    <option value="2">Mujer</option>
+                    <option value="3">Otro</option>
+                </select>
+            </div>
+
+            <!-- Fecha nacimiento -->
+            <div class="col-md-6">
+                <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+                <input type="date" class="form-control rounded-pill" id="inputFechaNacimiento"
+                    name="inputFechaNacimiento" [(ngModel)]="selectedTripulante.fechaNacimiento"
+                    (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- País de nacimiento -->
+            <div class="col-md-6">
+                <label for="selectPais" class="form-label">País: </label>
+                <select class="form-select rounded-pill" id="selectPais" name="selectPais"
+                    [(ngModel)]="selectedTripulante.paisNacimiento" (ngModelChange)="changedForm()">
+                    <option value="" disabled selected>Seleccione un país</option>
+                    <option *ngFor="let pais of paises" [value]="pais.nombre">{{ pais.nombre }}</option>
+                </select>
+            </div>
+
+            <!-- Lugar de nacimiento -->
+            <div class="col-md-12">
+                <label for="inputLugarNacimiento" class="form-label">Lugar de nacimiento: </label>
+                <input type="email" class="form-control rounded-pill" id="inputLugarNacimiento"
+                    name="inputLugarNacimiento" [(ngModel)]="selectedTripulante.lugarNacimiento"
+                    (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- Fecha Expedición Documento -->
+            <div class="col-md-6">
+                <label for="inputFechaExpeDocumento" class="form-label">Fecha de Expedición del documento:</label>
+                <input type="date" class="form-control rounded-pill" id="inputFechaExpeDocumento"
+                    name="inputFechaExpeDocumento" [(ngModel)]="selectedTripulante.fechaExpeDocumento"
+                    (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- Fecha Caducidad Documento -->
+            <div class="col-md-6">
+                <label for="inputFechaCadDocumento" class="form-label">Fecha de Caducidad del documento:</label>
+                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento"
+                    name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento"
+                    (ngModelChange)="changedForm()">
+            </div>
+
+            <!-- Fecha Caducidad Documento -->
+            <div class="col-md-6">
+                <label for="fileUpload">Subir documento de identidad (PDF o Imagen):</label>
+                <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*,application/pdf">
+            </div>
+
+
+            <div class="col-md-12">
+                <label for="fileUpload">Subir documento de identidad (PDF o Imagen):</label>
+                <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*,application/pdf">
+
+                <button (click)="abrirCamara()">Tomar foto</button>
+                <video #videoElement *ngIf="mostrandoCamara" autoplay></video>
+                <canvas #canvasElement style="display: none;"></canvas>
+                <button *ngIf="mostrandoCamara" (click)="capturarFoto()">Capturar</button>
+
+                <!-- Mostrar previsualización si es imagen -->
+                <img *ngIf="esImagen" [src]="filePreview" alt="Previsualización" style="max-width: 200px;">
+                <!-- Mostrar enlace si es PDF -->
+                <a *ngIf="esPDF" [href]="filePreview" target="_blank">Ver PDF</a>
+
+                <button (click)="guardarEnBD()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

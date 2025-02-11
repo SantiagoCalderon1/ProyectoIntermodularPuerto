@@ -18,6 +18,8 @@ import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
 import { ListaComponent as listaInstalacionComponent } from './instalacion/components/lista/lista.component';
 
+import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
+import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -63,13 +65,15 @@ const routes: Routes = [
   { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
 
+
+  { path: 'transito', component: TripulantesListComponent, canActivate: [authGuard] },
+  { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
+
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Ruta que no coincide con ninguna de las anteriores
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

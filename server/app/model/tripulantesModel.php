@@ -1,18 +1,50 @@
 <?php
 include_once '../../config/conexion.php';
 
-abstract class UsersLogin
+abstract class Tripulantes
 {
-    
+
     /**
-     * Inserta un usuario.
+     * Obtiene a un tripulante si se le pasa un id, en otro caso los obtiene a todos.
      * 
-     * @param string $username  El nombre de usuario proporcionado.
-     * @param string $password  La contraseña ingresada.
+     * @param string $numeroDocumento  El numero de documento proporcionado, por defecto vacío.
+     * @return array  Devuelve 1 array asociativo si la query se ejecutó con id, si no, retorna un array de arrays asociativos, en otros casos, un array vacío.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
+    static function getAllTripulantes(string $numeroDocumento)
+    {
+        $conexion = null;
+        try {
+            $conexion = openConexion();
+            if (empty($numeroDocumento)) {
+                $sql = "SELECT * FROM tripulantes";
+                $stmt = $conexion->prepare($sql);
+            } else {
+                $sql = "SELECT * FROM tripulantes WHERE numeroDocumento = ?";
+                $stmt = $conexion->prepare($sql);
+                $stmt->bind_param("s", $numeroDocumento);
+            }
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            return ["Exception" => "Error en getAllTripulantes: Excepción - " . $e->getMessage()];
+        } finally {
+            if ($conexion) {
+                closeConexion($conexion);
+            }
+        }
+    }
+
+
+    /**
+     * Inserta un tripulante.
+     * 
+     * @param object $input  El objeto json que proporciona el usuario, contiene los datos a insertar.
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function insertNewUserLogin(object $input)
+    static function insertNewTripulante(object $input)
     {
         $conexion = null;
         try {
@@ -20,45 +52,24 @@ abstract class UsersLogin
                 return false;
             }
             $conexion = openConexion();
-
             // Hashear la contraseña
             // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $fields = [];
             $values = [];
             $types = '';
-            $password = '';
-
-            if (property_exists($input, 'password')) {
-                $password = $input->password;
-                unset($input->password);
-            }
-
-            //var_dump($input);
 
             foreach ($input as $key => $value) {
                 $fields[] = $key;
                 $values[] = $value;
-
-                $types .= UsersLogin::getTypesBind($value);
+                $types .= Tripulantes::getTypesBind($value);
             }
-
-            //var_dump($fields);
-            //var_dump($values);
-
-            $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO tripulantes (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
-
-            $sql = "INSERT INTO usuariosLogin (usuario, email, password) VALUES (?, ?, ?)";
-            $stmt = $conexion->prepare($sql);
-
-            $stmt->bind_param("sss", $input->usuario, $input->email, $password);
-            $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
+            return ["Exception" => "Error en insertNewTripulante: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -66,14 +77,15 @@ abstract class UsersLogin
         }
     }
 
+
     /**
-     * Actualiza las credenciales de un usuario.
+     * Actualiza los datos de un tripulante, y lo hace de manera dinamica.
      * 
      * @param object $input  El objeto json que proporciona el usuario, contiene los datos nuevos y antiguos.
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function updateUserLogin(object $input,  string $oldUsername)
+    static function updateTripulante(object $input, $oldNumeroDocumento)
     {
         $conexion = null;
         try {
@@ -81,28 +93,24 @@ abstract class UsersLogin
             $fields = [];
             $values = [];
             $types = '';
-
             foreach ($input as $key => $value) {
                 $fields[] = "$key = ?";
                 $values[] = $value;
 
-                $types .= UsersLogin::getTypesBind($value);
+                $types .= Tripulantes::getTypesBind($value);
             }
 
-            $values[] = $oldUsername;
-            $types .= UsersLogin::getTypesBind($oldUsername);
+            $values[] = $oldNumeroDocumento;
+            $types .= Tripulantes::getTypesBind($oldNumeroDocumento);
 
-            $values[] = $oldUsername;
-
-            $sql = "UPDATE usuariosLogin SET " . implode(", ", $fields) . " WHERE usuario = ?";
+            $sql = "UPDATE tripulantes SET  " . implode(", ", $fields) . "   WHERE numeroDocumento = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
-
-            $stmt->bind_param($types, ...$values);
             $stmt->execute();
+
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            return ["Exception" => "Error en updateUserLogin: Excepción - " . $e->getMessage()];
+            return ["Exception" => "Error en updateTripulante: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -111,29 +119,28 @@ abstract class UsersLogin
     }
 
     /**
-     * Función para elimina a un usuario.
+     * Función para elimina a un tripulante.
      * 
      * @param string $username  El nombre de usuario proporcionado.
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function deleteUserLogin(string $username)
+    static function deleteTripulante(string $numeroDocumento)
     {
         $conexion = null;
         try {
-            if (empty($username)) {
+            if (empty($numeroDocumento)) {
                 return false;
             }
-
             $conexion = openConexion();
-            $sql = "DELETE FROM usuariosLogin WHERE username = ?";
+            $sql = "DELETE FROM tripulantes WHERE numeroDocumento = ?";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("s", $username);
+            $stmt->bind_param("s", $numeroDocumento);
             $stmt->execute();
 
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
-            return ["Exception" => "Error en deleteUserLogin: Excepción - " . $e->getMessage()];
+            return ["Exception" => "Error en deleteTripulante: Excepción - " . $e->getMessage()];
         } finally {
             if ($conexion) {
                 closeConexion($conexion);
@@ -142,7 +149,7 @@ abstract class UsersLogin
     }
 
     /**
-     * Función para elimina a un usuario.
+     * Función para obtener el tipo de un dato, se usa para bind_param.
      * 
      * @param string $value, el valor de una propiedad del array input.
      * @return chart  Devuelve una letra correspondinete al tipo de dato.

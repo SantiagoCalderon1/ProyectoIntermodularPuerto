@@ -1,5 +1,5 @@
 <div id="container-login" class="d-flex justify-content-center align-items-center">
-    <div class="card col-8 col-md-10 col-lg- shadow-lg p-3">
+    <div id="form-card" class="card col-8 col-md-10 col-lg- shadow-lg p-3">
         <div class="card-header text-center pt-4">
             <h1>{{ titleForm}}</h1>
         </div>
@@ -38,7 +38,6 @@
 
 <ng-template #contentFormLogin>
     <div [formGroup]="loginForm">
-
         <p class="text-center"> {{ leyendForm}} </p>
         <div class="mb-3">
             <label for="usernameLogin" class="form-label">Username o Email</label>
@@ -59,13 +58,11 @@
                 Recuerdame
             </label>
         </div>
-
         <div class="text-center">
             <button type="submit" class="btn btn-primary w-100">
                 {{ leyendBtn }}
             </button>
         </div>
-
         <div class="text-center pt-2">
             <p>Aún no tienes una cuenta? </p>
             <button type="submit" class="btn btn-primary w-100" (click)="changeDataForm('register')">
@@ -110,13 +107,11 @@
                 </button>
             </div>
         </div>
-
         <div class="text-center">
             <button type="submit" class="btn btn-primary w-100">
                 {{ leyendBtn }}
             </button>
         </div>
-
         <div class="text-center pt-2">
             <p>Ya tienes una cuenta? </p>
             <button type="submit" class="btn btn-primary w-100" (click)="changeDataForm('login')">
