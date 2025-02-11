@@ -7,7 +7,7 @@ import { authGuard } from './guards/auth.guard';
 
 import { UserListComponent } from './users/components/user-list/user-list.component';
 import { UserComponent } from './users/components/user/user.component';
-import { ListaComponent as listaRoles } from './roles/components/lista/lista.component';
+import { ListaComponent, ListaComponent as listaRoles } from './roles/components/lista/lista.component';
 import { ListaComponent as listaFuncionalidad } from './funcionalidades/components/lista/lista.component';
 
 import { FormularioComponent } from './roles/components/formulario/formulario.component';
@@ -17,6 +17,8 @@ import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
 import { ListaComponent as listaInstalacionComponent } from './instalacion/components/lista/lista.component';
+
+import { ReservaComponent } from './plazas/components/reservas/reservas.component';
 
 
 const routes: Routes = [
@@ -57,6 +59,8 @@ const routes: Routes = [
   { path: 'listaPlazas', component: listaPlazasComponents, canActivate: [authGuard] },
   { path: 'plazas', component: PlazaComponent, canActivate: [authGuard] },
   { path: 'plazas/:tipo/:id_plaza_base', component: PlazaComponent, canActivate: [authGuard] },
+  { path: 'reservas', component: ReservaComponent, canActivate: [authGuard] },
+  { path: 'reservas/:tipo/:id_reserva', component: ReservaComponent, canActivate: [authGuard] },
 
 
   { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },

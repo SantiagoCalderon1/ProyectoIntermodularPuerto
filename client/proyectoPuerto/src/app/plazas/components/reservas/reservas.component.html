@@ -1,1 +1,115 @@
-<p>reservas works!</p>
+<div class="container d-flex align-items-center justify-content-center contenedor-formulario">
+    <div class="col-10 col-md-12 card text-center my-3">
+        <div class="card-header titulos">{{ titulo }}</div>
+        <div class="card-body">
+            <h5 class="card-title">Introduce los datos de la Reserva</h5>
+            <form #reservaForm="ngForm" class="mt-4 text-start" (ngSubmit)="guardaReserva()" novalidate>
+
+                <!-- Datos de la Plaza -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="plaza" class="form-label">Plaza</label>
+                        <input type="number" id="plaza" name="plaza" class="form-control" [(ngModel)]="reservaact.plaza"
+                            required>
+                    </div>
+                </div>
+
+                <!-- Fechas -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control"
+                            [(ngModel)]="reservaact.fecha_inicio" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control"
+                            [(ngModel)]="reservaact.fecha_fin" required>
+                    </div>
+                </div>
+
+                <!-- Datos del Titular -->
+                <h5 class="mt-4">Datos del Titular</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre_titular" class="form-label">Nombre</label>
+                        <input type="text" id="nombre_titular" name="nombre_titular" class="form-control"
+                            [(ngModel)]="reservaact.titular.nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellidos_titular" class="form-label">Apellidos</label>
+                        <input type="text" id="apellidos_titular" name="apellidos_titular" class="form-control"
+                            [(ngModel)]="reservaact.titular.apellidos" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="tipo_doc" class="form-label">Tipo de Documento</label>
+                        <select id="tipo_doc" name="tipo_doc" class="form-control"
+                            [(ngModel)]="reservaact.titular.tipo_doc" required>
+                            <option value="DNI">DNI</option>
+                            <option value="NIE">NIE</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="numero_doc" class="form-label">Número de Documento</label>
+                        <input type="text" id="numero_doc" name="numero_doc" class="form-control"
+                            [(ngModel)]="reservaact.titular.numero_doc" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" class="form-control"
+                            [(ngModel)]="reservaact.titular.email" required>
+                    </div>
+                </div>
+
+                <!-- Datos de la Embarcación -->
+                <h5 class="mt-4">Datos de la Embarcación</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre_embarcacion" class="form-label">Nombre</label>
+                        <input type="text" id="nombre_embarcacion" name="nombre_embarcacion" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.nombre" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="eslora" class="form-label">Eslora (m)</label>
+                        <input type="number" id="eslora" name="eslora" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.eslora" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="manga" class="form-label">Manga (m)</label>
+                        <input type="number" id="manga" name="manga" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.manga" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="matricula" class="form-label">Matrícula</label>
+                        <input type="text" id="matricula" name="matricula" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.matricula" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="nib" class="form-label">NIB</label>
+                        <input type="text" id="nib" name="nib" class="form-control" [(ngModel)]="reservaact.embarcacion.nib">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="cin_hin" class="form-label">CIN/HIN</label>
+                        <input type="text" id="cin_hin" name="cin_hin" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.cin_hin">
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="my-3 text-center">
+                    <div name="cancelar" class="btn btn-secondary btn-lg me-3">
+                        <a [routerLink]="['/listaPlazas']">Cancelar</a>
+                    </div>
+                    <input type="submit" class="btn btn-dark btn-lg" [value]="txtBtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
