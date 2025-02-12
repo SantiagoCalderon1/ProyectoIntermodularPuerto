@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { AppService } from '../../../app.service';
 
 
@@ -11,18 +10,27 @@ import { AppService } from '../../../app.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  breadcrumb: string[] = [];
   rol: number | null = null;
+  rutaBreadCrumb: any[] = [];
 
-  constructor(private router: Router, private _appService: AppService
+  constructor(private _appService: AppService
   ) { }
 
   ngOnInit(): void {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
+
+    this._appService.ruta$.subscribe(ruta => {
+      if (ruta && typeof ruta === 'string') {
+        this.rutaBreadCrumb = ruta.split(',');
+      } else {
+        this.rutaBreadCrumb = [];
+      }
+      console.log(this.rutaBreadCrumb);
+    });
+    
+    //this.rutaBreadCrumb = this._appService.ruta.split(',');
   }
 
-  private updateBreadcrumb(): void {
-  }
 }

@@ -207,24 +207,6 @@ INSERT INTO `usuario` (`usuario`, `nombre`, `email`, `password`, `idioma`, `habi
 ('sofiahernandez', 'Sofía Hernández', 'sofia.hernandez@example.com', 'sofiapass678', 'Español', 1, 3);
 
 --
--- Disparadores `usuario`
---
-DELIMITER $$
-CREATE TRIGGER `delete_data_in_usuariosLogin` AFTER DELETE ON `usuario` FOR EACH ROW BEGIN
-        -- Eliminar el username y passwordd en la tabla usuariosLogin
-        DELETE FROM usuariosLogin WHERE usuario = OLD.usuario$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `update_username_in_usuariosLogin` AFTER UPDATE ON `usuario` FOR EACH ROW BEGIN
-    -- Verificar si el username ha cambiado
-    IF OLD.usuario != NEW.usuario THEN
-        -- Actualizar el username en la tabla usuariosLogin
-        UPDATE usuariosLogin
-        SET usuario = NEW.usuario
-        WHERE usuario = OLD.usuario$$
-DELIMITER ;
-
---
 -- Índices para tablas volcadas
 --
 

@@ -1,12 +1,7 @@
 <?php
 include '../../config/conexion.php';
 
-class Roles
-{
-    public $idRol;
-    public $nombreRol;
-    public $descripcionRol;
-
+class Roles {
     static public function getAllRoles(string $id = '')
     {
         $con = null;

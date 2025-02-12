@@ -44,6 +44,10 @@
                             <a class="nav-link" [routerLink]="['/funcionalidades']"
                                 [routerLinkActive]="['active']">Funcionalidades</a>
                         </li>
+                        <li class="nav-item" *ngIf="rol == 4">
+                            <a class="nav-link" [routerLink]="['/muelles']"
+                                [routerLinkActive]="['active']">Muelles</a>
+                        </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Modulo 3</a>
                         </li> -->
@@ -72,11 +76,11 @@
             </div>
         </div>
     </nav>
-    <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a [routerLink]="['/home']">Home</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users'] ">Usuarios</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users']">Listado de usuarios</a></li>
+    <!-- <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb" *ngFor="let ruta of rutaBreadCrumb">
+            <li class="breadcrumb-list">
+                {{ruta}}
+            </li>
         </ol>
-    </nav>
+    </nav> -->
 </header>

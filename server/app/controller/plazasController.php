@@ -1,4 +1,4 @@
-s<?php
+<?php
 include_once '../model/plazasModel.php';
 
 header("Access-Control-Allow-Origin: *");

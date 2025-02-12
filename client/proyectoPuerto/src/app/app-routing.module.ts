@@ -18,9 +18,11 @@ import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
 import { ListaComponent as listaInstalacionComponent } from './instalacion/components/lista/lista.component';
 
+import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
+import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent },
   {
     path: 'logout', component: LogoutComponent, canActivate: [authGuard]
   },
@@ -33,8 +35,9 @@ const routes: Routes = [
 
   {
     path: 'users', component: UserListComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
+  
   {
     path: 'users/:option/:username',
     component: UserComponent,
@@ -62,6 +65,10 @@ const routes: Routes = [
   { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
+
+  { path: 'muelles', component: ListamuellesComponent, canActivate: [authGuard] },
+  { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
+  { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

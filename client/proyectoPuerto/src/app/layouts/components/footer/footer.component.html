@@ -30,6 +30,9 @@
                         <a class="nav-link" [routerLink]="['/funcionalidades']"
                             [routerLinkActive]="['active']">Funcionalidades</a>
                     </li>
+                    <li class="nav-item" *ngIf="rol == 4">
+                        <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
+                    </li>
                 </ul>
             </div>
 

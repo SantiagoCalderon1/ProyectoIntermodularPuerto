@@ -18,11 +18,11 @@ import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
 import { PlazasModule } from './plazas/plazas.module';
 import { InstalacionModule } from './instalacion/instalacion.module';
-
+import { MuellesModule } from './muelles/muelles.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +38,8 @@ import { InstalacionModule } from './instalacion/instalacion.module';
     HttpClientModule ,
     RolesModule,
     FormsModule,
-    InstalacionModule
+    InstalacionModule,
+    MuellesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
