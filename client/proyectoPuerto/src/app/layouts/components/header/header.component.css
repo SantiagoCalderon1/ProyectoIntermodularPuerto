@@ -2,6 +2,10 @@ header nav{
     height: 100px;
 }
 
+img {
+    height: 7vh;
+}
+
 nav .breadcrumb{
     background-color: rgb(234, 234, 234);
     height: 4vh;

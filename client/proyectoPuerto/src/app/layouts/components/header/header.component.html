@@ -1,7 +1,9 @@
 <header class="fixed-top">
     <nav class="navbar bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" [routerLink]="['/home']">Puerto
+            <img src="http://localhost:8080/ProyectoIntermodularPuerto/client/proyectoPuerto/src/assets/images/logo.webp">
+            <a class="navbar-brand d-none d-sm-block" [routerLink]="['/home']">
+                Puerto
                 deportivo La Marina
                 de Valencia</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -22,27 +24,27 @@
 
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Página
+                            <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Página
                                 Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']">Usuarios</a>
+                            <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Usuarios</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']">Plazas
+                            <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Plazas
                                 bases</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
-                            <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']">Roles</a>
+                            <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Roles</a>
                         </li>
                         <li class="nav-item" *ngIf=" rol == 4">
                             <a class="nav-link" [routerLink]="['/instalacion']"
-                                [routerLinkActive]="['active']">Instalaciones</a>
+                                [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Instalaciones</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
                             <a class="nav-link" [routerLink]="['/funcionalidades']"
-                                [routerLinkActive]="['active']">Funcionalidades</a>
+                                [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Funcionalidades</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -55,13 +57,13 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <a class="nav-link" [routerLink]="['/tripulantes']"
-                                    [routerLinkActive]="['active']">Tripulantes</a>
+                                    [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Tripulantes</a>
                             </ul>
                         </li>
                     </ul>
 
                     <button class="btn bg-danger text-white mt-5" [routerLink]="['/logout']"
-                        [routerLinkActive]="['active']">Cerrar sesión</button>
+                        [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Cerrar sesión</button>
                 </div>
             </div>
         </div>

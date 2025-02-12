@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../../../app.service';
 
@@ -11,6 +11,7 @@ import { AppService } from '../../../app.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  @ViewChild('offcanvas') offcanvas!: ElementRef;
   breadcrumb: string[] = [];
   rol: number | null = null;
 

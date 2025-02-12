@@ -5,13 +5,13 @@
                 <h2 class="fs-4">Listado de usuarios</h2>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <button class="nav-link" [ngClass]="{'active': activeTab === 'habilitados'}"
+                        <button class="nav-link text-black" [ngClass]="{'active': activeTab === 'habilitados'}"
                             (click)="setActiveTab('habilitados')">
                             Usuarios Activos
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" [ngClass]="{'active': activeTab === 'noHabilitados'}"
+                        <button class="nav-link text-black" [ngClass]="{'active': activeTab === 'noHabilitados'}"
                             (click)="setActiveTab('noHabilitados')">
                             Usuarios pendientes de activarse
                         </button>
