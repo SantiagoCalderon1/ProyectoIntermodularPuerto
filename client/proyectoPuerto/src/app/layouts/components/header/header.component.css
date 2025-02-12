@@ -1,6 +1,11 @@
 header{
     height: 10vh;
 }
+
+img{
+    /* Tamaño logo */
+    height: 7vh;
+}
 /* 
 nav .navbar{
 } */
