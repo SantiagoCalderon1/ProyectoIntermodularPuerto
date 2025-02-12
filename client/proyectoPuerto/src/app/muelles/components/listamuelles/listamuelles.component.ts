@@ -49,34 +49,4 @@ export class ListamuellesComponent {
     // Guardar el PDF con un nombre
     doc.save('ListaMuelles.pdf');
   }
-
-  selectMuelle(nummuelle: number, event: any) {
-    this.selectedMuelle = event.target.checked ? nummuelle : 0;
-  }
-
-  // Método que se ejecuta cuando un checkbox cambia
-  onCheckboxChange(event: any, nummuelle: number): void {
-    if (event.target.checked) {
-      // Si el checkbox está marcado, decidimos qué hacer:
-      // Si ya hay uno seleccionado, lo asignamos a selectedMuelle (caso de único muelle seleccionado)
-      if (this.muellesSeleccionados.length === 0) {
-        this.selectedMuelle = nummuelle;
-      }
-    } else {
-      // Si el checkbox se desmarca, eliminamos el ID de la lista de seleccionados
-      this.muellesSeleccionados = this.muellesSeleccionados.filter(id => id !== nummuelle);
-
-      // Si desmarcamos el muelle seleccionado, ponemos selectedMuelle en null
-      if (this.selectedMuelle === nummuelle) {
-        this.selectedMuelle = 0;
-      }
-    }
-  }
-
-  // Método que verifica si un muelle está seleccionado
-  isChecked(id: number): boolean {
-    // Si estamos manejando la selección múltiple, buscamos en el array de seleccionados
-    return this.selectedMuelle === id || this.muellesSeleccionados.includes(id);
-  }
-
 }

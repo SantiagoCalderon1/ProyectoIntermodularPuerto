@@ -14,36 +14,35 @@
                         [routerLink]="['/formmuelles',0,0]">
                         <i class="fa-solid fa-user-plus"></i> Añadir Muelle
                     </button>
-                    <button [disabled]="muelles.length === 0 || rol != 4 || !selectedMuelle" class="btn btn-warning"
-                        [routerLink]="['/formmuelles',selectedMuelle, 2]">
-                        <i class="fa-solid fa-pen"></i> Actualizar Muelle
-                    </button>
-                    <button [disabled]="muelles.length === 0 || rol != 4 || !selectedMuelle" class="btn btn-danger"
-                    [routerLink]="['/formmuelles',selectedMuelle, 3]">
-                    <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
-                </button>
                 </div>
                 <!-- Tabla Responsiva -->
                 <div *ngIf="muelles.length > 0" id="container-table" class="table-responsive">
                     <table id="tbmuelles" class="table text-center table-striped table-hover table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col" *ngIf="rol == 4">Seleccionar</th>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
                                 <th>Ocupado</th>
+                                <th>Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let muelle of muelles">
-                                <td *ngIf="rol == 4">
-                                    <input class="form-check-input" type="checkbox" [value]="muelle.nombre_muelle"
-                                    (change)="onCheckboxChange($event, muelle.id_muelle)" 
-                                    [checked]="isChecked(muelle.id_muelle)">
-                                </td>
                                 <td>{{ muelle.nombre_muelle }}</td>
                                 <td>{{ muelle.descripcion }}</td>
                                 <td>{{ +muelle.ocupado === 1 ? 'Sí' : 'No' }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2 m-3">
+                                        <button [disabled]="muelles.length === 0 || rol != 4" class="btn btn-warning"
+                                            [routerLink]="['/formmuelles',muelle.id_muelle, 2]">
+                                            <i class="fa-solid fa-pen"></i> Actualizar Muelle
+                                        </button>
+                                        <button [disabled]="muelles.length === 0 || rol != 4" class="btn btn-danger"
+                                            [routerLink]="['/formmuelles',muelle.id_muelle, 3]">
+                                            <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
