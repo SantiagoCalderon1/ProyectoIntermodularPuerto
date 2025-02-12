@@ -68,6 +68,7 @@ export class TripulantesComponent {
   ];
 
   @ViewChild('tripulanteForm', { static: true }) tripulanteForm: NgForm | undefined;
+  selectedFile: File | null = null;
   public title: string = "Tripulantes";
   public numeroDocumento: string = '';
   public option: string = '';
@@ -76,7 +77,7 @@ export class TripulantesComponent {
   rol: number | null = null;
 
   public selectedTripulante: Tripulante = {
-    tipoDocumento: '',
+    tipoDocumento: 0,
     numeroDocumento: '',
     nombre: '',
     apellidos: '',
@@ -88,16 +89,6 @@ export class TripulantesComponent {
     fechaExpeDocumento: new Date(),
     fechaCadDocumento: new Date()
   };
-
-
-
-  // Varibales para los documentos
-  filePreview: string | null = null;
-  esImagen = false;
-  esPDF = false;
-  mostrandoCamara = false;
-  @ViewChild('videoElement') videoElement!: ElementRef;
-  @ViewChild('canvasElement') canvasElement!: ElementRef;
 
   constructor(private http: HttpClient,
     private _aroute: ActivatedRoute,
@@ -122,6 +113,7 @@ export class TripulantesComponent {
       }
     });
   }
+
 
   createTitle(option: string) {
     switch (option) {
@@ -157,16 +149,16 @@ export class TripulantesComponent {
     //console.log(this.selectedUser);
     switch (this.option) {
       case 'Insert':
-        this.insertNewUser();
+        this.insertNewTripulante();
         break;
       case 'Update':
-        this.updateUser();
+        this.updateTripulante();
         break;
       case 'Delete':
-        this.deleteUser();
+        this.deleteTripulante();
         break;
       case 'Habilitar':
-        this.updateUser();
+        this.updateTripulante();
         break;
       default:
         this.toastr.error(
@@ -178,9 +170,12 @@ export class TripulantesComponent {
     }
   }
 
-  insertNewUser() {
+  insertNewTripulante() {
+    console.log(this.selectedTripulante);
+
+    let formData = this.crearFormulario();
     this._transitosService
-      .insertNewTripulante(this.selectedTripulante)
+      .insertNewTripulante(formData)
       .subscribe({
         next: (response) => {
           if (response.success) {
@@ -204,8 +199,7 @@ export class TripulantesComponent {
       });
   }
 
-
-  updateUser() {
+  updateTripulante() {
     this._transitosService
       .updateTripulante(this.numeroDocumento, this.selectedTripulante)
       .subscribe({
@@ -230,12 +224,13 @@ export class TripulantesComponent {
       });
   }
 
-  deleteUser() {
+  deleteTripulante() {
     this._transitosService
       .deleteTripulante(this.selectedTripulante.numeroDocumento)
       .subscribe({
         next: (response) => {
           if (response && response.success) {
+            // this.deleteDocumento();
             this.toastr.success(
               'Se ha eliminado a ' + this.selectedTripulante.nombre,
               'Tripulante actualizado correctamente!', { positionClass: 'toast-top-right' }
@@ -294,110 +289,43 @@ export class TripulantesComponent {
     return true;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //Funciones para subir documentos ++++++++++++++++++++++++++++++++++++++++++++++++++
-  // Subir archivo desde el sistema
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const fileType = file.type;
-    this.esImagen = fileType.startsWith('image/');
-    this.esPDF = fileType === 'application/pdf';
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    // Cambia esta URL a la de tu servidor PHP
-    this.http.post<{ filePath: string }>('http://localhost/api/upload.php', formData)
-      .subscribe(response => {
-        if (response.filePath) {
-          this.filePreview = response.filePath;  // URL del archivo
-        } else {
-          console.error('Error al subir el archivo');
-        }
-      });
+  seleccionarDocumento(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      this.selectedFile = this.prepararDocumento(inputElement.files[0]);
+      console.log("Archivo seleccionado:", this.selectedFile);
+    } else {
+      console.warn('No se seleccionó ningún archivo.');
+    }
   }
 
-
-  // Abrir la cámara
-  abrirCamara() {
-    this.mostrandoCamara = true;
-    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-      this.videoElement.nativeElement.srcObject = stream;
-    }).catch(error => console.error('Error al acceder a la cámara:', error));
+  prepararDocumento(file: File) {
+    let nombreFichero = file.name;
+    let extension = nombreFichero.split('.').pop();
+    let nuevoNombreFichero = 'tripulante_' + this.selectedTripulante.numeroDocumento + '.' + extension;
+    let renamedFile = new File([file], nuevoNombreFichero, { type: file.type });
+    console.log(renamedFile.name);
+    return renamedFile;
   }
 
-  // Capturar la foto y subirla
-  capturarFoto() {
-    const video = this.videoElement.nativeElement;
-    const canvas = this.canvasElement.nativeElement;
-    const context = canvas.getContext('2d');
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    canvas.toBlob((blob: Blob | null) => {
-      if (!blob) return;
-      const file = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
-
-      const formData = new FormData();
-      formData.append('file', file);
-
-      this.http.post<{ filePath: string }>('http://localhost:3000/upload', formData)
-        .subscribe(response => {
-          this.filePreview = response.filePath;
-          this.esImagen = true;
-          this.mostrandoCamara = false;
-          video.srcObject.getTracks().forEach((track: MediaStreamTrack) => track.stop()); // Apagar la cámara
-        }, error => console.error('Error al subir la foto:', error));
-    }, 'image/jpeg');
+  crearFormulario() {
+    let formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+      console.log("Archivo añadido al FormData:", this.selectedFile);
+    } else {
+      console.warn("No se seleccionó ningún archivo.");
+    }
+    formData.append('tripulante', JSON.stringify(this.selectedTripulante));
+    console.log("Datos a enviar:", formData);
+    return formData;
   }
 
-  // Guardar en la base de datos
-  guardarEnBD() {
-    const data = {
-      id_usuario: 123,
-      documento_url: this.filePreview  // URL del archivo subido
-    };
-
-    this.http.post('http://localhost/api/guardar.php', data)
-      .subscribe(response => {
-        console.log('Guardado en la base de datos:', response);
-      }, error => {
-        console.error('Error al guardar en la base de datos:', error);
-      });
-  }
+  // deleteDocumento() {
+  //   this._transitosService.deleteDocument(this.selectedTripulante.numeroDocumento).subscribe(response => {
+  //     console.log('Respuesta del servidor:', response);
+  //   });
+  // }
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 }

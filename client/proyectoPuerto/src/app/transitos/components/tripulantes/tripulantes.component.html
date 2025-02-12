@@ -97,7 +97,7 @@
                 <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento:</label>
                 <input type="date" class="form-control rounded-pill" id="inputFechaNacimiento"
                     name="inputFechaNacimiento" [(ngModel)]="selectedTripulante.fechaNacimiento"
-                    (ngModelChange)="changedForm()">
+                    (ngModelChange)="changedForm()" >
             </div>
 
             <!-- País de nacimiento -->
@@ -123,38 +123,22 @@
                 <label for="inputFechaExpeDocumento" class="form-label">Fecha de Expedición del documento:</label>
                 <input type="date" class="form-control rounded-pill" id="inputFechaExpeDocumento"
                     name="inputFechaExpeDocumento" [(ngModel)]="selectedTripulante.fechaExpeDocumento"
-                    (ngModelChange)="changedForm()">
+                    (ngModelChange)="changedForm()" >
             </div>
 
             <!-- Fecha Caducidad Documento -->
             <div class="col-md-6">
                 <label for="inputFechaCadDocumento" class="form-label">Fecha de Caducidad del documento:</label>
-                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento" name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento" (ngModelChange)="changedForm()">
+                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento"
+                    name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento"
+                    (ngModelChange)="changedForm()" >
             </div>
 
-            <!-- Fecha Caducidad Documento -->
+            <!-- Subida de Documentos -->
             <div class="col-md-6">
-                <label for="fileUpload">Subir documento de identidad (PDF o Imagen):</label>
-                <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*,application/pdf">
+                <label for="inputFileUpload" class="form-label">Subir documento de identidad (PDF o Imagen):</label>
+                <input type="file" class="form-control rounded-pill" id="inputFileUpload" ngModel #file (change)="seleccionarDocumento($event)" accept="image/*,application/pdf">
             </div>
-
-
-            <!-- <div class="col-md-12">
-                <label for="fileUpload">Subir documento de identidad (PDF o Imagen):</label>
-                <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*,application/pdf">
-
-                <button (click)="abrirCamara()">Tomar foto</button>
-                <video #videoElement *ngIf="mostrandoCamara" autoplay></video>
-                <canvas #canvasElement style="display: none;"></canvas>
-                <button *ngIf="mostrandoCamara" (click)="capturarFoto()">Capturar</button>
-
-                 Mostrar previsualización si es imagen 
-                <img *ngIf="esImagen" [src]="filePreview" alt="Previsualización" style="max-width: 200px;">
-                 Mostrar enlace si es PDF
-                <a *ngIf="esPDF" [href]="filePreview" target="_blank">Ver PDF</a>
-
-                <button (click)="guardarEnBD()">Guardar</button>
-            </div> -->
         </div>
     </div>
 </ng-template>

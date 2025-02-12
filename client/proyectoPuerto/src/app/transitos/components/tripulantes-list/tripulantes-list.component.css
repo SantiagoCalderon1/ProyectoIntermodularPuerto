@@ -1,13 +1,12 @@
 #container-tripulantes-list{
-    width: 100%;
     pad: 5vh 0;
 }
 
 #container-table {
     overflow-y: auto; 
     overflow-x: auto;
-    position: relative;
-    padding-bottom: 50px;
+    position: relative ;
+    padding-bottom: 50px ;
 }
 
 #container-table table {

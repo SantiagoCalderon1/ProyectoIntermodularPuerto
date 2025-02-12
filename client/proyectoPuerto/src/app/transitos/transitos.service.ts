@@ -36,7 +36,7 @@ export class TransitosService {
 
 
 
-  
+
 
   // Inicio Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   getAllTripulantes(): Observable<any> {
@@ -48,7 +48,7 @@ export class TransitosService {
   }
 
   insertNewTripulante(data: any): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/insert`, JSON.stringify(data), this.httpOptions);
+    return this.http.post<any>(`${this.urlApi}/insert`, data, this.httpOptions);
   }
 
   updateTripulante(numeroDocumento: string, data: any): Observable<any> {

@@ -66,8 +66,8 @@ const routes: Routes = [
   { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
 
 
-  { path: 'transito', component: TripulantesListComponent, canActivate: [authGuard] },
-  { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
+  { path: 'tripulantes', component: TripulantesListComponent, canActivate: [authGuard] },
+  { path: 'tripulantes/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

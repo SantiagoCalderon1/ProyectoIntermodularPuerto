@@ -7,6 +7,7 @@
 //http://localhost:8080/server/app/controller/usuariosController.php/user/anna_s
 
 include '../model/tripulantesModel.php';
+include '../model/documentoModel.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -14,7 +15,10 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 $method = $_SERVER['REQUEST_METHOD'];
-$input = json_decode(file_get_contents('php://input'));
+
+$tripulanteData = isset($_POST['tripulante']) ? json_decode($_POST['tripulante'], true) : null;
+$fileData = isset($_FILES['file']) ? $_FILES['file'] : null;
+
 $request = trim($_SERVER['REQUEST_URI'], '/');
 
 $uri = explode('/', $request);
@@ -24,7 +28,7 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 switch ($method) {
     case 'GET':  // funciona
         if ($penultimatePart == 'tripulante') {
-            getAllTripulantes($lastpar);
+            getAllTripulantes($lastpart);
         }
 
         if ($lastpart == 'tripulantes') { //funciona
@@ -33,7 +37,7 @@ switch ($method) {
         break;
     case 'POST': //funciona
         if ($lastpart == 'insert') {
-            insertNewTripulante($input);
+            insertNewTripulante($tripulanteData, $fileData);
         }
         break;
     case 'PUT':
@@ -63,11 +67,18 @@ function getAllTripulantes(string $numeroDocumento = '')
     }
 }
 
-function insertNewTripulante($input)
-{
-    $result = Tripulantes::insertNewTripulante($input);
-    if ($result) {
-        echoResponse(true, 201, 'Tripulante registrado correctamente.');
+function insertNewTripulante($tripulanteData, $fileData)
+{   var_dump($tripulanteData);
+    var_dump($fileData);
+    $resultTripulante = Tripulantes::insertNewTripulante($tripulanteData);
+    if ($resultTripulante) {
+        if ($fileData) {
+            $resultDocumento = Documentos::insertDocumentoFTP($tripulanteData['numeroDocumento'], $fileData);
+            if ($resultDocumento) {
+                echoResponse(true, 201, 'Tripulante registrado correctamente con documentación.');
+            }
+        }
+        echoResponse(true, 201, 'Tripulante registrado correctamente sin documentación.');
     } else {
         $exception = $result['Exception'] ?? '';
         echoResponse(false, 400, 'Error al registar el tripulante.', $exception);

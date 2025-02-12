@@ -44,7 +44,7 @@ abstract class Tripulantes
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function insertNewTripulante(object $input)
+    static function insertNewTripulante($input)
     {
         $conexion = null;
         try {
@@ -57,7 +57,6 @@ abstract class Tripulantes
             $fields = [];
             $values = [];
             $types = '';
-
             foreach ($input as $key => $value) {
                 $fields[] = $key;
                 $values[] = $value;

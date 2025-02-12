@@ -1,6 +1,6 @@
 export class Tripulante {
     constructor(
-        public tipoDocumento: string = '',
+        public tipoDocumento: number = 0,
         public numeroDocumento: string = '',
         public nombre: string = '',
         public apellidos: string = '',
@@ -10,6 +10,6 @@ export class Tripulante {
         public paisNacimiento: string = '',
         public lugarNacimiento: string = '',
         public fechaExpeDocumento: Date,
-        public fechaCadDocumento: Date
+        public fechaCadDocumento: Date,
     ) { }
 }
