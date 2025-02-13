@@ -52,16 +52,16 @@ export class TransitosComponent {
   getTransito(embarcacion: number) {
     this.transitosService.getTransito(embarcacion).subscribe({
       next: (response) => {
-        console.log("Response completo: ", response); 
+        console.log("Response completo: ", response);
         this.transitoAct.anyo = response.anyo;
         this.transitoAct.datos_estancia = response.datos_estancia;
         this.transitoAct.embarcacion = response.embarcacion;
-        this.transitoAct.fecha_entrada = response.fecha_entrada; 
+        this.transitoAct.fecha_entrada = response.fecha_entrada;
         this.transitoAct.fecha_salida = response.fecha_salida;
         this.transitoAct.instalacion = response.instalacion;
         this.transitoAct.pantalan = response.pantalan;
         this.transitoAct.patron = response.patron;
-        
+
         console.log("transito actual: ", this.transitoAct);
       },
       error: (error) => {
@@ -69,23 +69,57 @@ export class TransitosComponent {
       }
     });
   }
-  
+
 
   agregarTransito() {
-    console.log("TransitoAct" + this.transitoAct);
+    console.log("tipo: " +this.tipo);
+    if(this.tipo == 2){
+      console.log("TransitoAct" + this.transitoAct);
+      let fEntrada = this.transitoAct.fecha_entrada;
+      let fSalida = this.transitoAct.fecha_salida;
+      //let fecha_valida = this.comprobarEntradaSalida(fEntrada, fSalida);
+      //if (fecha_valida) {
+        this.transitosService.nuevoTransito(this.transitoAct).subscribe({
+          next: (response) => {
+            console.log("Transito creado", response);
+            this.mensaje = 1;
+          },
+          error: (error) => {
+            console.log("error al crear transito", error);
+            this.mensaje = 0;
+          },
+          complete: () => {
+            console.log("Peticion completada");
+          }
+        })
+      //}else{
+        console.log("fechas no válidas");
+        this.mensaje = 2;
+      //}
+    }else if(this.tipo == 1){
+      this.transitosService.updateTransito(this.transitoAct).subscribe({
+        next: (response) => {
+          console.log("Transito modificado", response);
+          this.mensaje = 1;
+        },
+        error: (error) => {
+          console.log("Error al modificar transito", error);
+        }
+      })
+    }
 
-    this.transitosService.nuevoTransito(this.transitoAct).subscribe({
-      next: (response) => {
-        console.log("Transito creado", response);
-        this.mensaje = 1;
-      },
-      error: (error) => {
-        console.log("error al crear transito", error);
-        this.mensaje = 0;
-      },
-      complete: () => {
-        console.log("Peticion completada");
-      }
-    })
+
+  }
+
+  comprobarEntradaSalida(entrada: Date, salida: Date): boolean {
+    let resta = salida.getTime() - entrada.getTime();
+    let hoy = new Date();
+    if (resta < 0) {
+      return false;
+    }
+    if (hoy > salida && hoy > entrada) {
+      return false;
+    }
+    return true;
   }
 }

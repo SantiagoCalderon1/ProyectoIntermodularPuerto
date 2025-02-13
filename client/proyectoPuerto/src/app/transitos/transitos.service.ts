@@ -57,6 +57,14 @@ export class TransitosService {
     );
   }
 
+  updateTransito(transito: Transito) {
+    console.log("entrando a updateTransito");
+    const updateURL = this.urlApi + "?embarcacion=" + transito.embarcacion;
+    return this.http.put<any>(updateURL, JSON.stringify(transito)).pipe(
+      tap(response => console.log("Respuesta del servidor: ", response))
+    );
+  }
+
 
   // Inicio Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   getAllTripulantes(): Observable<any> {

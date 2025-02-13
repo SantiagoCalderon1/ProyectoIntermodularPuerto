@@ -49,14 +49,14 @@
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm">
+                        <button class="btn btn-success btn-sm" [routerLink] ="['/tripulantes',transito.embarcacion]">
                             <i class="fa fa-user fa-fw"></i>Lista
                         </button>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <p *ngIf="mensaje == 1" class="text-danger text-center mt-3">Tránsito eliminado correctamente</p>
+        <p *ngIf="mensaje == 1" class="text-success text-center mt-3">Tránsito eliminado correctamente</p>
         <p *ngIf="mensaje == 2" class="text-danger text-center mt-3">Error al eliminar tránsito</p>
     </div>
 </div>

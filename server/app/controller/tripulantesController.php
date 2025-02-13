@@ -6,8 +6,12 @@
 // url prueba thunder client
 //http://localhost:8080/server/app/controller/usuariosController.php/user/anna_s
 
+<<<<<<< HEAD
 include '../model/tripulantesModel.php';
 include '../model/documentoModel.php';
+=======
+include "../model/tripulantesModel.php";
+>>>>>>> 0ce8a11 (funcionalidadTransitos terminada)
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

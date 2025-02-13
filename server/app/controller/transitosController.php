@@ -65,4 +65,24 @@ switch ($metodo) {
             echo json_encode(["error" => "Error al recoger la embarcacion"]);
         }
         break;
+        case "PUT":
+            if ($data) {
+                $anyo = $data["anyo"];
+                $pantalan = $data["pantalan"];
+                $instalacion = $data["instalacion"];
+                $fecha_entrada = $data["fecha_entrada"];
+                $fecha_salida = $data["fecha_salida"];
+                $patron = $data["patron"];
+                $embarcacion = $data["embarcacion"];
+                $datos_estancia = $data["datos_estancia"];
+                $respuesta = Transito::updateTransito($embarcacion,$anyo,$pantalan,$instalacion,$fecha_entrada,$fecha_salida,$patron,$datos_estancia);
+                if($respuesta){
+                    echo json_encode(["mensaje" => "Transito modificado correctamente"]);
+                }else{
+                    echo json_encode(["error" => "Error al modificar transito"]);
+                }
+            }else{
+                echo json_encode(["error" => "Nº de embarcacion no recibida"]);
+            }
+            break;
 }

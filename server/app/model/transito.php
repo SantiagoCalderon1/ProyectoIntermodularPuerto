@@ -54,4 +54,39 @@ class Transito
             closeConexion($conexion);
         }
     }
+
+    public static function updateTransito(int $embarcacion, int $anyo = 0, string $pantalan = "", string $instalacion = "", $fecha_entrada = "", $fecha_salida = "", string $patron = "", string $datos_estancia = "")
+    {
+        $conexion = openConexion();
+        $dataActualizar = [];
+        //si el parametro no esta por defecto, se añade a la actualizacion
+        if ($anyo != 0) {
+            $dataActualizar[] = "anyo='$anyo'";
+        }
+        if ($pantalan != "") {
+            $dataActualizar[] = "pantalan='$pantalan'";
+        }
+        if ($instalacion != "") {
+            $dataActualizar[] = "instalacion='$instalacion'";
+        }
+        if ($fecha_entrada != "") {
+            $dataActualizar[] = "fecha_entrada='$fecha_entrada'";
+        }
+        if ($fecha_salida != "") {
+            $dataActualizar[] = "fecha_salida='$fecha_salida'";
+        }
+        if ($patron != "") {
+            $dataActualizar[] = "patron='$patron'";
+        }
+        if ($datos_estancia != "") {
+            $dataActualizar[] = "datos_estancia='$datos_estancia'";
+        }
+        $ssql = "UPDATE `transito` SET " . implode(",", $dataActualizar) . " WHERE embarcacion='$embarcacion'";
+        $resultado = $conexion->query($ssql);
+        if ($resultado && $conexion->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
