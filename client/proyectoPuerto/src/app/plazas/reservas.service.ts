@@ -21,33 +21,52 @@ export class ReservasService {
 
   constructor(private http: HttpClient) { }
 
-  // Obtener todas las plazas
+  // Obtener todas las reservas
   obtengoReservasApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.apiUrl+"/reservas");
   }
 
-  // Guardar una nueva plaza
+  // Obtener todas las provincias
+  obtengoProvinciasApi(): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/provincia");
+  }
+
+  // Obtener provincia por id
+  obtengoProvinciaApi(nCcaa:number): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/provincia/"+nCcaa);
+  }
+
+  // Obtener todos los municipios
+  obtengoMunicipiosApi(): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/municipio");
+  }
+
+  // Obtener municipio por id
+  obtengoMunicipiosProvinciaApi(nMunicipio:number): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/municipio/"+nMunicipio);
+  }
+
+  // Guardar una nueva reserva
   guardaNuevaReservaApi(reserva: Reserva): Observable<any> {
     return this.http.post<any>(this.apiUrl, JSON.stringify(reserva), this.httpOptions);
   }
 
-  // Obtener una plaza por ID
+  // Obtener una reserva por ID
   obtengoReservaApi(nreserva: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${nreserva}`); // La API obtiene el ID desde la URL
   }
 
-  // Modificar una plaza existente
+  // Modificar una reserva existente
   modificaReservaApi(nreserva: number, reserva: Reserva): Observable<any> {
-    // Agregar el id dentro del objeto plaza, ya que la API lo requiere
     const plazaConId = { ...reserva, id: nreserva };
   
     return this.http.put<any>(this.apiUrl, JSON.stringify(plazaConId), this.httpOptions);
   }
   
 
-  // Borrar una plaza
+  // Borrar una reserva
   borraReservaApi(nreserva: number): Observable<any> {
-    const body = JSON.stringify({ id: nreserva }); // La API espera el ID dentro del cuerpo JSON
+    const body = JSON.stringify({ id: nreserva });
     return this.http.request<any>('DELETE', this.apiUrl, { body, ...this.httpOptions });
   }
 }

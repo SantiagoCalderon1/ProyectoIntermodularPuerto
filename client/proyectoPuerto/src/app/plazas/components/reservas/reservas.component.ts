@@ -9,7 +9,7 @@ import { AppService } from '../../../app.service';
 @Component({
   selector: 'app-reservas',
   standalone: false,
-  
+
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.css'
 })
@@ -23,13 +23,14 @@ export class ReservaComponent {
   @ViewChild('plazaForm', { static: false }) plazaForm: NgForm | undefined;
 
   reservaact: Reserva = new Reserva(
-      0, // id_reserva
-      0, // plaza
-      '', // fecha_inicio
-      '', // fecha_fin
-      new Titular(0, '', '', '', 0, '', '', '', 0, 0, '', '', '', '', '', 0, 0, ''), // Titular vacío
-      new Embarcacion(0, '', 0, 0, 0, '', '', '', 0) // Embarcación vacía
+    0, // id_reserva
+    0, // plaza
+    '', // fecha_inicio
+    '', // fecha_fin
+    new Titular(0, '', '', '', 0, '', '', '', 0, 0, '', '', '', '', '', 0, 0, ''), // Titular vacío
+    new Embarcacion(0, '', 0, 0, 0, '', '', '', 0) // Embarcación vacía
   );
+  provincia: any[] = [];
 
   constructor(private _aroute: ActivatedRoute, private _reservasService: ReservasService, private _route: Router, private toastr: ToastrService, private _appService: AppService) { }
 
@@ -126,5 +127,41 @@ export class ReservaComponent {
       [errorClass]: ngModel.touched && ngModel.invalid
     };
   }
+
+  provincias: any[] = []; // Array donde guardaremos las provincias
+
+actualizarProvincia() {
+  if (this.reservaact.titular.pais === 'España') {
+    this._reservasService.obtengoProvinciasApi().subscribe({
+      next: (resultado) => {
+        this.provincias = resultado; // Guardamos el resultado en el array
+      },
+      error: () => this.toastr.error('Error al obtener provincias'),
+    });
+  } else {
+    this.provincias = []; // Si el país no es España, limpiamos la lista
+  }
+}
+
+actualizarProvinciaActual() {
+  this.provincia[0] = this.reservaact.titular.provincia
+}
+
+
+
+
+municipios: any[] = []; // Array donde guardaremos los municipios
+actualizarPoblacion() {
+  let id = this.provincia[0]["idProvincia"]
+  console.log(id);
+
+    this._reservasService.obtengoMunicipiosProvinciaApi(id).subscribe({
+      next: (resultado) => {
+        this.municipios = resultado;
+      },
+      error: () => this.toastr.error('Error al obtener municipios'),
+    });
+}
+
 }
 

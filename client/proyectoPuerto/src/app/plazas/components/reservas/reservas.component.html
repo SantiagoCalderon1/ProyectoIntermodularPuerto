@@ -5,40 +5,18 @@
             <h5 class="card-title">Introduce los datos de la Reserva</h5>
             <form #reservaForm="ngForm" class="mt-4 text-start" (ngSubmit)="guardaReserva()" novalidate>
 
-                <!-- Datos de la Plaza -->
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <label for="plaza" class="form-label">Plaza</label>
-                        <input type="number" id="plaza" name="plaza" class="form-control" [(ngModel)]="reservaact.plaza"
-                            required>
-                    </div>
-                </div>
-
-                <!-- Fechas -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control"
-                            [(ngModel)]="reservaact.fecha_inicio" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
-                        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control"
-                            [(ngModel)]="reservaact.fecha_fin" required>
-                    </div>
-                </div>
-
                 <!-- Datos del Titular -->
                 <h5 class="mt-4">Datos del Titular</h5>
+
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="nombre_titular" class="form-label">Nombre</label>
-                        <input type="text" id="nombre_titular" name="nombre_titular" class="form-control"
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control"
                             [(ngModel)]="reservaact.titular.nombre" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="apellidos_titular" class="form-label">Apellidos</label>
-                        <input type="text" id="apellidos_titular" name="apellidos_titular" class="form-control"
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" id="apellidos" name="apellidos" class="form-control"
                             [(ngModel)]="reservaact.titular.apellidos" required>
                     </div>
                 </div>
@@ -59,6 +37,88 @@
                             [(ngModel)]="reservaact.titular.numero_doc" required>
                     </div>
                     <div class="col-md-4">
+                        <label for="letra" class="form-label">Letra</label>
+                        <input type="text" id="letra" name="letra" class="form-control"
+                            [(ngModel)]="reservaact.titular.letra">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="tipo_via" class="form-label">Tipo de Vía</label>
+                        <input type="text" id="tipo_via" name="tipo_via" class="form-control"
+                            [(ngModel)]="reservaact.titular.tipo_via">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" id="direccion" name="direccion" class="form-control"
+                            [(ngModel)]="reservaact.titular.direccion" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="numero" class="form-label">Número</label>
+                        <input type="number" id="numero" name="numero" class="form-control"
+                            [(ngModel)]="reservaact.titular.numero" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="escalera" class="form-label">Escalera</label>
+                        <input type="text" id="escalera" name="escalera" class="form-control"
+                            [(ngModel)]="reservaact.titular.escalera">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="piso" class="form-label">Piso</label>
+                        <input type="number" id="piso" name="piso" class="form-control"
+                            [(ngModel)]="reservaact.titular.piso">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="puerta" class="form-label">Puerta</label>
+                        <input type="text" id="puerta" name="puerta" class="form-control"
+                            [(ngModel)]="reservaact.titular.puerta">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="cod_postal" class="form-label">Código Postal</label>
+                        <input type="text" id="cod_postal" name="cod_postal" class="form-control"
+                            [(ngModel)]="reservaact.titular.cod_postal" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="pais" class="form-label">País</label>
+                        <input type="text" id="pais" name="pais" class="form-control"
+                            [(ngModel)]="reservaact.titular.pais" (ngModelChange)="actualizarProvincia()" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <select id="provincia" name="provincia" class="form-control"
+                            [(ngModel)]="reservaact.titular.provincia" (ngModelChange)="actualizarProvinciaActual()" (ngModelChange)="actualizarPoblacion()">
+                            <option [ngValue]="null">Seleccione una provincia</option>
+                            <option *ngFor="let item of provincias" [ngValue]="item">
+                                {{ item.Provincia }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="poblacion" class="form-label">Población</label>
+                            <select id="poblacion" name="poblacion" class="form-control"
+                            [(ngModel)]="reservaact.titular.poblacion">
+                            <option [ngValue]="null">Seleccione una provincia</option>
+                            <option *ngFor="let item of municipios" [ngValue]="item">
+                                {{ item.Municipio }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <input type="text" id="localidad" name="localidad" class="form-control"
+                            [(ngModel)]="reservaact.titular.localidad" required>
+                    </div>
+                    <div class="col-md-6">
                         <label for="email" class="form-label">Correo Electrónico</label>
                         <input type="email" id="email" name="email" class="form-control"
                             [(ngModel)]="reservaact.titular.email" required>
@@ -68,17 +128,22 @@
                 <!-- Datos de la Embarcación -->
                 <h5 class="mt-4">Datos de la Embarcación</h5>
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label for="titular" class="form-label">Titular</label>
+                        <input type="text" id="titular" name="titular" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.titular" required>
+                    </div>
+                    <div class="col-md-4">
                         <label for="nombre_embarcacion" class="form-label">Nombre</label>
                         <input type="text" id="nombre_embarcacion" name="nombre_embarcacion" class="form-control"
                             [(ngModel)]="reservaact.embarcacion.nombre" required>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="eslora" class="form-label">Eslora (m)</label>
                         <input type="number" id="eslora" name="eslora" class="form-control"
                             [(ngModel)]="reservaact.embarcacion.eslora" required>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label for="manga" class="form-label">Manga (m)</label>
                         <input type="number" id="manga" name="manga" class="form-control"
                             [(ngModel)]="reservaact.embarcacion.manga" required>
@@ -93,12 +158,37 @@
                     </div>
                     <div class="col-md-4">
                         <label for="nib" class="form-label">NIB</label>
-                        <input type="text" id="nib" name="nib" class="form-control" [(ngModel)]="reservaact.embarcacion.nib">
+                        <input type="text" id="nib" name="nib" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion.nib">
                     </div>
                     <div class="col-md-4">
                         <label for="cin_hin" class="form-label">CIN/HIN</label>
                         <input type="text" id="cin_hin" name="cin_hin" class="form-control"
                             [(ngModel)]="reservaact.embarcacion.cin_hin">
+                    </div>
+                </div>
+
+                <!-- Datos de la Reserva -->
+                <h5 class="mt-4">Datos de la Reserva</h5>
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <label for="plaza" class="form-label">Plaza</label>
+                        <input type="number" id="plaza" name="plaza" class="form-control" [(ngModel)]="reservaact.plaza"
+                            required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control"
+                            [(ngModel)]="reservaact.fecha_inicio" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control"
+                            [(ngModel)]="reservaact.fecha_fin" required>
                     </div>
                 </div>
 
