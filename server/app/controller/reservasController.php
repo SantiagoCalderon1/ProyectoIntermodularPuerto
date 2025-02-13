@@ -53,6 +53,18 @@ function handleGet($db, $uri = null)
         $ccaa = $db->showMunicipioByProvincia(end($uri));
         echo json_encode($ccaa);
     }
+    else if (((array_slice($uri, -2, 1))[0]) === "titular" || end($uri) === "titular") {
+        $ccaa = $db->showTitulares(end($uri));
+        echo json_encode($ccaa);
+    }
+    else if (((array_slice($uri, -2, 1))[0]) === "embarcacion" || end($uri) === "embarcacion") {
+        $ccaa = $db->showEmbarcaciones(end($uri));
+        echo json_encode($ccaa);
+    }
+    else if (((array_slice($uri, -2, 1))[0]) === "embarcacionTitular" || end($uri) === "embarcacionTitular") {
+        $ccaa = $db->showEmbarcacionesByTitular(end($uri));
+        echo json_encode($ccaa);
+    }
 }
 
 function handlePost($db, $data)

@@ -131,4 +131,34 @@ class Reservations
                 return $this->conexion->dataQuery($sql);
         }
     }
+
+    function showTitulares($id){
+        if (is_numeric($id)) {
+            $sql = "SELECT * FROM titular WHERE id_titular = '$id'";
+                return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM titular";
+                return $this->conexion->dataQuery($sql);
+        }
+    }
+
+    function showEmbarcaciones($id){
+        if (is_numeric($id)) {
+            $sql = "SELECT * FROM embarcaciones WHERE id_embarcacion = '$id'";
+                return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM embarcaciones";
+                return $this->conexion->dataQuery($sql);
+        }
+    }
+
+    function showEmbarcacionesByTitular($id){
+        if (is_numeric($id)) {
+            $sql = "SELECT * FROM embarcaciones WHERE titular = '$id'";
+                return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM embarcaciones";
+                return $this->conexion->dataQuery($sql);
+        }
+    }
 }

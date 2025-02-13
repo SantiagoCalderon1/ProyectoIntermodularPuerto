@@ -38,7 +38,6 @@ export class ListaComponent {
   GET(): void {
     this.plazaService.obtengoPlazasApi().subscribe({
       next: (response) => {
-        console.log(response);
         this.dataPlaces = response;
       },
       error: (error) => {
@@ -48,7 +47,6 @@ export class ListaComponent {
 
     this.reservasService.obtengoReservasApi().subscribe({
       next: (response) => {
-        console.log(response);
         this.dataReservations = response;
       },
       error: (error) => {

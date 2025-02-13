@@ -46,6 +46,31 @@ export class ReservasService {
     return this.http.get<any>(this.apiUrl+"/municipio/"+nMunicipio);
   }
 
+  // Obtener titular
+  obtengoTitularesApi(): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/titular");
+  }
+
+  // Obtener titular por id
+  obtengoTitularApi(nTitular:number): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/titular/"+nTitular);
+  }
+
+  // Obtener embarcaciones
+  obtengoEmbarcacionesApi(): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/embarcacion");
+  }
+
+  // Obtener embarcacion por id
+  obtengoEmbarcacionApi(nEmbarcacion:number): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/embarcacion/"+nEmbarcacion);
+  }
+
+  // Obtener embarcacion por id
+  obtengoEmbarcacionTitularApi(nEmbarcacion:number): Observable<any> {
+    return this.http.get<any>(this.apiUrl+"/embarcacionTitular/"+nEmbarcacion);
+  }
+
   // Guardar una nueva reserva
   guardaNuevaReservaApi(reserva: Reserva): Observable<any> {
     return this.http.post<any>(this.apiUrl, JSON.stringify(reserva), this.httpOptions);
