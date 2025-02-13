@@ -5,13 +5,17 @@ import { TripulantesListComponent } from './components/tripulantes-list/tripulan
 import { DataTablesModule } from 'angular-datatables';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TransitosComponent } from './components/transitos/transitos.component';
+import { TransitosListComponent } from './components/transitos-list/transitos-list.component';
 
 
 
 @NgModule({
   declarations: [
     TripulantesComponent,
-    TripulantesListComponent
+    TripulantesListComponent,
+    TransitosComponent,
+    TransitosListComponent
   ],
   imports: [
     CommonModule,

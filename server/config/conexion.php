@@ -6,6 +6,7 @@ function openConexion()
 {
     //url local
     $mysqli = new mysqli('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+
     //$mysqli = new mysqli('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
 
     if ($mysqli->connect_errno) {

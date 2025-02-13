@@ -21,6 +21,9 @@ import { ListaComponent as listaInstalacionComponent } from './instalacion/compo
 import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
 import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
 
+import { TransitosComponent } from './transitos/components/transitos/transitos.component';
+import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   {
@@ -31,6 +34,9 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [authGuard]
   },
+  { path: "transitos-list", component: TransitosListComponent, canActivate: [authGuard] },
+  { path: "transitos", component: TransitosComponent, canActivate: [authGuard] },
+  { path: 'transitos/:embarcacion/:tipo', component: TransitosComponent, canActivate: [authGuard] },
 
 
   {

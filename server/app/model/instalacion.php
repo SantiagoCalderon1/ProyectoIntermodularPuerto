@@ -9,7 +9,6 @@ class Instalacion
     public string $tipo_instalacion;
     public $fecha_disposicion;
     public $estado;
-    public $embarcacion_menores;
     //funcion para obtener todas las intalaciones
     public static function getInstalaciones($id = "")
     {

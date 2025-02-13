@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transitos</title>
+</head>
+<body>
+    <div id="container-create-installation" class="container-fluid d-flex justify-content-center align-items-center">
+        <div class="col-7 col-md-11 col-lg-12">
+            <div class="card text-start shadow-lg">
+                <div class="card-header title text-center">
+                    <h2 class="fs-4">Crear Nueva Instalación</h2>
+                </div>
+                <div class="card-body">
+                    <form #crear="ngForm" (ngSubmit)="agregarTransito()">
+                        <div class="mb-3">
+                            <label for="anyo" class="form-label">Año:</label>
+                            <input type="number" class="form-control" [(ngModel)]="transitoAct.anyo" name="anyo" id="anyo"
+                                required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="codigo_instalacion" class="form-label">Código de Instalación:</label>
+                            <select class="form-control" [(ngModel)]="transitoAct.instalacion" name="codigo_instalacion" id="codigo_instalacion" required>
+                                <option *ngFor="let codigos of codigosInstalaciones" [value]="codigos">
+                                    {{ codigos }}
+                                </option>
+                            </select>
+                        </div>
+                        
+                        <p *ngIf="instalacionSeleccionada">Código seleccionado: {{ instalacionSeleccionada }}</p>
+    
+                        <div class="mb-3">
+                            <label for="fecha_entrada" class="form-label">Fecha de entrada:</label>
+                            <input class="form-control" type="date" [(ngModel)]="transitoAct.fecha_entrada"
+                                name="fecha_entrada" id="fecha_entrada" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="pantalan" class="form-label">Pantalan:</label>
+                            <input class="form-control" type="number" [(ngModel)]="transitoAct.pantalan"
+                                name="pantalan" id="pantalan" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="fecha_salida" class="form-label">Fecha de salida:</label>
+                            <input type="date" class="form-control" name="fecha_salida"
+                                [(ngModel)]="transitoAct.fecha_salida" id="fecha_salida" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="patron" class="form-label">Patrón:</label>
+                            <input type="text" class="form-control" name="patron" [(ngModel)]="transitoAct.patron"
+                                id="patron" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="datos_estancia" class="form-label">Datos de la estancia:</label>
+                            <textarea class="form-control" name="datos_estancia" [(ngModel)]="transitoAct.datos_estancia"
+                                id="datos_estancia" required></textarea>
+                        </div>
+    
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-save"></i> Guardar Tránsito
+                            </button>
+                            <button class="btn btn-secondary" [routerLink]="['/transitos-list']">
+                                <i class="fa-solid fa-list"></i> Listar Tránsitos
+                            </button>
+                        </div>
+                    </form>
+    
+                     <!--Mensajes de estado-->
+                    <p *ngIf="mensaje == 1" class="text-success text-center mt-3">Tránsito guardado correctamente
+                    </p>
+                    <p *ngIf="mensaje == 0" class="text-danger text-center mt-3">Error al guardar el tránsito</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
