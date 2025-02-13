@@ -72,13 +72,10 @@ const routes: Routes = [
   { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
 
 
-<<<<<<< HEAD
   { path: 'tripulantes', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'tripulantes/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
-=======
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
->>>>>>> 8cc5bdb (funcionalidad teminada con filtro de fechas)
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

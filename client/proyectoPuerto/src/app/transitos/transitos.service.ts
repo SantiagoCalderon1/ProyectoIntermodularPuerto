@@ -11,7 +11,7 @@ export class TransitosService {
   //URLs transitos
   // URLs tripulantes 
   // local
-  urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
+  urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
   //URL pruebas
   //urlApi = "http://aut-puerto.proyectos-2daw.es/app/controller/transitosController.php";
   //URL producción

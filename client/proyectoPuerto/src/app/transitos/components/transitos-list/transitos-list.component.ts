@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { TransitosService } from '../../transitos.service';
 import { Transito } from '../Transito';
+import { Rol } from '../../../roles/rol';
+import { AppService } from '../../../app.service';
+import { RolesService } from '../../../roles/roles.service';
 
 @Component({
   selector: 'app-transitos-list',
@@ -13,10 +16,25 @@ import { Transito } from '../Transito';
 export class TransitosListComponent {
   mensaje = 0;
   transitos: Transito[] = [];
+  public roles: Rol[] = [];
+  rol: number | null = null;
   ngOnInit(): void {
     this.listarTransitos();
+
+    this._appService.rol$.subscribe(rol => {
+      this.rol = rol;
+    });
+
+    this.listarolesService.obtengoRolesApi().subscribe({
+      next: (resultado) => {
+        this.roles = resultado.data;
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
   }
-  constructor(private transitosService: TransitosService) { }
+  constructor(private transitosService: TransitosService, private listarolesService: RolesService, private _appService: AppService) { }
 
   listarTransitos() {
     this.transitosService.getAllTransitos().subscribe({
