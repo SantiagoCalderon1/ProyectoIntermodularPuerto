@@ -8,7 +8,7 @@ import { Plaza } from './plazas';
 })
 export class PlazasService {
   //url local
-  private apiUrl = 'http://localhost:8080/server/app/controller/plazasController.php';
+  private apiUrl = 'http://localhost/ProyectoIntermodularPuerto/server/app/controller/plazasController.php';
   
   //apiUrl = "https://puerto.proyectos-2daw.es/app/controller/plazasController.php";
 
