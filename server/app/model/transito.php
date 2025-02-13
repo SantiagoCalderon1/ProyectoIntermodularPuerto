@@ -3,28 +3,24 @@ include_once "../../config/conexion.php";
 class Transito
 {
 
+    //devolvemos todos los trnasitos de la bbdd
     public static function getTodosTransitos()
     {
         $conexion = openConexion();
         $ssql = "SELECT * FROM `transito`";
         $resultado = $conexion->query($ssql);
-        if ($conexion) {
-            closeConexion($conexion);
-        }
         return $resultado;
     }
-
+    //devolvemos solo 1 transito de la bbdd, el de nºembarcacion que coincida con el parametro
     public static function getTransito(int $embarcacion)
     {
         $conexion = openConexion();
         $ssql = "SELECT * FROM `transito` WHERE `embarcacion`='$embarcacion'";
         $resultado = $conexion->query($ssql);
-        if ($conexion) {
-            closeConexion($conexion);
-        }
         return $resultado;
     }
 
+    //eliminamos un transito de la bbdd,el de nºembarcacion que coincida con el parametro
     public static function deleteTransito(int $embarcacion)
     {
         $conexion = openConexion();
@@ -35,11 +31,8 @@ class Transito
         } else {
             return false;
         }
-        if ($conexion) {
-            closeConexion($conexion);
-        }
     }
-
+    //añadimos un transito a la bbdd
     public static function agregarTransito(int $anyo, string $pantalan, string $instalacion, $fecha_entrada, $fecha_salida, string $patron, string $datos_estancia)
     {
         $conexion = openConexion();
@@ -50,11 +43,8 @@ class Transito
         } else {
             return false;
         }
-        if ($conexion) {
-            closeConexion($conexion);
-        }
     }
-
+    //modificamos un transito de la bbdd,el de nºembarcacion que coincida con el parametro
     public static function updateTransito(int $embarcacion, int $anyo = 0, string $pantalan = "", string $instalacion = "", $fecha_entrada = "", $fecha_salida = "", string $patron = "", string $datos_estancia = "")
     {
         $conexion = openConexion();

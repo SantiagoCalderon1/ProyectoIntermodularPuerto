@@ -32,6 +32,7 @@ export class TransitosListComponent {
       }
     })
   }
+
   eliminarTransito(embarcacion: number) {
     console.log("embarcacion=" + embarcacion);
     this.transitosService.desecharTransito(embarcacion).subscribe({

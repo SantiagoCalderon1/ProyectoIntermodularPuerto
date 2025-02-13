@@ -72,13 +72,13 @@ export class TransitosComponent {
 
 
   agregarTransito() {
-    console.log("tipo: " +this.tipo);
-    if(this.tipo == 2){
+    console.log("tipo: " + this.tipo);
+    if (this.tipo == 2) {
       console.log("TransitoAct" + this.transitoAct);
       let fEntrada = this.transitoAct.fecha_entrada;
       let fSalida = this.transitoAct.fecha_salida;
-      //let fecha_valida = this.comprobarEntradaSalida(fEntrada, fSalida);
-      //if (fecha_valida) {
+      let fecha_valida = this.comprobarEntradaSalida(fEntrada, fSalida);
+      if (fecha_valida) {
         this.transitosService.nuevoTransito(this.transitoAct).subscribe({
           next: (response) => {
             console.log("Transito creado", response);
@@ -92,11 +92,11 @@ export class TransitosComponent {
             console.log("Peticion completada");
           }
         })
-      //}else{
+      } else {
         console.log("fechas no válidas");
         this.mensaje = 2;
-      //}
-    }else if(this.tipo == 1){
+      }
+    } else if (this.tipo == 1) {
       this.transitosService.updateTransito(this.transitoAct).subscribe({
         next: (response) => {
           console.log("Transito modificado", response);
@@ -111,15 +111,31 @@ export class TransitosComponent {
 
   }
 
-  comprobarEntradaSalida(entrada: Date, salida: Date): boolean {
-    let resta = salida.getTime() - entrada.getTime();
+  comprobarEntradaSalida(entrada: any, salida: any): boolean {
+    let fechaEntrada = new Date(entrada);
+    let fechaSalida = new Date(salida);
     let hoy = new Date();
+
+    // asegurando que las fechas sean validas
+    if (isNaN(fechaEntrada.getTime()) || isNaN(fechaSalida.getTime())) {
+      console.error("Fechas inválidas:", entrada, salida);
+      return false;
+    }
+
+    let resta = fechaSalida.getTime() - fechaEntrada.getTime();
+
+    // Verifica que la fecha de salida sea posterior a la de entrada
     if (resta < 0) {
       return false;
     }
-    if (hoy > salida && hoy > entrada) {
+
+    // Verifica que ambas fechas no sean anteriores a hoy
+    if (hoy > fechaSalida || hoy > fechaEntrada) {
       return false;
     }
+
     return true;
   }
+
+
 }
