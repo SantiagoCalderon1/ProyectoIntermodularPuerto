@@ -33,11 +33,11 @@
                                 <td>{{ +muelle.ocupado === 1 ? 'Sí' : 'No' }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2 m-3">
-                                        <button [disabled]="muelles.length === 0 || rol != 4" class="btn btn-warning"
+                                        <button [disabled]="muelles.length === 0 || rol != 4 && rol != 3" class="btn btn-warning"
                                             [routerLink]="['/formmuelles',muelle.id_muelle, 2]">
                                             <i class="fa-solid fa-pen"></i> Actualizar Muelle
                                         </button>
-                                        <button [disabled]="muelles.length === 0 || rol != 4" class="btn btn-danger"
+                                        <button [disabled]="muelles.length === 0 || rol != 4 && rol != 3" class="btn btn-danger"
                                             [routerLink]="['/formmuelles',muelle.id_muelle, 3]">
                                             <i class="fa-solid fa-trash-can"></i> Eliminar Muelle
                                         </button>
