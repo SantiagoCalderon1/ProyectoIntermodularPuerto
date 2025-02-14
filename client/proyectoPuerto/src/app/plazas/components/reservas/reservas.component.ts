@@ -53,7 +53,7 @@ export class ReservaComponent {
       this.rol = rol;
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
-    this.id_reserva = +this._aroute.snapshot.params['id_plaza_base'];
+    this.id_reserva = +this._aroute.snapshot.params['id_reserva'];
     this.titulares = [];
     this.traeTitulares();
     this.traeEmbarcaciones();

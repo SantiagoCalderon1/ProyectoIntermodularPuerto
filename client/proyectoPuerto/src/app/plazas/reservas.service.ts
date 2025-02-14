@@ -78,7 +78,7 @@ export class ReservasService {
 
   // Obtener una reserva por ID
   obtengoReservaApi(nreserva: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${nreserva}`); // La API obtiene el ID desde la URL
+    return this.http.get<any>(`${this.apiUrl}/reservas/${nreserva}`); // La API obtiene el ID desde la URL
   }
 
   // Modificar una reserva existente
