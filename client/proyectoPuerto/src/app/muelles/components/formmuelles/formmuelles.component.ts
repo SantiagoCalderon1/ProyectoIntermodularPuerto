@@ -83,6 +83,10 @@ export class FormmuellesComponent {
     } else {
       this.muelleact.ocupado = 0;
     }
+    if (this.muelleact.nombre_muelle.trim() === '' || this.muelleact.descripcion.trim() === '') {
+      this.toastr.error('No estan permitidos los campos vacíos');
+      return;
+    }
     this.muellesService.agregarMuelleApi(this.muelleact).subscribe(
       (respuesta) => {
         if (respuesta.success) {
