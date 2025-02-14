@@ -53,12 +53,21 @@ export class ReservaComponent {
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
     this.id_reserva = +this._aroute.snapshot.params['id_reserva'];
+    this._reservasService.obtengoReservaApi(this.id_reserva).subscribe({
+      next: (resultado) => {
+        console.log('Resultado:', resultado/* this.reservaact */);
+        this.reservaact = resultado[0];
+        console.log('Reserva:', this.reservaact);
+      }
+    });
     this.titulares = [];
     this.traeTitulares();
     this.traeEmbarcaciones();
     this.traePlazas();
 
     if (this.tipo == 1 || this.tipo == 2) {
+      setTimeout(() => {
+      }, 100);
       this.traeReserva(this.id_reserva);
     }
   }
@@ -109,6 +118,7 @@ export class ReservaComponent {
   private traeTitulares() {
     this._reservasService.obtengoTitularesApi().subscribe({
       next: (resultado) => {
+        console.log('Resultado:', resultado);
         this.titulares = resultado
       },
       error: () => this.toastr.error('Error')
@@ -195,6 +205,7 @@ export class ReservaComponent {
   }
 
   guardaReserva(): void {
+    console.log(this.reservaact);
     if (this.reservaForm?.valid || this.tipo === 2) {
       this.formularioCambiado = false;
 
@@ -206,6 +217,8 @@ export class ReservaComponent {
       this.reservaact.plaza = plaza
       this.reservaact.embarcacion = embarcacion
       this.reservaact.titular = titular
+      console.log(plaza, embarcacion, titular);
+      console.log(this.reservaact);
 
       if (this.tipo === 0) { // Crear nueva reserva
         this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
@@ -274,13 +287,6 @@ export class ReservaComponent {
 
   cambiado(): void {
     this.formularioCambiado = true;
-  }
-
-  validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
-    return {
-      [validClass]: ngModel.touched && ngModel.valid,
-      [errorClass]: ngModel.touched && ngModel.invalid
-    };
   }
 }
 

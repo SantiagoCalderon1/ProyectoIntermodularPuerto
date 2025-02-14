@@ -11,37 +11,23 @@
                         <label for="titular" class="form-label">Titular</label>
                         <select id="titular" name="titular" class="form-control" [(ngModel)]="reservaact.titular"
                             (ngModelChange)="actualizaTitularActual(); actualizaTitular(); traeEmbarcacionTitular(); changeTitular()">
-                            <option *ngIf="!changedTitular" [ngValue]="reservaact.titular">{{ titulares[0].nombre }} {{ titulares[0].apellidos }}</option>
                             <option *ngFor="let item of titulares" [ngValue]="item">
                                 {{ item.nombre }} {{ item.apellidos }}
                             </option>
+
                         </select>
 
                     </div>
                     <div class="col-md-6">
-                        <label for="documento" class="form-label">Documento</label>
-                        <input type="text" value="{{datosTitular}}" class="form-control" disabled>
-                    </div>
-                </div>
-
-                <!-- Datos de la Embarcación -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
                         <label for="embarcacion" class="form-label">Embarcacion</label>
-                        <input *ngIf="!this.titActual[0]?.id_titular" type="text" value="Titular no seleccionado"
-                            class="form-control" disabled>
-                        <select *ngIf="this.titActual[0]?.id_titular" id="embarcacion" name="embarcacion"
-                            class="form-control" [(ngModel)]="reservaact.embarcacion"
-                            (ngModelChange)="actualizaEmbarcacionActual()" (ngModelChange)="actualizaEmbarcacion()">
+                        <select id="embarcacion" name="embarcacion" class="form-control"
+                            [(ngModel)]="reservaact.embarcacion" (ngModelChange)="actualizaEmbarcacionActual()"
+                            (ngModelChange)="actualizaEmbarcacion()">
                             <option [ngValue]="null">Seleccione una embarcacion</option>
                             <option *ngFor="let item of embarcaciones" [ngValue]="item">
                                 {{ item.nombre }}
                             </option>
                         </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="documento" class="form-label">Documento</label>
-                        <input type="text" value="{{datosEmbarcacion}}" class="form-control" disabled>
                     </div>
                 </div>
 
@@ -65,7 +51,7 @@
                         <label for="plaza" class="form-label">Plaza</label>
                         <select id="plaza" name="plaza" class="form-control" [(ngModel)]="reservaact.plaza"
                             (ngModelChange)="actualizaPlazaActual()">
-                            <option *ngIf="(tipo==1||tipo==2)&&changedPlaza==false">{{ reservaact.plaza }}</option>
+                            <option *ngIf="(tipo==1||tipo==2)&&changedPlaza==false" selected>{{ plazas[reservaact.plaza].nombre }}</option>
                             <option *ngFor="let item of plazas" [ngValue]="item">
                                 {{ item.nombre }}
                             </option>

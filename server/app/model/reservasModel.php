@@ -29,7 +29,7 @@ class Reservations
         $plaza = $input['plaza'];
         $titular = $input['titular'];
         $embarcacion = $input['embarcacion'];
-        $fecha_ini = $input['fecha_inicio'];
+        $fecha_ini = $input['fecha_ini'];
         $fecha_fin = $input['fecha_fin'];
 
         $sql = "INSERT INTO reservas (plaza, titular, embarcacion, fecha_ini, fecha_fin) VALUES ($plaza, $titular, $embarcacion, '$fecha_ini', '$fecha_fin');";

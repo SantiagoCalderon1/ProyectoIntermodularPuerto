@@ -7,12 +7,9 @@ import { Reserva } from './plazas';
   providedIn: 'root'
 })
 export class ReservasService {
-  //url local
+  // URL de la API
   private apiUrl = 'http://localhost:8080/server/app/controller/reservasController.php';
   
-  //apiUrl = "https://puerto.proyectos-2daw.es/app/controller/reservasController.php";
-
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -23,74 +20,51 @@ export class ReservasService {
 
   // Obtener todas las reservas
   obtengoReservasApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/reservas");
+    return this.http.get<any>(`${this.apiUrl}/reservas`);
   }
 
-  // Obtener todas las provincias
-  obtengoProvinciasApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/provincia");
-  }
-
-  // Obtener provincia por id
-  obtengoProvinciaApi(nCcaa:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/provincia/"+nCcaa);
-  }
-
-  // Obtener todos los municipios
-  obtengoMunicipiosApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/municipio");
-  }
-
-  // Obtener municipio por id
-  obtengoMunicipiosProvinciaApi(nMunicipio:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/municipio/"+nMunicipio);
-  }
-
-  // Obtener titular
+  // Obtener todos los titulares
   obtengoTitularesApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/titular");
+    return this.http.get<any>(`${this.apiUrl}/titular`);
   }
 
-  // Obtener titular por id
-  obtengoTitularApi(nTitular:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/titular/"+nTitular);
+  // Obtener titular por ID
+  obtengoTitularApi(idTitular: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/titular/${idTitular}`);
   }
 
-  // Obtener embarcaciones
+  // Obtener todas las embarcaciones
   obtengoEmbarcacionesApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/embarcacion");
+    return this.http.get<any>(`${this.apiUrl}/embarcacion`);
   }
 
-  // Obtener embarcacion por id
-  obtengoEmbarcacionApi(nEmbarcacion:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/embarcacion/"+nEmbarcacion);
+  // Obtener embarcación por ID
+  obtengoEmbarcacionApi(idEmbarcacion: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/embarcacion/${idEmbarcacion}`);
   }
 
-  // Obtener embarcacion por id
-  obtengoEmbarcacionTitularApi(nEmbarcacion:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/embarcacionTitular/"+nEmbarcacion);
+  // Obtener embarcaciones de un titular
+  obtengoEmbarcacionTitularApi(idTitular: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/embarcacionTitular/${idTitular}`);
   }
 
   // Guardar una nueva reserva
   guardaNuevaReservaApi(reserva: Reserva): Observable<any> {
-    return this.http.post<any>(this.apiUrl, JSON.stringify(reserva), this.httpOptions);
+    return this.http.post<any>(`${this.apiUrl}`, JSON.stringify(reserva), this.httpOptions);
   }
 
   // Obtener una reserva por ID
-  obtengoReservaApi(nreserva: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/reservas/${nreserva}`);
+  obtengoReservaApi(idReserva: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/reservas/${idReserva}`);
   }
   
   // Modificar una reserva existente
-  modificaReservaApi(nreserva: number, reserva: Reserva): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${nreserva}`, JSON.stringify(reserva), this.httpOptions);
+  modificaReservaApi(idReserva: number, reserva: Reserva): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/reservas/${idReserva}`, JSON.stringify(reserva), this.httpOptions);
   }
-  
 
   // Borrar una reserva
-  borraReservaApi(nreserva: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${nreserva}`, this.httpOptions);
+  borraReservaApi(idReserva: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/reservas/${idReserva}`, this.httpOptions);
   }
-  
 }
-
