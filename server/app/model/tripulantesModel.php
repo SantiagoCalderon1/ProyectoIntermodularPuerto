@@ -3,22 +3,22 @@ include_once '../../config/conexion.php';
 
 abstract class Tripulantes
 {
-
     /**
      * Obtiene a un tripulante si se le pasa un id, en otro caso los obtiene a todos.
      * 
-     * @param string $numeroDocumento  El numero de documento proporcionado, por defecto vacío.
-     * @return array  Devuelve 1 array asociativo si la query se ejecutó con id, si no, retorna un array de arrays asociativos, en otros casos, un array vacío.
+     * @param string $numeroDocumento  El numero de documento proporcionado o numero de embarcación, por defecto vacíos.
+     * @return array  Devuelve arrays asociativo si la query se ejecutó correctamente.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function getAllTripulantes(string $numeroDocumento)
+    static function getAllTripulantes(string $numeroDocumento = '', string $embarcacion = '')
     {
         $conexion = null;
         try {
             $conexion = openConexion();
             if (empty($numeroDocumento)) {
-                $sql = "SELECT * FROM tripulantes";
+                $sql = "SELECT * FROM tripulantes WHERE embarcacion = ?";
                 $stmt = $conexion->prepare($sql);
+                $stmt->bind_param("s", $embarcacion);
             } else {
                 $sql = "SELECT * FROM tripulantes WHERE numeroDocumento = ?";
                 $stmt = $conexion->prepare($sql);
@@ -36,7 +36,6 @@ abstract class Tripulantes
         }
     }
 
-
     /**
      * Inserta un tripulante.
      * 
@@ -52,8 +51,6 @@ abstract class Tripulantes
                 return false;
             }
             $conexion = openConexion();
-            // Hashear la contraseña
-            // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $fields = [];
             $values = [];
             $types = '';
@@ -62,7 +59,8 @@ abstract class Tripulantes
                 $values[] = $value;
                 $types .= Tripulantes::getTypesBind($value);
             }
-            $sql = "INSERT INTO tripulantes (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $placeholders = implode(',', array_fill(0, count($fields), '?'));
+            $sql = "INSERT INTO tripulantes (" . implode(',', $fields) . ") VALUES ($placeholders)";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
@@ -84,7 +82,7 @@ abstract class Tripulantes
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
-    static function updateTripulante(object $input, $oldNumeroDocumento)
+    static function updateTripulante($input, $oldNumeroDocumento)
     {
         $conexion = null;
         try {
@@ -95,13 +93,10 @@ abstract class Tripulantes
             foreach ($input as $key => $value) {
                 $fields[] = "$key = ?";
                 $values[] = $value;
-
                 $types .= Tripulantes::getTypesBind($value);
             }
-
             $values[] = $oldNumeroDocumento;
             $types .= Tripulantes::getTypesBind($oldNumeroDocumento);
-
             $sql = "UPDATE tripulantes SET  " . implode(", ", $fields) . "   WHERE numeroDocumento = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
@@ -120,7 +115,7 @@ abstract class Tripulantes
     /**
      * Función para elimina a un tripulante.
      * 
-     * @param string $username  El nombre de usuario proporcionado.
+     * @param string $numeroDocumento  El numero de documento proporcionado.
      * @return bool  Devuelve true si la query se ejecutó (si hubo filas afectadas), de lo contrario, false.
      * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
      */
@@ -136,7 +131,6 @@ abstract class Tripulantes
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $numeroDocumento);
             $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en deleteTripulante: Excepción - " . $e->getMessage()];
@@ -164,5 +158,44 @@ abstract class Tripulantes
         } elseif (is_null($value)) {
             return 's'; //  NULL como string (por si acaso)
         }
+    }
+
+    // PARTE DE FTP 
+    // ===================================================================================
+    /**
+     * Inserta un documento el servidor.
+     * 
+     * @param file $fileData  El objeto file que proporciona el usuario, contiene los datos a insertar.
+     * @return bool  Devuelve true un Json con el url del documento para ser insertado más adelante en la BBDD, de lo contrario, false.
+     */
+    static function  insertDocumentoFTP($fileData)
+    {
+        if (!$fileData || !isset($fileData['tmp_name']) || empty($fileData['name'])) {
+            return false;
+        }
+        $uploadDir = '/var/www/html/uploads/';
+        $uploadDirBBDD = 'https://uat-puerto.proyectos-2daw.es/uploads/' . basename($fileData['name']);
+        $uploadFile = $uploadDir . basename($fileData['name']);
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        if (!isset($fileData['tmp_name'])) {
+            return false;
+        }
+        $resultMove = copy($fileData['tmp_name'], $uploadFile);
+        return $resultMove ? ["documentoUrl" => $uploadDirBBDD] : false;
+    }
+
+    /**
+     * Elimina un documento el servidor.
+     * 
+     * @param string $documentoUrl  La URL del file que proporciona el usuario, contiene el nombre del fichero.
+     * @return bool  Devuelve true, si el ficheor se eliminó correctamente, false en caso contrario.
+     */
+    static function deleteDocumentoFTP(string $documentoUrl)
+    {
+        $uploadDir = '/var/www/html/uploads/';
+        $uploadFile = $uploadDir . basename($documentoUrl);
+        return unlink($uploadFile);
     }
 }

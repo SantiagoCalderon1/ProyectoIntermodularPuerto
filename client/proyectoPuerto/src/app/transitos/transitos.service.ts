@@ -11,17 +11,18 @@ export class TransitosService {
   //URLs transitos
   // URLs tripulantes 
   // local
-  urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
+  //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
   //URL pruebas
   //urlApi = "http://aut-puerto.proyectos-2daw.es/app/controller/transitosController.php";
+  //urlApi = "http://localhost:8080/server/app/controller/tripulantesController.php";
+  //URL pruebas
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
   //URL producción
   //urlApi = "https://puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
 
 
   httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
+    headers: new HttpHeaders()
   }
 
   constructor(private http: HttpClient) { }
@@ -67,8 +68,8 @@ export class TransitosService {
 
 
   // Inicio Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  getAllTripulantes(): Observable<any> {
-    return this.http.get(`${this.urlApi}/tripulantes`);
+  getAllTripulantes(embarcacion: number): Observable<any> {
+    return this.http.get(`${this.urlApi}/tripulantes/${embarcacion}`);
   }
 
   getTripulante(numeroDocumento: string): Observable<any> {
@@ -76,15 +77,16 @@ export class TransitosService {
   }
 
   insertNewTripulante(data: any): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/insert`, data, this.httpOptions);
+    return this.http.post<any>(`${this.urlApi}/insert`, data);
   }
 
   updateTripulante(numeroDocumento: string, data: any): Observable<any> {
-    return this.http.put<any>(`${this.urlApi}/update/${numeroDocumento}`, JSON.stringify(data), this.httpOptions);
+    return this.http.post<any>(`${this.urlApi}/update/${numeroDocumento}`, data);
   }
 
   deleteTripulante(numeroDocumento: string): Observable<any> {
     return this.http.delete(`${this.urlApi}/delete/${numeroDocumento}`);
   }
+
   // Fin Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }

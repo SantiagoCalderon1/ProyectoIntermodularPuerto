@@ -17,7 +17,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <p>¿Está seguro de eliminar al tripulante {{ selectedTripulante.nombre }} con Número de
-                                    identificación {{selectedTripulante.numeroDocumento}}?</p>
+                                    identificación {{selectedTripulante.numeroDocumento}} de la embarcación {{ embarcacion}}?</p>
                             </div>
                         </div>
                     </div>
@@ -139,6 +139,7 @@
                 <label for="inputFileUpload" class="form-label">Subir documento de identidad (PDF o Imagen):</label>
                 <input type="file" class="form-control rounded-pill" id="inputFileUpload" ngModel #file (change)="seleccionarDocumento($event)" accept="image/*,application/pdf">
             </div>
+
         </div>
     </div>
 </ng-template>

@@ -77,6 +77,8 @@ const routes: Routes = [
   { path: 'tripulantes/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
+  // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -75,6 +75,8 @@ export class TripulantesComponent {
   public tituloConfirmacion: string = '';
   public formStatus: boolean = false;
   rol: number | null = null;
+  public embarcacion : number = 0;
+
 
   public selectedTripulante: Tripulante = {
     tipoDocumento: 0,
@@ -87,7 +89,9 @@ export class TripulantesComponent {
     paisNacimiento: '',
     lugarNacimiento: '',
     fechaExpeDocumento: new Date(),
-    fechaCadDocumento: new Date()
+    fechaCadDocumento: new Date(),
+    embarcacion: 0,
+    documentoUrl: ''
   };
 
   constructor(private http: HttpClient,
@@ -103,10 +107,12 @@ export class TripulantesComponent {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
-
+    
     this._aroute.params.subscribe(params => {
       this.numeroDocumento = params['numeroDocumento'];
       this.option = params['option'];
+      this.embarcacion = params['embarcacion'];
+
       this.tituloConfirmacion = this.createTitle(params['option']);
       if (this.numeroDocumento) {
         this.getSelectedTripulante(this.numeroDocumento);
@@ -118,13 +124,11 @@ export class TripulantesComponent {
   createTitle(option: string) {
     switch (option) {
       case 'Insert':
-        return "Insertando un nuevo tripulante";
+        return "Insertando un nuevo tripulante en la embarcación - " + this.embarcacion;
       case 'Update':
-        return "Actualizando al tripulante - " + this.numeroDocumento;
+        return "Actualizando al tripulante - " + this.numeroDocumento + " de la embarcación - "  + this.embarcacion;
       case 'Delete':
-        return "Eliminando al tripulante - " + this.numeroDocumento;
-      case 'Habilitar':
-        return "Habilitando al tripulante - " + this.numeroDocumento;
+        return "Eliminando al tripulante - " + this.numeroDocumento+ " de la embarcación - "  + this.embarcacion;
       default:
         return "";
     }
@@ -171,9 +175,9 @@ export class TripulantesComponent {
   }
 
   insertNewTripulante() {
-    console.log(this.selectedTripulante);
-
     let formData = this.crearFormulario();
+    console.log('FormData' + formData);
+    
     this._transitosService
       .insertNewTripulante(formData)
       .subscribe({
@@ -200,8 +204,11 @@ export class TripulantesComponent {
   }
 
   updateTripulante() {
+    let formData = this.crearFormulario();
+    console.log('FormData' + formData);
+
     this._transitosService
-      .updateTripulante(this.numeroDocumento, this.selectedTripulante)
+      .updateTripulante(this.numeroDocumento, formData)
       .subscribe({
         next: (response) => {
           if (response.success) {
@@ -273,7 +280,7 @@ export class TripulantesComponent {
       paisNacimiento: '',
       lugarNacimiento: '',
       fechaExpeDocumento: new Date(),
-      fechaCadDocumento: new Date()
+      fechaCadDocumento: new Date(),
     });
     if (this.tripulanteForm) {
       this.tripulanteForm.resetForm();
@@ -304,7 +311,7 @@ export class TripulantesComponent {
     let extension = nombreFichero.split('.').pop();
     let nuevoNombreFichero = 'tripulante_' + this.selectedTripulante.numeroDocumento + '.' + extension;
     let renamedFile = new File([file], nuevoNombreFichero, { type: file.type });
-    console.log(renamedFile.name);
+    console.log('Nombre del fichero: ' + renamedFile.name);
     return renamedFile;
   }
 
@@ -312,11 +319,12 @@ export class TripulantesComponent {
     let formData = new FormData();
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
-      console.log("Archivo añadido al FormData:", this.selectedFile);
+      console.log("Archivo añadido al FormData: ", this.selectedFile);
     } else {
       console.warn("No se seleccionó ningún archivo.");
     }
     formData.append('tripulante', JSON.stringify(this.selectedTripulante));
+    console.log("Tripulante añadido al FormData: ", this.selectedTripulante);
     console.log("Datos a enviar:", formData);
     return formData;
   }

@@ -4,6 +4,7 @@ import { TransitosService } from '../../transitos.service';
 import { AppService } from '../../../app.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -16,20 +17,33 @@ import jsPDF from 'jspdf';
 export class TripulantesListComponent {
   public title: string = "Tripulantes";
   public tripulantes: any[] = [];
+  public option: string = '';
 
   public dtOptions: Config = {};
   public selectedTripulante: string = '';
   public filterSearch: string = '';
   rol: number | null = null;
 
+  public embarcacion : number = 0;
 
-  constructor(private _transitosService: TransitosService, private _appService: AppService
+
+  constructor(
+    private _transitosService: TransitosService,
+    private _appService: AppService,
+    private _route: Router,
+    private _aroute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
+
+    // this._aroute.params.subscribe(params => {
+    //   this.embarcacion = params['embarcacion'];
+    // });
+
+    this.embarcacion = 3;
 
     this.selectedTripulante = '';
 
@@ -54,7 +68,7 @@ export class TripulantesListComponent {
       },
     };
 
-    this._transitosService.getAllTripulantes().subscribe({
+    this._transitosService.getAllTripulantes(1).subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
           this.tripulantes = response.data;
@@ -78,12 +92,7 @@ export class TripulantesListComponent {
     doc.save('tablaUsers.pdf');
   }
 
-  selectUser(numeroDocumento: string, event: any) {
-    this.selectedTripulante = event.target.checked ? numeroDocumento : '';
-  }
-
-  obtenerDocumento(numeroDocumento: string){
+  obtenerDocumento(numeroDocumento: string) {
 
   }
-
 }
