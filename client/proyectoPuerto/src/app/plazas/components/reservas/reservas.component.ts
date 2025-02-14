@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Plaza, Reserva,  } from '../../plazas';
+import { Embarcacion, Plaza, Reserva, Titular } from '../../plazas';
 import { NgForm, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservasService } from '../../reservas.service';
@@ -21,12 +21,14 @@ export class ReservaComponent {
   public id_reserva: number = 0;
   public tipo: number = 0;
   public titulares: any[] = [];
+  public titular: Titular = new Titular(0, "", "", "", 0, "", "", "", 0, 0, "", "", "", "", "", 0, 0, "");
+  public embarcacion: Embarcacion = new Embarcacion(0, "", 0, 0, 0, "", "", "", 0);
+  public plaza: Plaza = new Plaza(0, "", "");
   public titActual: any[] = [];
   public datosTitular: string = "Titular no seleccionado";
 
   public embarcaciones: any[] = [];
   public embActual: any[] = [];
-  public plazaActual: any[] = [];
   public datosEmbarcacion: string = "Embarcacion no seleccionada";
 
   rol: number | null = null;
@@ -40,10 +42,9 @@ export class ReservaComponent {
     0,
     0,
   );
+  public plazaact: Plaza = { id_plaza_base: 0, nombre: '', instalacion: ''};
   public plazas: any[] = [];
   provincia: any[] = [];
-  changedTitular: boolean = false;
-  changedPlaza: boolean = false;
 
   constructor(private _aroute: ActivatedRoute, private _plazasService: PlazasService, private _reservasService: ReservasService, private _route: Router, private toastr: ToastrService, private _appService: AppService) { }
 
@@ -52,22 +53,13 @@ export class ReservaComponent {
       this.rol = rol;
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
-    this.id_reserva = +this._aroute.snapshot.params['id_reserva'];
-    this._reservasService.obtengoReservaApi(this.id_reserva).subscribe({
-      next: (resultado) => {
-        console.log('Resultado:', resultado/* this.reservaact */);
-        this.reservaact = resultado[0];
-        console.log('Reserva:', this.reservaact);
-      }
-    });
+    this.id_reserva = +this._aroute.snapshot.params['id_plaza_base'];
     this.titulares = [];
     this.traeTitulares();
     this.traeEmbarcaciones();
     this.traePlazas();
 
     if (this.tipo == 1 || this.tipo == 2) {
-      setTimeout(() => {
-      }, 100);
       this.traeReserva(this.id_reserva);
     }
   }
@@ -86,39 +78,23 @@ export class ReservaComponent {
     });
   }
 
-  public changeTitular(){
-    this.changedTitular = true;
-  }
-
-  public changePlaza(){
-    this.changedPlaza = true;
-  }
-
   private traeReserva(id_reserva: number) {
     this._reservasService.obtengoReservaApi(id_reserva).subscribe({
       next: (resultado) => {
-        this.reservaact = resultado[0]; 
-  
-        // Si la API devuelve solo el ID, busca el objeto completo
-        const titularEncontrado = this.titulares.find(t => t.id_titular === this.reservaact.titular);
-        this.reservaact.titular = titularEncontrado ? titularEncontrado : null;
-  
-        this.actualizaTitularActual();
-        this.actualizaEmbarcacionActual();
-        this.actualizaPlazaActual();
+        this.reservaact = resultado[0];
       },
       error: (error) => {
-        this.toastr.error(error, 'Error al obtener la reserva');
+        this.toastr.error(error, 'Error al obtener la plaza');
+      },
+      complete: () => {
+        console.log('Operación completada.');
       }
     });
   }
-  
-  
 
   private traeTitulares() {
     this._reservasService.obtengoTitularesApi().subscribe({
       next: (resultado) => {
-        console.log('Resultado:', resultado);
         this.titulares = resultado
       },
       error: () => this.toastr.error('Error')
@@ -126,7 +102,7 @@ export class ReservaComponent {
   }
 
   actualizaTitularActual() {
-    this.titActual[0] = this.reservaact.titular
+    this.titActual[0] = this.titular
   }
 
   actualizaTitular() {
@@ -154,7 +130,8 @@ export class ReservaComponent {
   }
 
   actualizaEmbarcacionActual() {
-    this.embActual[0] = this.reservaact.embarcacion
+    this.embActual[0] = this.embarcacion
+    console.log(this.embActual);
   }
 
   actualizaEmbarcacion() {
@@ -166,6 +143,7 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionApi(id).subscribe({
         next: (resultado) => {
           this.datosEmbarcacion = resultado[0]["matricula"]
+          console.log(this.datosEmbarcacion);
         },
         error: () => this.toastr.error('Error')
       });
@@ -182,44 +160,21 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionTitularApi(id).subscribe({
         next: (resultado) => {
           this.embarcaciones = resultado
+          console.log(this.embarcaciones);
         },
         error: () => this.toastr.error('Error')
       });
     }
   }
 
-  getEmbarcacionActual() {
-    return this.embActual.length > 0 ? this.embActual[0] : null;
-  }
-
-  actualizaPlazaActual() {
-    this.plazaActual[0] = this.reservaact.plaza
-  }
-
-  getPlazaActual() {
-    return this.plazaActual.length > 0 ? this.plazaActual[0] : null;
-  }
-
-  getTitularActual() {
-    return this.titActual.length > 0 ? this.titActual[0] : null;
-  }
-
   guardaReserva(): void {
-    console.log(this.reservaact);
     if (this.reservaForm?.valid || this.tipo === 2) {
       this.formularioCambiado = false;
-
-      // Asegurar que se asignen correctamente los datos
-      let embarcacion = this.getEmbarcacionActual()?.id_embarcacion ?? 0;
-      let plaza = this.getPlazaActual()?.id_plaza_base ?? 0;
-      let titular = this.getTitularActual()?.id_titular ?? 0;
-
-      this.reservaact.plaza = plaza
-      this.reservaact.embarcacion = embarcacion
-      this.reservaact.titular = titular
-      console.log(plaza, embarcacion, titular);
-      console.log(this.reservaact);
-
+      this.reservaact.embarcacion = this.embarcacion.id_embarcacion
+      this.reservaact.titular = this.titular.id_titular
+      this.reservaact.plaza = this.plaza.id_plaza_base
+      console.log("Guardando reserva...", this.reservaact);
+  
       if (this.tipo === 0) { // Crear nueva reserva
         this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
           next: (resultado) => {
@@ -236,7 +191,7 @@ export class ReservaComponent {
           },
           complete: () => console.log('Operación completada.')
         });
-
+  
       } else if (this.tipo === 1) { // Modificar reserva existente
         this._reservasService.modificaReservaApi(this.id_reserva, this.reservaact).subscribe({
           next: (resultado) => {
@@ -253,7 +208,7 @@ export class ReservaComponent {
           },
           complete: () => console.log('Operación completada.')
         });
-
+  
       } else if (this.tipo === 2) { // Eliminar reserva
         this._reservasService.borraReservaApi(this.id_reserva).subscribe({
           next: (resultado) => {
@@ -276,7 +231,7 @@ export class ReservaComponent {
       console.warn("Formulario inválido:", this.reservaForm);
     }
   }
-
+  
 
   canDeactivate(): boolean {
     if (this.formularioCambiado) {
@@ -287,6 +242,13 @@ export class ReservaComponent {
 
   cambiado(): void {
     this.formularioCambiado = true;
+  }
+
+  validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
+    return {
+      [validClass]: ngModel.touched && ngModel.valid,
+      [errorClass]: ngModel.touched && ngModel.invalid
+    };
   }
 }
 
