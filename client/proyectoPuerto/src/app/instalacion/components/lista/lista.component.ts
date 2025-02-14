@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InstalacionService } from '../../instalacion.service';
 import { Instalacion } from '../instalacion';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-lista',
@@ -12,6 +13,7 @@ export class ListaComponent {
   constructor(private instalacionesService: InstalacionService) { }
   mensajeEliminacion = 3;
   instalaciones: Instalacion[] = [];
+  instalacionSeleccionada: Instalacion | null = null;
   ngOnInit(): void {
     this.listarInstalaciones();
   }
@@ -61,5 +63,29 @@ export class ListaComponent {
       }
     })
 
+  }
+
+  confirmarEliminacion() {
+    if (this.instalacionSeleccionada) {
+      this.eliminarInstalacion(this.instalacionSeleccionada.id_instalacion);
+      // Cerrar el modal manualmente
+      const modalElement = document.getElementById('modalConfirmarEliminacion');
+      if (modalElement) {
+        const modalBootstrap = bootstrap.Modal.getInstance(modalElement);
+        modalBootstrap.hide();
+      }
+      // Limpia la selección
+      this.instalacionSeleccionada = null;
+    }
+  }
+
+  // Método para abrir el modal
+  abrirModal(instalacion: Instalacion) {
+    this.instalacionSeleccionada = instalacion; // Asigna el tránsito seleccionado
+    const modalElement = document.getElementById('modalConfirmarEliminacion');
+    if (modalElement) {
+      const modalBootstrap = new bootstrap.Modal(modalElement);
+      modalBootstrap.show(); // Abre el modal
+    }
   }
 }
