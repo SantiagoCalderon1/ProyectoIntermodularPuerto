@@ -78,21 +78,19 @@ export class ReservasService {
 
   // Obtener una reserva por ID
   obtengoReservaApi(nreserva: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${nreserva}`); // La API obtiene el ID desde la URL
+    return this.http.get<any>(`${this.apiUrl}/reservas/${nreserva}`);
   }
-
+  
   // Modificar una reserva existente
   modificaReservaApi(nreserva: number, reserva: Reserva): Observable<any> {
-    const plazaConId = { ...reserva, id: nreserva };
-  
-    return this.http.put<any>(this.apiUrl, JSON.stringify(plazaConId), this.httpOptions);
+    return this.http.put<any>(`${this.apiUrl}/${nreserva}`, JSON.stringify(reserva), this.httpOptions);
   }
   
 
   // Borrar una reserva
   borraReservaApi(nreserva: number): Observable<any> {
-    const body = JSON.stringify({ id: nreserva });
-    return this.http.request<any>('DELETE', this.apiUrl, { body, ...this.httpOptions });
+    return this.http.delete<any>(`${this.apiUrl}/${nreserva}`, this.httpOptions);
   }
+  
 }
 

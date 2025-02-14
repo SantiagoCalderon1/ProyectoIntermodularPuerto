@@ -44,24 +44,19 @@ function handleGet($db, $uri = null)
         }
 
         echo json_encode($res);
-    }
-    else if (((array_slice($uri, -2, 1))[0]) === "provincia" || end($uri) === "provincia") {
+    } else if (((array_slice($uri, -2, 1))[0]) === "provincia" || end($uri) === "provincia") {
         $ccaa = $db->showProvincia(end($uri));
         echo json_encode($ccaa);
-    } 
-    else if (((array_slice($uri, -2, 1))[0]) === "municipio" || end($uri) === "municipio") {
+    } else if (((array_slice($uri, -2, 1))[0]) === "municipio" || end($uri) === "municipio") {
         $ccaa = $db->showMunicipioByProvincia(end($uri));
         echo json_encode($ccaa);
-    }
-    else if (((array_slice($uri, -2, 1))[0]) === "titular" || end($uri) === "titular") {
+    } else if (((array_slice($uri, -2, 1))[0]) === "titular" || end($uri) === "titular") {
         $ccaa = $db->showTitulares(end($uri));
         echo json_encode($ccaa);
-    }
-    else if (((array_slice($uri, -2, 1))[0]) === "embarcacion" || end($uri) === "embarcacion") {
+    } else if (((array_slice($uri, -2, 1))[0]) === "embarcacion" || end($uri) === "embarcacion") {
         $ccaa = $db->showEmbarcaciones(end($uri));
         echo json_encode($ccaa);
-    }
-    else if (((array_slice($uri, -2, 1))[0]) === "embarcacionTitular" || end($uri) === "embarcacionTitular") {
+    } else if (((array_slice($uri, -2, 1))[0]) === "embarcacionTitular" || end($uri) === "embarcacionTitular") {
         $ccaa = $db->showEmbarcacionesByTitular(end($uri));
         echo json_encode($ccaa);
     }
@@ -69,35 +64,18 @@ function handleGet($db, $uri = null)
 
 function handlePost($db, $data)
 {
-    $data = [
-        "type" => "reserva"/* /titular/embarcacion */,
+    /* $data = [
         "plaza" => 1,
         "titular" => 1,
-        "embarcacion" => 1,
+        "embarcacion" => 22,
         "fecha_ini" => "2025-02-01",
         "fecha_fin" => "2025-02-28"
-    ];
+    ]; */
 
-    $type = $data["type"];
-    $data = array_diff($data, array("type"));
-    if ($type == "reserva") {
-        if ($db->insertNewReservation($data)) {
-            echo json_encode("OK");
-        } else {
-            echo json_encode("Error al crear el producto");
-        }
-    } else if ($type == "titular") {
-        if ($db->insertNewTitular($data)) {
-            echo json_encode("OK");
-        } else {
-            echo json_encode("Error al crear el producto");
-        }
-    } else if ($type == "embarcacion") {
-        if ($db->insertNewEmbarcacion($data)) {
-            echo json_encode("OK");
-        } else {
-            echo json_encode("Error al crear el producto");
-        }
+    if ($db->insertNewReservation($data)) {
+        echo json_encode("OK");
+    } else {
+        echo json_encode("Error al crear el producto");
     }
 }
 

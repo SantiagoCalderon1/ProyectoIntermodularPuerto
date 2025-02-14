@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Embarcacion, Plaza, Reserva, Titular } from '../../plazas';
+import { Plaza, Reserva,  } from '../../plazas';
 import { NgForm, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservasService } from '../../reservas.service';
@@ -26,6 +26,7 @@ export class ReservaComponent {
 
   public embarcaciones: any[] = [];
   public embActual: any[] = [];
+  public plazaActual: any[] = [];
   public datosEmbarcacion: string = "Embarcacion no seleccionada";
 
   rol: number | null = null;
@@ -36,12 +37,13 @@ export class ReservaComponent {
     0, // plaza
     '', // fecha_inicio
     '', // fecha_fin
-    new Titular(0, '', '', '', 0, '', '', '', 0, 0, '', '', '', '', '', 0, 0, ''), // Titular vacío
-    new Embarcacion(0, '', 0, 0, 0, '', '', '', 0) // Embarcación vacía
+    0,
+    0,
   );
-  public plazaact: Plaza = { id_plaza_base: 0, nombre: '', instalacion: ''};
   public plazas: any[] = [];
   provincia: any[] = [];
+  changedTitular: boolean = false;
+  changedPlaza: boolean = false;
 
   constructor(private _aroute: ActivatedRoute, private _plazasService: PlazasService, private _reservasService: ReservasService, private _route: Router, private toastr: ToastrService, private _appService: AppService) { }
 
@@ -50,7 +52,7 @@ export class ReservaComponent {
       this.rol = rol;
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
-    this.id_reserva = +this._aroute.snapshot.params['id_plaza_base'];
+    this.id_reserva = +this._aroute.snapshot.params['id_reserva'];
     this.titulares = [];
     this.traeTitulares();
     this.traeEmbarcaciones();
@@ -75,19 +77,34 @@ export class ReservaComponent {
     });
   }
 
+  public changeTitular(){
+    this.changedTitular = true;
+  }
+
+  public changePlaza(){
+    this.changedPlaza = true;
+  }
+
   private traeReserva(id_reserva: number) {
     this._reservasService.obtengoReservaApi(id_reserva).subscribe({
       next: (resultado) => {
-        this.reservaact = resultado[0];
+        this.reservaact = resultado[0]; 
+  
+        // Si la API devuelve solo el ID, busca el objeto completo
+        const titularEncontrado = this.titulares.find(t => t.id_titular === this.reservaact.titular);
+        this.reservaact.titular = titularEncontrado ? titularEncontrado : null;
+  
+        this.actualizaTitularActual();
+        this.actualizaEmbarcacionActual();
+        this.actualizaPlazaActual();
       },
       error: (error) => {
-        this.toastr.error(error, 'Error al obtener la plaza');
-      },
-      complete: () => {
-        console.log('Operación completada.');
+        this.toastr.error(error, 'Error al obtener la reserva');
       }
     });
   }
+  
+  
 
   private traeTitulares() {
     this._reservasService.obtengoTitularesApi().subscribe({
@@ -128,7 +145,6 @@ export class ReservaComponent {
 
   actualizaEmbarcacionActual() {
     this.embActual[0] = this.reservaact.embarcacion
-    console.log(this.embActual);
   }
 
   actualizaEmbarcacion() {
@@ -140,7 +156,6 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionApi(id).subscribe({
         next: (resultado) => {
           this.datosEmbarcacion = resultado[0]["matricula"]
-          console.log(this.datosEmbarcacion);
         },
         error: () => this.toastr.error('Error')
       });
@@ -157,67 +172,41 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionTitularApi(id).subscribe({
         next: (resultado) => {
           this.embarcaciones = resultado
-          console.log(this.embarcaciones);
         },
         error: () => this.toastr.error('Error')
       });
     }
   }
 
-  /* guardaReserva(): void {
-    if (this.reservaForm!.valid || this.tipo == 2) {
-      this.formularioCambiado = false;
+  getEmbarcacionActual() {
+    return this.embActual.length > 0 ? this.embActual[0] : null;
+  }
 
-      if (this.tipo == 0) {
-        this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
-          next: (resultado) => {
-            if (resultado == "OK") {
-              this.toastr.success('Plaza agregada correctamente!');
-              this._route.navigate(['/listaPlazas']);
-            } else {
-              this.toastr.error('Error guardando plaza');
-            }
-          },
-          error: () => this.toastr.error('Error guardando plaza'),
-          complete: () => console.log('Operación completada.')
-        });
-      } else if (this.tipo == 1) {
-        this._reservasService.modificaReservaApi(this.id_reserva, this.reservaact).subscribe({
-          next: (resultado) => {
-            if (resultado == "OK") {
-              this.toastr.success('Plaza modificada correctamente!');
-              this._route.navigate(['/listaPlazas']);
-            } else {
-              this.toastr.error('Error modificando plaza');
-            }
-          },
-          error: () => this.toastr.error('Error modificando plaza'),
-          complete: () => console.log('Operación completada.')
-        });
-      } else if (this.tipo == 2) {
-        this._reservasService.borraReservaApi(this.id_reserva).subscribe({
-          next: (resultado) => {
-            if (resultado == "OK") {
-              this.toastr.success('Plaza eliminada correctamente!');
-              this._route.navigate(['/listaPlazas']);
-            } else {
-              this.toastr.error('Error eliminando plaza');
-            }
-          },
-          error: () => this.toastr.error('Error eliminando plaza'),
-          complete: () => console.log('Operación completada.')
-        });
-      }
-    } else {
-      this.toastr.error("El formulario tiene campos inválidos", 'Error de validación');
-    }
-  } */
+  actualizaPlazaActual() {
+    this.plazaActual[0] = this.reservaact.plaza
+  }
+
+  getPlazaActual() {
+    return this.plazaActual.length > 0 ? this.plazaActual[0] : null;
+  }
+
+  getTitularActual() {
+    return this.titActual.length > 0 ? this.titActual[0] : null;
+  }
 
   guardaReserva(): void {
     if (this.reservaForm?.valid || this.tipo === 2) {
       this.formularioCambiado = false;
-      console.log("Guardando reserva...", this.reservaact);
-  
+
+      // Asegurar que se asignen correctamente los datos
+      let embarcacion = this.getEmbarcacionActual()?.id_embarcacion ?? 0;
+      let plaza = this.getPlazaActual()?.id_plaza_base ?? 0;
+      let titular = this.getTitularActual()?.id_titular ?? 0;
+
+      this.reservaact.plaza = plaza
+      this.reservaact.embarcacion = embarcacion
+      this.reservaact.titular = titular
+
       if (this.tipo === 0) { // Crear nueva reserva
         this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
           next: (resultado) => {
@@ -234,7 +223,7 @@ export class ReservaComponent {
           },
           complete: () => console.log('Operación completada.')
         });
-  
+
       } else if (this.tipo === 1) { // Modificar reserva existente
         this._reservasService.modificaReservaApi(this.id_reserva, this.reservaact).subscribe({
           next: (resultado) => {
@@ -251,7 +240,7 @@ export class ReservaComponent {
           },
           complete: () => console.log('Operación completada.')
         });
-  
+
       } else if (this.tipo === 2) { // Eliminar reserva
         this._reservasService.borraReservaApi(this.id_reserva).subscribe({
           next: (resultado) => {
@@ -274,7 +263,7 @@ export class ReservaComponent {
       console.warn("Formulario inválido:", this.reservaForm);
     }
   }
-  
+
 
   canDeactivate(): boolean {
     if (this.formularioCambiado) {
@@ -293,41 +282,5 @@ export class ReservaComponent {
       [errorClass]: ngModel.touched && ngModel.invalid
     };
   }
-
-  provincias: any[] = []; // Array donde guardaremos las provincias
-
-  actualizarProvincia() {
-    if (this.reservaact.titular.pais === 'España') {
-      this._reservasService.obtengoProvinciasApi().subscribe({
-        next: (resultado) => {
-          this.provincias = resultado; // Guardamos el resultado en el array
-        },
-        error: () => this.toastr.error('Error al obtener provincias'),
-      });
-    } else {
-      this.provincias = []; // Si el país no es España, limpiamos la lista
-    }
-  }
-
-  actualizarProvinciaActual() {
-    this.provincia[0] = this.reservaact.titular.provincia
-  }
-
-
-
-
-  municipios: any[] = []; // Array donde guardaremos los municipios
-  actualizarPoblacion() {
-    let id = this.provincia[0]["idProvincia"]
-    console.log(id);
-
-    this._reservasService.obtengoMunicipiosProvinciaApi(id).subscribe({
-      next: (resultado) => {
-        this.municipios = resultado;
-      },
-      error: () => this.toastr.error('Error al obtener municipios'),
-    });
-  }
-
 }
 
