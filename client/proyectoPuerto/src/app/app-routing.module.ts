@@ -24,6 +24,11 @@ import { TripulantesListComponent } from './transitos/components/tripulantes-lis
 import { TransitosComponent } from './transitos/components/transitos/transitos.component';
 import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
 
+import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
+import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
+
+
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   {
@@ -81,6 +86,11 @@ const routes: Routes = [
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
 
+  { path: 'muelles', component: ListamuellesComponent, canActivate: 
+    [authGuard] },
+      { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
+      { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
+    
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
