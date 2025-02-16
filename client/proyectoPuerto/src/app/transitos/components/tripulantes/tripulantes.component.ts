@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Tripulante } from '../../tripulante';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,59 +14,8 @@ import { TransitosService } from '../../transitos.service';
   styleUrl: './tripulantes.component.css'
 })
 export class TripulantesComponent {
-  paises = [
-    { nombre: "Afganistán" }, { nombre: "Albania" }, { nombre: "Alemania" }, { nombre: "Andorra" },
-    { nombre: "Angola" }, { nombre: "Antigua y Barbuda" }, { nombre: "Arabia Saudita" }, { nombre: "Argelia" },
-    { nombre: "Argentina" }, { nombre: "Armenia" }, { nombre: "Australia" }, { nombre: "Austria" },
-    { nombre: "Azerbaiyán" }, { nombre: "Bahamas" }, { nombre: "Bangladés" }, { nombre: "Baréin" },
-    { nombre: "Barbados" }, { nombre: "Bélgica" }, { nombre: "Belice" }, { nombre: "Benín" },
-    { nombre: "Bielorrusia" }, { nombre: "Birmania/Myanmar" }, { nombre: "Bolivia" }, { nombre: "Bosnia y Herzegovina" },
-    { nombre: "Botsuana" }, { nombre: "Brasil" }, { nombre: "Brunéi" }, { nombre: "Bulgaria" },
-    { nombre: "Burkina Faso" }, { nombre: "Burundi" }, { nombre: "Bután" }, { nombre: "Cabo Verde" },
-    { nombre: "Camboya" }, { nombre: "Camerún" }, { nombre: "Canadá" }, { nombre: "Catar" },
-    { nombre: "Chad" }, { nombre: "Chile" }, { nombre: "China" }, { nombre: "Chipre" },
-    { nombre: "Colombia" }, { nombre: "Comoras" }, { nombre: "Corea del Norte" }, { nombre: "Corea del Sur" },
-    { nombre: "Costa de Marfil" }, { nombre: "Costa Rica" }, { nombre: "Croacia" }, { nombre: "Cuba" },
-    { nombre: "Dinamarca" }, { nombre: "Dominica" }, { nombre: "Ecuador" }, { nombre: "Egipto" },
-    { nombre: "El Salvador" }, { nombre: "Emiratos Árabes Unidos" }, { nombre: "Eritrea" }, { nombre: "Eslovaquia" },
-    { nombre: "Eslovenia" }, { nombre: "España" }, { nombre: "Estados Unidos" }, { nombre: "Estonia" },
-    { nombre: "Esuatini" }, { nombre: "Etiopía" }, { nombre: "Filipinas" }, { nombre: "Finlandia" },
-    { nombre: "Fiyi" }, { nombre: "Francia" }, { nombre: "Gabón" }, { nombre: "Gambia" },
-    { nombre: "Georgia" }, { nombre: "Ghana" }, { nombre: "Granada" }, { nombre: "Grecia" },
-    { nombre: "Guatemala" }, { nombre: "Guinea" }, { nombre: "Guinea-Bisáu" }, { nombre: "Guinea Ecuatorial" },
-    { nombre: "Guyana" }, { nombre: "Haití" }, { nombre: "Honduras" }, { nombre: "Hungría" },
-    { nombre: "India" }, { nombre: "Indonesia" }, { nombre: "Irak" }, { nombre: "Irán" },
-    { nombre: "Irlanda" }, { nombre: "Islandia" }, { nombre: "Islas Marshall" }, { nombre: "Islas Salomón" },
-    { nombre: "Israel" }, { nombre: "Italia" }, { nombre: "Jamaica" }, { nombre: "Japón" },
-    { nombre: "Jordania" }, { nombre: "Kazajistán" }, { nombre: "Kenia" }, { nombre: "Kirguistán" },
-    { nombre: "Kiribati" }, { nombre: "Kuwait" }, { nombre: "Laos" }, { nombre: "Lesoto" },
-    { nombre: "Letonia" }, { nombre: "Líbano" }, { nombre: "Liberia" }, { nombre: "Libia" },
-    { nombre: "Liechtenstein" }, { nombre: "Lituania" }, { nombre: "Luxemburgo" }, { nombre: "Madagascar" },
-    { nombre: "Malasia" }, { nombre: "Malaui" }, { nombre: "Maldivas" }, { nombre: "Malí" },
-    { nombre: "Malta" }, { nombre: "Marruecos" }, { nombre: "Mauricio" }, { nombre: "Mauritania" },
-    { nombre: "México" }, { nombre: "Micronesia" }, { nombre: "Moldavia" }, { nombre: "Mónaco" },
-    { nombre: "Mongolia" }, { nombre: "Montenegro" }, { nombre: "Mozambique" }, { nombre: "Namibia" },
-    { nombre: "Nauru" }, { nombre: "Nepal" }, { nombre: "Nicaragua" }, { nombre: "Níger" },
-    { nombre: "Nigeria" }, { nombre: "Noruega" }, { nombre: "Nueva Zelanda" }, { nombre: "Omán" },
-    { nombre: "Países Bajos" }, { nombre: "Pakistán" }, { nombre: "Palaos" }, { nombre: "Panamá" },
-    { nombre: "Papúa Nueva Guinea" }, { nombre: "Paraguay" }, { nombre: "Perú" }, { nombre: "Polonia" },
-    { nombre: "Portugal" }, { nombre: "Reino Unido" }, { nombre: "República Centroafricana" }, { nombre: "República Checa" },
-    { nombre: "República del Congo" }, { nombre: "República Democrática del Congo" }, { nombre: "República Dominicana" }, { nombre: "Ruanda" },
-    { nombre: "Rumania" }, { nombre: "Rusia" }, { nombre: "Samoa" }, { nombre: "San Cristóbal y Nieves" },
-    { nombre: "San Marino" }, { nombre: "San Vicente y las Granadinas" }, { nombre: "Santa Lucía" }, { nombre: "Santo Tomé y Príncipe" },
-    { nombre: "Senegal" }, { nombre: "Serbia" }, { nombre: "Seychelles" }, { nombre: "Sierra Leona" },
-    { nombre: "Singapur" }, { nombre: "Siria" }, { nombre: "Somalia" }, { nombre: "Sri Lanka" },
-    { nombre: "Sudáfrica" }, { nombre: "Sudán" }, { nombre: "Sudán del Sur" }, { nombre: "Suecia" },
-    { nombre: "Suiza" }, { nombre: "Surinam" }, { nombre: "Tailandia" }, { nombre: "Tanzania" },
-    { nombre: "Tayikistán" }, { nombre: "Timor Oriental" }, { nombre: "Togo" }, { nombre: "Tonga" },
-    { nombre: "Trinidad y Tobago" }, { nombre: "Túnez" }, { nombre: "Turkmenistán" }, { nombre: "Turquía" },
-    { nombre: "Tuvalu" }, { nombre: "Ucrania" }, { nombre: "Uganda" }, { nombre: "Uruguay" },
-    { nombre: "Uzbekistán" }, { nombre: "Vanuatu" }, { nombre: "Vaticano" }, { nombre: "Venezuela" },
-    { nombre: "Vietnam" }, { nombre: "Yemen" }, { nombre: "Yibuti" }, { nombre: "Zambia" },
-    { nombre: "Zimbabue" }
-  ];
-
   @ViewChild('tripulanteForm', { static: true }) tripulanteForm: NgForm | undefined;
+
   selectedFile: File | null = null;
   public title: string = "Tripulantes";
   public numeroDocumento: string = '';
@@ -75,7 +23,9 @@ export class TripulantesComponent {
   public tituloConfirmacion: string = '';
   public formStatus: boolean = false;
   rol: number | null = null;
-  public embarcacion : number = 0;
+  public embarcacion: number = 0;
+  public datosGlobales: any = [];
+
 
 
   public selectedTripulante: Tripulante = {
@@ -94,41 +44,55 @@ export class TripulantesComponent {
     documentoUrl: ''
   };
 
-  constructor(private http: HttpClient,
+  constructor(
     private _aroute: ActivatedRoute,
     private _route: Router,
-
     private _transitosService: TransitosService,
     private _appService: AppService,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
-    
-    this._aroute.params.subscribe(params => {
-      this.numeroDocumento = params['numeroDocumento'];
-      this.option = params['option'];
-      this.embarcacion = params['embarcacion'];
 
+    this._aroute.params.subscribe(params => {
+      this.option = params['option'];
+      this.numeroDocumento = params['numeroDocumento'];
+      this.embarcacion = params['embarcacion'];
       this.tituloConfirmacion = this.createTitle(params['option']);
+
       if (this.numeroDocumento) {
         this.getSelectedTripulante(this.numeroDocumento);
+      } else {
+        this.selectedTripulante.embarcacion = this.embarcacion;
+      }
+    });
+
+    this._transitosService.getAllPaises().subscribe({
+      next: (response) => {
+        if (response.success) { // esto debe ser true
+          this.datosGlobales = response.data;
+        } else {
+          this.toastr.error(response.message);
+        }
+      },
+      error: (error) => {
+        this.toastr.error(error, 'Error al obtener el usuario');
       }
     });
   }
-
 
   createTitle(option: string) {
     switch (option) {
       case 'Insert':
         return "Insertando un nuevo tripulante en la embarcación - " + this.embarcacion;
       case 'Update':
-        return "Actualizando al tripulante - " + this.numeroDocumento + " de la embarcación - "  + this.embarcacion;
+        return "Actualizando al tripulante - " + this.numeroDocumento + " de la embarcación - " + this.embarcacion;
       case 'Delete':
-        return "Eliminando al tripulante - " + this.numeroDocumento+ " de la embarcación - "  + this.embarcacion;
+        return "Eliminando al tripulante - " + this.numeroDocumento + " de la embarcación - " + this.embarcacion;
       default:
         return "";
     }
@@ -149,35 +113,40 @@ export class TripulantesComponent {
     });
   }
 
-  manageForm() {
-    //console.log(this.selectedUser);
-    switch (this.option) {
-      case 'Insert':
-        this.insertNewTripulante();
-        break;
-      case 'Update':
-        this.updateTripulante();
-        break;
-      case 'Delete':
-        this.deleteTripulante();
-        break;
-      case 'Habilitar':
-        this.updateTripulante();
-        break;
-      default:
-        this.toastr.error(
-          'El formulario tiene campos inválidos',
-          'Error de validación'
-        );
-        this._route.navigate(['/tripulantes']);
-        break;
+  manageForm(tripulanteForm: NgForm) {
+    console.log("Formulario inválido: ", tripulanteForm.invalid);
+    console.log("Campos del formulario:", tripulanteForm.controls);
+    if (tripulanteForm.valid) {
+      console.log("Formulario enviado:", this.selectedTripulante);
+
+      this._route.navigate(['/tripulantes', this.embarcacion]);
+      switch (this.option) {
+        case 'Insert':
+          this.insertNewTripulante();
+          break;
+        case 'Update':
+          this.updateTripulante();
+          break;
+        case 'Delete':
+          this.deleteTripulante();
+          break;
+        case 'Habilitar':
+          this.updateTripulante();
+          break;
+      }
+    } else {
+      this.toastr.error(
+        'El formulario tiene campos inválidos',
+        'por favor complete todos los campos requeridos.'
+      );
+      console.log("Formulario no válido, ");
+
     }
   }
 
   insertNewTripulante() {
     let formData = this.crearFormulario();
     console.log('FormData' + formData);
-    
     this._transitosService
       .insertNewTripulante(formData)
       .subscribe({
@@ -187,8 +156,9 @@ export class TripulantesComponent {
               'Se ha añadido a ' + this.selectedTripulante.nombre,
               'Tripulante agregado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this.resetForm();
-            this._route.navigate(['/tripulantes']);
+            setTimeout(() => {
+              this._route.navigate(['/tripulantes', this.embarcacion]);
+            }, 500);
           } else {
             this.toastr.error(
               response.message
@@ -216,7 +186,9 @@ export class TripulantesComponent {
               'Se ha actualizado a ' + this.selectedTripulante.nombre,
               'Tripulante actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this._route.navigate(['/tripulantes']);
+            setTimeout(() => {
+              this._route.navigate(['/tripulantes', this.embarcacion]);
+            }, 500);
           } else {
             this.toastr.error(
               response?.message
@@ -237,13 +209,13 @@ export class TripulantesComponent {
       .subscribe({
         next: (response) => {
           if (response && response.success) {
-            // this.deleteDocumento();
             this.toastr.success(
               'Se ha eliminado a ' + this.selectedTripulante.nombre,
               'Tripulante actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this.resetForm();
-            this._route.navigate(['/tripulantes']);
+            setTimeout(() => {
+              this._route.navigate(['/tripulantes', this.embarcacion]);
+            }, 500);
           } else {
             this.toastr.error(
               response.message
@@ -259,33 +231,16 @@ export class TripulantesComponent {
   }
 
   cancelForm(event: Event): void {
-    this.resetForm();
     event.preventDefault();
-    this._route.navigate(['/tripulantes'], { queryParams: {} });
+    setTimeout(() => {
+      this._route.navigate(['/tripulantes', this.embarcacion]);
+    }, 500);
   }
 
   changedForm(): void {
     this.formStatus = !this.formStatus;
   }
 
-  resetForm(): void {
-    Object.assign(this.selectedTripulante, {
-      tipoDocumento: '',
-      numeroDocumento: '',
-      nombre: '',
-      apellidos: '',
-      nacionalidad: '',
-      genero: 0,
-      fechaNacimiento: new Date(),
-      paisNacimiento: '',
-      lugarNacimiento: '',
-      fechaExpeDocumento: new Date(),
-      fechaCadDocumento: new Date(),
-    });
-    if (this.tripulanteForm) {
-      this.tripulanteForm.resetForm();
-    }
-  }
 
   canDeactivateForm(): boolean {
     if (this.formStatus) {
@@ -329,11 +284,51 @@ export class TripulantesComponent {
     return formData;
   }
 
-  // deleteDocumento() {
-  //   this._transitosService.deleteDocument(this.selectedTripulante.numeroDocumento).subscribe(response => {
-  //     console.log('Respuesta del servidor:', response);
-  //   });
-  // }
+  comprobarFecha(fecha: any, tipoFecha: any): boolean {
+    let fechaComprobar = new Date(fecha);
+    let hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);  // Esto elimina la hora, minutos, segundos y milisegundos
+    // Verificar si las fechas son válidas
+    if (isNaN(fechaComprobar.getTime())) {
+      this.toastr.error(
+        'Error en la fecha ',
+        '', { positionClass: 'toast-top-right' }
+      ); return false;
+    }
+
+    switch (tipoFecha) {
+      case 1: // Fecha de nacimiento
+        if (fechaComprobar > hoy) {
+          this.toastr.error(
+            'Error en la fecha de nacimiento: ',
+            'La fecha no puede ser posterior de hoy!', { positionClass: 'toast-top-right' }
+          );
+          return false;
+        }
+        break;
+      case 2: // Fecha de expedición
+        if (fechaComprobar > hoy) {
+          this.toastr.error(
+            'Error en la fecha de expedición: ',
+            'La fecha no puede ser anterior de hoy!', { positionClass: 'toast-top-right' }
+          );
+          return false;
+        }
+        break;
+      case 3: // Fecha de caducidad
+        if (fechaComprobar < hoy) {
+          this.toastr.error(
+            'Error en la fecha de caducidad: ',
+            'La fecha no puede ser anterior de hoy!', { positionClass: 'toast-top-right' }
+          );
+          return false;
+        }
+        break;
+    }
+    // si todo es correcto retornamos true
+    return true;
+  }
+
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 }

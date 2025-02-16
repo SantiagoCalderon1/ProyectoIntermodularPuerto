@@ -11,10 +11,10 @@ export class InstalacionService {
   //private urlApi = "http://localhost/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
   
   // local
-  urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
+  //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
   
   //UAT
-  //urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/instalacionController.php"; //urlPrueba
+  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/instalacionController.php"; //urlPrueba
 
   //private urlApiLocal = "http://localhost:8080/ProyectoIntermodularPuerto/ProyectoIntermodularPuerto/server/app/controller/instalacionController.php";
 

@@ -3,26 +3,190 @@
         <div class="card-header d-flex justify-content-center align-items-center p-3">
             <h5>{{ tituloConfirmacion }}</h5>
         </div>
-        <div class="card-body p-4 shadow-lg rounded-4">
-            <form #tripulanteForm="ngForm" class="mt-4 text-start" (ngSubmit)="manageForm()" novalidate
-                class="row gx-3 gy-2 align-items-center">
+        <div class="card-body p-4 shadow-lg rounded-4 ">
+            <form #tripulanteForm="ngForm" (ngSubmit)="manageForm(tripulanteForm)" novalidate>
                 <div [ngSwitch]="option">
-                    <div *ngSwitchCase="'Insert'">
-                        <ng-container *ngTemplateOutlet="contentForm"></ng-container>
+                    <div *ngIf="option === 'Insert' || option === 'Update'">
+                        <div class="row gx-3 gy-3">
+                            <!-- Tripulante -->
+                            <!-- Número de embarcación -->
+                            <div class="col-md-6">
+                                <label for="inputEmbarcacion" class="form-label">Numero de embarcación: *</label>
+                                <input type="number" class="form-control rounded-pill" name="inputEmbarcacion" required
+                                    #inputEmbarcacion="ngModel" [(ngModel)]="selectedTripulante.embarcacion"
+                                    value="{{embarcacion}}" min="1">
+                                <div
+                                    *ngIf="inputEmbarcacion.invalid && (inputEmbarcacion.dirty || inputEmbarcacion.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+
+                            </div>
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label for="imputNombre" class="form-label">Nombre: *</label>
+                                <input type="text" class="form-control rounded-pill" name="imputNombre" required
+                                    #imputNombre="ngModel" [(ngModel)]="selectedTripulante.nombre" minlength="3">
+                                <div *ngIf="imputNombre.invalid && (imputNombre.dirty || imputNombre.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+                            <!-- Apellidos -->
+                            <div class="col-md-6">
+                                <label for="inputApellidos" class="form-label">Apellidos: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputApellidos" required
+                                    #inputApellidos="ngModel" [(ngModel)]="selectedTripulante.apellidos" minlength="2">
+                                <div *ngIf="inputApellidos.invalid && (inputApellidos.dirty || inputApellidos.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- tipoDocumento -->
+                            <div class="col-md-6">
+                                <label for="selectTipoDocumento" class="form-label">Tipo de documento: *</label>
+                                <select class="form-select rounded-pill" name="selectTipoDocumento" required
+                                    #selectTipoDocumento="ngModel" [(ngModel)]="selectedTripulante.tipoDocumento">
+                                    <option value="" disabled selected>DNI, NIE, Pasaporte</option>
+                                    <option value="1">DNI</option>
+                                    <option value="2">NIE</option>
+                                    <option value="3">Pasaporte</option>
+                                </select>
+                                <div
+                                    *ngIf="selectTipoDocumento.invalid && (selectTipoDocumento.dirty || selectTipoDocumento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Número documento -->
+                            <div class="col-md-6">
+                                <label for="inputNumeroDocumento" class="form-label">Número de documento: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputNumeroDocumento"
+                                    required #inputNumeroDocumento="ngModel"
+                                    [(ngModel)]="selectedTripulante.numeroDocumento" minlength="5">
+                                <div
+                                    *ngIf="inputNumeroDocumento.invalid && (inputNumeroDocumento.dirty || inputNumeroDocumento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Nacionalidad -->
+                            <div class="col-md-6">
+                                <label for="inputNacionalidad" class="form-label">Nacionalidad: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputNacionalidad" required
+                                    #inputNacionalidad="ngModel" [(ngModel)]="selectedTripulante.nacionalidad"
+                                    minlength="3">
+                                <div
+                                    *ngIf="inputNacionalidad.invalid && (inputNacionalidad.dirty || inputNacionalidad.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- genero -->
+                            <div class="col-md-6">
+                                <label for="selectGenero" class="form-label">Genero: *</label>
+                                <select class="form-select rounded-pill" name="selectGenero" required
+                                    #selectGenero="ngModel" [(ngModel)]="selectedTripulante.genero">
+                                    <option value="" disabled selected>Seleccione un genero</option>
+                                    <option value="1">Hombre</option>
+                                    <option value="2">Mujer</option>
+                                    <option value="3">Otro</option>
+                                </select>
+                                <div *ngIf="selectGenero.invalid && (selectGenero.dirty || selectGenero.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Fecha nacimiento -->
+                            <div class="col-md-6">
+                                <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento: *</label>
+                                <input type="date" class="form-control rounded-pill" name="inputFechaNacimiento"
+                                    required #inputFechaNacimiento="ngModel"
+                                    [(ngModel)]="selectedTripulante.fechaNacimiento"
+                                    (change)="comprobarFecha(selectedTripulante.fechaNacimiento, 1)">
+                                <div
+                                    *ngIf="inputFechaNacimiento.invalid && (inputFechaNacimiento.dirty || inputFechaNacimiento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- País de nacimiento -->
+                            <div class="col-md-6">
+                                <label for="selectPais" class="form-label">País: *</label>
+                                <select class="form-select rounded-pill" name="selectPais" required
+                                    #selectPais="ngModel" [(ngModel)]="selectedTripulante.paisNacimiento">
+                                    <option value="" disabled selected>Seleccione un país</option>
+                                    <option *ngFor="let paises of datosGlobales" [value]="paises.paises">{{
+                                        paises.paises }}</option>
+                                </select>
+                                <div *ngIf="selectPais.invalid && (selectPais.dirty || selectPais.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Lugar de nacimiento -->
+                            <div class="col-md-6">
+                                <label for="inputLugarNacimiento" class="form-label">Lugar de nacimiento: *</label>
+                                <input type="email" class="form-control rounded-pill" name="inputLugarNacimiento"
+                                    required #inputLugarNacimiento="ngModel"
+                                    [(ngModel)]="selectedTripulante.lugarNacimiento" minlength="1">
+                                <div
+                                    *ngIf="inputLugarNacimiento.invalid && (inputLugarNacimiento.dirty || inputLugarNacimiento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Fecha Expedición Documento -->
+                            <div class="col-md-6">
+                                <label for="inputFechaExpeDocumento" class="form-label">Fecha de Expedición del
+                                    documento: *</label>
+                                <input type="date" class="form-control rounded-pill" name="inputFechaExpeDocumento"
+                                    required #inputFechaExpeDocumento="ngModel"
+                                    [(ngModel)]="selectedTripulante.fechaExpeDocumento"
+                                    (change)="comprobarFecha(selectedTripulante.fechaExpeDocumento, 2)">
+                                <div
+                                    *ngIf="inputFechaExpeDocumento.invalid && (inputFechaExpeDocumento.dirty || inputFechaExpeDocumento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Fecha Caducidad Documento -->
+                            <div class="col-md-6">
+                                <label for="inputFechaCadDocumento" class="form-label">Fecha de Caducidad del documento:
+                                    *</label>
+                                <input type="date" class="form-control rounded-pill" name="inputFechaCadDocumento"
+                                    required #inputFechaCadDocumento="ngModel"
+                                    [(ngModel)]="selectedTripulante.fechaCadDocumento"
+                                    (change)="comprobarFecha(selectedTripulante.fechaCadDocumento, 3)">
+                                <div
+                                    *ngIf="inputFechaCadDocumento.invalid && (inputFechaCadDocumento.dirty || inputFechaCadDocumento.touched)">
+                                    <small class="text-danger">Este campo es obligatorio.</small>
+                                </div>
+                            </div>
+
+                            <!-- Subida de Documentos -->
+                            <div class="col-md-6">
+                                <label for="inputFileUpload" class="form-label">Subir documento de identidad (PDF o
+                                    Imagen):</label>
+                                <input type="file" class="form-control rounded-pill" name="inputFileUpload"
+                                    #inputFileUpload="ngModel" ngModel #file (change)="seleccionarDocumento($event)"
+                                    accept="image/*,application/pdf">
+                            </div>
+                            <div class="col-md-6">
+                                <p>Campos obligatorios *</p>
+                            </div>
+                        </div>
                     </div>
-                    <div *ngSwitchCase="'Update'">
-                        <ng-container *ngTemplateOutlet="contentForm"></ng-container>
-                    </div>
-                    <div *ngSwitchCase="'Delete'">
+                    <div *ngIf="option === 'Delete'">
                         <div class="card">
                             <div class="card-body">
                                 <p>¿Está seguro de eliminar al tripulante {{ selectedTripulante.nombre }} con Número de
-                                    identificación {{selectedTripulante.numeroDocumento}} de la embarcación {{ embarcacion}}?</p>
+                                    identificación {{selectedTripulante.numeroDocumento}} de la embarcación {{
+                                    embarcacion}}?</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row gx-3 gy-3 justify-content-between">
+
+                <div class="row gx-3 gy-3 m-3">
                     <div class="col-6">
                         <button name="cancelar" class="btn btn-danger px-4 "
                             (click)="cancelForm($event)">Cancelar</button>
@@ -38,108 +202,5 @@
 
 
 <ng-template #contentForm>
-    <div class="">
-        <div class="row gx-3 gy-3">
-            <!-- Tripulante -->
-            <!-- Nombre -->
-            <div class="col-md-6">
-                <label for="inputNombre" class="form-label">Nombre: </label>
-                <input type="text" class="form-control rounded-pill" id="inputNombre" name="inputNombre"
-                    [(ngModel)]="selectedTripulante.nombre" (ngModelChange)="changedForm()">
-            </div>
-            <!-- Apellidos -->
-            <div class="col-md-6">
-                <label for="inputApellidos" class="form-label">Apellidos: </label>
-                <input type="text" class="form-control rounded-pill" id="inputApellidos" name="inputApellidos"
-                    [(ngModel)]="selectedTripulante.apellidos" (ngModelChange)="changedForm()">
-            </div>
 
-            <!-- tipoDocumento -->
-            <div class="col-md-6">
-                <label for="selectTipoDocumento" class="form-label">Tipo de documento:</label>
-                <select class="form-select rounded-pill" id="selectTipoDocumento" name="selectTipoDocumento"
-                    [(ngModel)]="selectedTripulante.tipoDocumento" (ngModelChange)="changedForm()">
-                    <option value="" disabled selected>DNI, NIE, Pasaporte</option>
-                    <option value="1">DNI</option>
-                    <option value="2">NIE</option>
-                    <option value="3">Pasaporte</option>
-                </select>
-            </div>
-
-            <!-- Número documento -->
-            <div class="col-md-6">
-                <label for="inputNumeroDocumento" class="form-label">Número de documento: </label>
-                <input type="text" class="form-control rounded-pill" id="inputNumeroDocumento" name="inputApellidos"
-                    [(ngModel)]="selectedTripulante.numeroDocumento" (ngModelChange)="changedForm()">
-            </div>
-
-            <!-- Nacionalidad -->
-            <div class="col-md-6">
-                <label for="inputNacionalidad" class="form-label">Nacionalidad</label>
-                <input type="text" class="form-control rounded-pill" id="inputNacionalidad" name="inputNacionalidad"
-                    [(ngModel)]="selectedTripulante.nacionalidad" (ngModelChange)="changedForm()">
-            </div>
-
-            <!-- genero -->
-            <div class="col-md-6">
-                <label for="selectGenero" class="form-label">Genero:</label>
-                <select class="form-select rounded-pill" id="selectGenero" name="selectGenero"
-                    [(ngModel)]="selectedTripulante.genero" (ngModelChange)="changedForm()">
-                    <option value="" disabled selected>DNI, NIE, Pasaporte</option>
-                    <option value="1">Hombre</option>
-                    <option value="2">Mujer</option>
-                    <option value="3">Otro</option>
-                </select>
-            </div>
-
-            <!-- Fecha nacimiento -->
-            <div class="col-md-6">
-                <label for="inputFechaNacimiento" class="form-label">Fecha de nacimiento:</label>
-                <input type="date" class="form-control rounded-pill" id="inputFechaNacimiento"
-                    name="inputFechaNacimiento" [(ngModel)]="selectedTripulante.fechaNacimiento"
-                    (ngModelChange)="changedForm()" >
-            </div>
-
-            <!-- País de nacimiento -->
-            <div class="col-md-6">
-                <label for="selectPais" class="form-label">País: </label>
-                <select class="form-select rounded-pill" id="selectPais" name="selectPais"
-                    [(ngModel)]="selectedTripulante.paisNacimiento" (ngModelChange)="changedForm()">
-                    <option value="" disabled selected>Seleccione un país</option>
-                    <option *ngFor="let pais of paises" [value]="pais.nombre">{{ pais.nombre }}</option>
-                </select>
-            </div>
-
-            <!-- Lugar de nacimiento -->
-            <div class="col-md-12">
-                <label for="inputLugarNacimiento" class="form-label">Lugar de nacimiento: </label>
-                <input type="email" class="form-control rounded-pill" id="inputLugarNacimiento"
-                    name="inputLugarNacimiento" [(ngModel)]="selectedTripulante.lugarNacimiento"
-                    (ngModelChange)="changedForm()">
-            </div>
-
-            <!-- Fecha Expedición Documento -->
-            <div class="col-md-6">
-                <label for="inputFechaExpeDocumento" class="form-label">Fecha de Expedición del documento:</label>
-                <input type="date" class="form-control rounded-pill" id="inputFechaExpeDocumento"
-                    name="inputFechaExpeDocumento" [(ngModel)]="selectedTripulante.fechaExpeDocumento"
-                    (ngModelChange)="changedForm()" >
-            </div>
-
-            <!-- Fecha Caducidad Documento -->
-            <div class="col-md-6">
-                <label for="inputFechaCadDocumento" class="form-label">Fecha de Caducidad del documento:</label>
-                <input type="date" class="form-control rounded-pill" id="inputFechaCadDocumento"
-                    name="inputFechaCadDocumento" [(ngModel)]="selectedTripulante.fechaCadDocumento"
-                    (ngModelChange)="changedForm()" >
-            </div>
-
-            <!-- Subida de Documentos -->
-            <div class="col-md-6">
-                <label for="inputFileUpload" class="form-label">Subir documento de identidad (PDF o Imagen):</label>
-                <input type="file" class="form-control rounded-pill" id="inputFileUpload" ngModel #file (change)="seleccionarDocumento($event)" accept="image/*,application/pdf">
-            </div>
-
-        </div>
-    </div>
 </ng-template>

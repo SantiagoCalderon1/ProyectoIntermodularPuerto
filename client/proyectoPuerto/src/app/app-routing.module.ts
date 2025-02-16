@@ -74,7 +74,9 @@ const routes: Routes = [
 
   { path: 'tripulantes', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'tripulantes/:embarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
-  { path: 'tripulantes/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
+  { path: 'tripulantes/:option/:numeroDocumento/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+
+
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },

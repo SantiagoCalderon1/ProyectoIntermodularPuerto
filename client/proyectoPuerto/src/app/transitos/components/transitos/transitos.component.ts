@@ -38,8 +38,11 @@ export class TransitosComponent {
   public instalacionSeleccionada: any = this.transitoAct.instalacion;
 
   getCodigosInstalaciones() {
+
     this.instalacionService.getInstalaciones().subscribe({
       next: (response) => {
+        console.log(response);
+        
         this.codigosInstalaciones = response.map((instalacion: Instalacion) =>
           instalacion.codigo // Retorna solo el valor del código
         );

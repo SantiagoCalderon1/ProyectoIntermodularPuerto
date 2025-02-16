@@ -3,6 +3,33 @@ include_once '../../config/conexion.php';
 
 abstract class Tripulantes
 {
+
+    /**
+     * Función básica que obtiene un listado de los 195 paises reconocidos en el año 2025.
+     * 
+     * @return array  Devuelve arrays asociativo si la query se ejecutó correctamente.
+     * @throws Exception  Si hay algún error en la ejecución de la query captura la excepción y devuelve un mensaje. 
+     */
+    static function getAllPaises()
+    {
+        $conexion = null;
+        try {
+            $conexion = openConexion();
+            $sql = "SELECT paises FROM datosGlobales";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (Exception $e) {
+            return ["Exception" => "Error en getAllPaises: Excepción - " . $e->getMessage()];
+        } finally {
+            if ($conexion) {
+                closeConexion($conexion);
+            }
+        }
+    }
+
+
     /**
      * Obtiene a un tripulante si se le pasa un id, en otro caso los obtiene a todos.
      * 
@@ -15,14 +42,18 @@ abstract class Tripulantes
         $conexion = null;
         try {
             $conexion = openConexion();
-            if (empty($numeroDocumento)) {
+            
+            if (!empty($embarcacion) && empty($numeroDocumento)) {
                 $sql = "SELECT * FROM tripulantes WHERE embarcacion = ?";
                 $stmt = $conexion->prepare($sql);
                 $stmt->bind_param("s", $embarcacion);
-            } else {
+            } else if (!empty($numeroDocumento) && empty($embarcacion)) {
                 $sql = "SELECT * FROM tripulantes WHERE numeroDocumento = ?";
                 $stmt = $conexion->prepare($sql);
                 $stmt->bind_param("s", $numeroDocumento);
+            } else {
+                $sql = "SELECT * FROM tripulantes";
+                $stmt = $conexion->prepare($sql);
             }
             $stmt->execute();
             $result = $stmt->get_result();

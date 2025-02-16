@@ -16,7 +16,6 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 $metodo = $_SERVER["REQUEST_METHOD"];
 
 switch ($metodo) {
-
     case "GET":
         if ($lastpart == "transitos") {
             $respuesta = Transito::getTodosTransitos();
@@ -32,7 +31,6 @@ switch ($metodo) {
         }
         break;
     case "POST":
-
         if ($data) {
             $anyo = $data["anyo"];
             $pantalan = $data["pantalan"];

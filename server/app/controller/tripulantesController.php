@@ -24,11 +24,15 @@ $penultimatePart = $uri[count($uri) - 2] ?? null;
 
 switch ($method) {
     case 'GET':
+
         if ($penultimatePart == 'tripulante') {
             getAllTripulantes($lastpart, '');
-        }
-        if ($penultimatePart == 'tripulantes') {
+        }else if ($penultimatePart == 'tripulantesEmbarcacion') {
             getAllTripulantes('', $lastpart);
+        }else if ($lastpart == 'tripulantes') {
+            getAllTripulantes('','');
+        }else if ($lastpart == 'paises') {
+            getAllPaises();
         }
         break;
     case 'POST':
@@ -48,6 +52,22 @@ switch ($method) {
     default:
         echoResponse(false, 500, 'Error del servidor.');
         break;
+}
+
+/**
+ * Función básica que obtiene un listado de los 195 paises reconocidos en el año 2025.
+ * 
+ * @return json  Llama a la función echoResponse que retorna un Json a el front.
+ */
+function getAllPaises()
+{
+    $result = Tripulantes::getAllPaises();
+    if ($result) {
+        echoResponse(true, 200, 'Países obtenido/s correctamente.', '', $result);
+    } else {
+        $exception = $result['Exception'] ?? '';
+        echoResponse(false, 404, 'Error al obtener los Países.', $exception);
+    }
 }
 
 /**

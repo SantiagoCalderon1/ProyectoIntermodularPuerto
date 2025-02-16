@@ -13,10 +13,10 @@ export class TransitosService {
   // local
   //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
   //URL pruebas
-  //urlApi = "http://aut-puerto.proyectos-2daw.es/app/controller/transitosController.php";
+  urlApiTransitos = "http://uat-puerto.proyectos-2daw.es/app/controller/transitosController.php";
   //urlApi = "http://localhost:8080/server/app/controller/tripulantesController.php";
   //URL pruebas
-  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
+  urlApiTripulantes = "https://uat-puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
   //URL producción
   //urlApi = "https://puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
 
@@ -30,21 +30,21 @@ export class TransitosService {
 
   getAllTransitos(): Observable<any> {
     console.log("entrando a getAllTransitos");
-    return this.http.get(`${this.urlApi}/transitos`).pipe(
+    return this.http.get(`${this.urlApiTransitos}/transitos`).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
     )
   }
 
   getTransito(idtransito: number): Observable<any> {
     console.log("entrando a getTransito");
-    return this.http.get(`${this.urlApi}/transito/${idtransito}`).pipe(
+    return this.http.get(`${this.urlApiTransitos}/transito/${idtransito}`).pipe(
       tap(response => console.log("respuesta servidor:", response))
     )
   }
 
   desecharTransito(embarcacion: number): Observable<any> {
     console.log("entrando en desecharTransito");
-    const URLDELETE = this.urlApi + "?embarcacion=" + embarcacion;
+    const URLDELETE = this.urlApiTransitos + "?embarcacion=" + embarcacion;
     return this.http.delete(`${URLDELETE}`).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
     );
@@ -53,14 +53,14 @@ export class TransitosService {
   nuevoTransito(transito: Transito): Observable<any> {
     console.log("entrando en nuevoTransito");
     console.log(JSON.stringify(transito));
-    return this.http.post<any>(this.urlApi, JSON.stringify(transito), this.httpOptions).pipe(
+    return this.http.post<any>(this.urlApiTransitos, JSON.stringify(transito), this.httpOptions).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
     );
   }
 
   updateTransito(transito: Transito) {
     console.log("entrando a updateTransito");
-    const updateURL = this.urlApi + "?embarcacion=" + transito.embarcacion;
+    const updateURL = this.urlApiTransitos + "?embarcacion=" + transito.embarcacion;
     return this.http.put<any>(updateURL, JSON.stringify(transito)).pipe(
       tap(response => console.log("Respuesta del servidor: ", response))
     );
@@ -68,24 +68,32 @@ export class TransitosService {
 
 
   // Inicio Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  getAllTripulantes(embarcacion: number): Observable<any> {
-    return this.http.get(`${this.urlApi}/tripulantes/${embarcacion}`);
+  getAllPaises(): Observable<any> {
+    return this.http.get(`${this.urlApiTripulantes}/paises`);
+  }
+  
+  getAllTripulantesEmbarcacion(embarcacion: number): Observable<any> {
+    return this.http.get(`${this.urlApiTripulantes}/tripulantesEmbarcacion/${embarcacion}`);
+  }
+
+  getAllTripulantes(): Observable<any> {
+    return this.http.get(`${this.urlApiTripulantes}/tripulantes`);
   }
 
   getTripulante(numeroDocumento: string): Observable<any> {
-    return this.http.get(`${this.urlApi}/tripulante/${numeroDocumento}`);
+    return this.http.get(`${this.urlApiTripulantes}/tripulante/${numeroDocumento}`);
   }
 
   insertNewTripulante(data: any): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/insert`, data);
+    return this.http.post<any>(`${this.urlApiTripulantes}/insert`, data);
   }
 
   updateTripulante(numeroDocumento: string, data: any): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}/update/${numeroDocumento}`, data);
+    return this.http.post<any>(`${this.urlApiTripulantes}/update/${numeroDocumento}`, data);
   }
 
   deleteTripulante(numeroDocumento: string): Observable<any> {
-    return this.http.delete(`${this.urlApi}/delete/${numeroDocumento}`);
+    return this.http.delete(`${this.urlApiTripulantes}/delete/${numeroDocumento}`);
   }
 
   // Fin Sección tripulantes ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
