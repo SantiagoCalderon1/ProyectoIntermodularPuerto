@@ -20,10 +20,17 @@ import { ListaComponent as listaInstalacionComponent } from './instalacion/compo
 
 import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
 import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
+<<<<<<< HEAD
 import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
 import { TransitosComponent } from './transitos/components/transitos/transitos.component';
 import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
 import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
+=======
+
+import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+
+
+>>>>>>> f460f36 (Versión casi casi terminada, sin la parte de editar y eliminar de reservas)
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -86,6 +93,9 @@ const routes: Routes = [
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+  { path: 'reservas', component: ReservaComponent, canActivate: [authGuard] },
+  { path: 'reservas/:tipo/:id_reserva', component: ReservaComponent, canActivate: [authGuard] },
+
 
   {
     path: 'muelles', component: ListamuellesComponent, canActivate:

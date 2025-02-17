@@ -57,11 +57,18 @@ export class TripulantesComponent {
     this._appService.rol$.subscribe(rol => {
       this.rol = rol;
     });
-
     this._aroute.params.subscribe(params => {
       this.option = params['option'];
       this.numeroDocumento = params['numeroDocumento'];
-      this.embarcacion = params['embarcacion'];
+      console.log('option: ' + this.option);
+      console.log('numeroDocumento: ' + this.numeroDocumento);
+      console.log('embarcacion: ' + params['embarcacion']);
+    
+      if (params['embarcacion'] == 'undefined') {
+        this.embarcacion = 0;
+      } else {
+        this.embarcacion = params['embarcacion'];
+      }
       this.tituloConfirmacion = this.createTitle(params['option']);
 
       if (this.numeroDocumento) {
@@ -88,9 +95,9 @@ export class TripulantesComponent {
       case 'Insert':
         return "Insertando un nuevo tripulante en la embarcación - " + this.embarcacion;
       case 'Update':
-        return "Actualizando al tripulante - " + this.numeroDocumento ;
+        return "Actualizando al tripulante - " + this.numeroDocumento;
       case 'Delete':
-        return "Eliminando al tripulante - " + this.numeroDocumento ;
+        return "Eliminando al tripulante - " + this.numeroDocumento;
       default:
         return "";
     }
@@ -224,11 +231,18 @@ export class TripulantesComponent {
       });
   }
 
-  cancelForm(event: Event): void {
+  cancelForm(event: Event, embarcacion: any): void {
     event.preventDefault();
-    setTimeout(() => {
-      this._route.navigate(['/tripulantes', this.embarcacion]);
-    }, 500);
+    if (embarcacion == 'undefined') {
+      setTimeout(() => {
+        this._route.navigate(['/tripulantes']);
+      }, 500);
+    } else {
+      setTimeout(() => {
+        this._route.navigate(['/tripulantes', this.embarcacion]);
+      }, 500);
+    }
+
   }
 
   changedForm(): void {

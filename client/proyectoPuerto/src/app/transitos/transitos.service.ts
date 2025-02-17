@@ -13,7 +13,7 @@ export class TransitosService {
   // local
   //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/transitosController.php";
   //URL pruebas
-  urlApiTransitos = "http://uat-puerto.proyectos-2daw.es/app/controller/transitosController.php";
+  urlApiTransitos = "https://uat-puerto.proyectos-2daw.es/app/controller/transitosController.php";
   //urlApi = "http://localhost:8080/server/app/controller/tripulantesController.php";
   //URL pruebas
   urlApiTripulantes = "https://uat-puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
