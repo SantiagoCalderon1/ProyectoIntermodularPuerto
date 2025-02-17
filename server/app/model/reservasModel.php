@@ -112,26 +112,6 @@ class Reservations
             return $this->conexion->dataQuery($sql);
     }
 
-    function showProvincia($id){
-        if (is_numeric($id)) {
-            $sql = "SELECT * FROM PROVINCIAS WHERE idProvincia = '$id'";
-                return $this->conexion->dataQuery($sql);
-        } else {
-            $sql = "SELECT * FROM PROVINCIAS";
-                return $this->conexion->dataQuery($sql);
-        }
-    }
-
-    function showMunicipioByProvincia($id){
-        if (is_numeric($id)) {
-            $sql = "SELECT * FROM MUNICIPIOS WHERE idProvincia = '$id'";
-                return $this->conexion->dataQuery($sql);
-        } else {
-            $sql = "SELECT * FROM MUNICIPIOS";
-                return $this->conexion->dataQuery($sql);
-        }
-    }
-
     function showTitulares($id){
         if (is_numeric($id)) {
             $sql = "SELECT * FROM titular WHERE id_titular = '$id'";
