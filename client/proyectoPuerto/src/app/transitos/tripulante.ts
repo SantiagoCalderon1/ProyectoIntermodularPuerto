@@ -12,6 +12,6 @@ export class Tripulante {
         public fechaExpeDocumento: Date,
         public fechaCadDocumento: Date,
         public embarcacion: number = 0,
-        public documentoUrl: string = ''
+        public documentoUrl: null
     ) { }
 }

@@ -124,7 +124,7 @@ export class LoginComponent {
         "rol": 0
       };
       console.log('Contenido del nuevo usuario = ' + newUser);
-      
+
       this._loginService.register(newUser).subscribe({
         next: (response) => {
           if (response.success) { // esto debe ser true
@@ -147,6 +147,8 @@ export class LoginComponent {
           this.toastr.error(error, 'Error al registrarse.');
         }
       });
+    } else {
+      this.toastr.error('El formulario no es valido, los campos no pueden estar vacíos.');
     }
   }
 
@@ -169,14 +171,16 @@ export class LoginComponent {
             setTimeout(() => {
               this._route.navigate(['/home']);
             }, 500);
+          } else {
+            this.toastr.error('Verifique las credenciales.');
           }
         },
         error: (error) => {
-          this.toastr.error(error, 'Error al identificarse.');
+          this.toastr.error('Error al identificarse.');
         }
       });
     } else {
-      //console.log('Formulario inválido');
+      this.toastr.error('El formulario no es valido, verifique las credenciales.');
     }
   }
 }

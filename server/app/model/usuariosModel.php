@@ -52,6 +52,7 @@ abstract class Users
         $conexion = null;
         try {
             $conexion = openConexion();
+
             if (empty($username)) {
                 $sql = "SELECT * FROM usuario";
                 $stmt = $conexion->prepare($sql);
@@ -61,11 +62,8 @@ abstract class Users
                 $stmt->bind_param("s", $username);
             }
             $stmt->execute();
-            if ($stmt->affected_rows > 0) {
-                $result = $stmt->get_result();
-                return $result->fetch_all(MYSQLI_ASSOC);
-            }
-            return [];
+            $result = $stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC);
         } catch (Exception $e) {
             return ["Exception" => "Error en getAllUsers: Excepción - " . $e->getMessage()];
         } finally {

@@ -1,10 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Config } from 'datatables.net';
 import { TransitosService } from '../../transitos.service';
 import { AppService } from '../../../app.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Tripulante } from '../../tripulante';
+declare var bootstrap: any;
 
 
 @Component({
@@ -26,12 +29,15 @@ export class TripulantesListComponent {
   public filterSearch: string = '';
   rol: number | null = null;
 
-  public embarcacion: number = 0;
+  public embarcacion: number = -1;
   public numeroDocumento: string = '';
 
   documentoUrl: string = '';
+  iframeUrl!: SafeResourceUrl;
   esPDF: boolean = false;
   mostrarModal: boolean = false;
+  tripulanteSelected: Tripulante | null = null;
+  tablaRecargada: number = 0;
 
 
   constructor(
@@ -39,6 +45,8 @@ export class TripulantesListComponent {
     private _appService: AppService,
     private _route: Router,
     private _aroute: ActivatedRoute,
+    private _sanitizer: DomSanitizer,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -47,12 +55,14 @@ export class TripulantesListComponent {
     });
 
     this._aroute.params.subscribe(params => {
-      this.embarcacion = params['embarcacion'];
-      if (this.embarcacion == 0) {
+      this.embarcacion = params['embarcacion']; 
+      console.log(params['embarcacion']);
+      
+      if (params['embarcacion'] == undefined) {
         this.getAllTripulantes();
-      } else {
+      } else{
         this.getAllTripulantesEmbarcacion(this.embarcacion);
-      }
+      }    
     });
 
     this.selectedTripulante = '';
@@ -80,6 +90,7 @@ export class TripulantesListComponent {
 
   }
 
+
   getAllTripulantesEmbarcacion(embarcacion: number) {
     this._transitosService.getAllTripulantesEmbarcacion(embarcacion).subscribe({
       next: (response) => {
@@ -98,10 +109,9 @@ export class TripulantesListComponent {
   getAllTripulantes() {
     this._transitosService.getAllTripulantes().subscribe({
       next: (response) => {
-        console.log('Respuesta completa del backend:', response);
-
         if (response.success) { // esto debe ser true
           this.tripulantes = response.data;
+
         } else {
           console.error('Error:', response.exception);
         }
@@ -122,40 +132,41 @@ export class TripulantesListComponent {
     doc.save('tablaUsers.pdf');
   }
 
-  obtenerDocumento(numeroDocumento: string, documentoUrl: string) {
-    console.log('numero documento ' + numeroDocumento);
-    console.log('documento url ' + documentoUrl);
 
-    this.numeroDocumento = numeroDocumento;
-    this.documentoUrl = documentoUrl;
+
+  obtenerDocumento(tripulante: Tripulante) {
+    this.tripulanteSelected = tripulante;
+    this.documentoUrl = tripulante.documentoUrl!;
+    this.numeroDocumento = tripulante.numeroDocumento;
     this.esPDF = this.documentoUrl.toLowerCase().endsWith('.pdf');
-
-    let modal = document.getElementById('documentoModal');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-      this.mostrarModal = true;
+    this.setURL(this.documentoUrl);
+    const modalElement = document.getElementById('documentoModal');
+    if (modalElement) {
+      const modalBootstrap = new bootstrap.Modal(modalElement);
+      modalBootstrap.show();
     }
   }
 
-  descargarArchivo() { 
-    let a = document.createElement('a');
-    a.href = this.documentoUrl;
-     a.download = this.documentoUrl.split('/').pop()! ;  // Nombre del archivo que se descargará
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+  // descargarArchivo() {
+  //   let a = document.createElement('a');
+  //   a.href = this.documentoUrl;
+  //   a.setAttribute('download', this.documentoUrl.split('/').pop() || 'archivo');
+  //   a.setAttribute('target', '_self'); 
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   document.body.removeChild(a);
+  // }
 
   cerrarModal() {
-    const modal = document.getElementById('documentoModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      this.mostrarModal = false;
-
+    const modalElement = document.getElementById('documentoModal');
+    if (modalElement) {
+      const modalBootstrap = bootstrap.Modal.getInstance(modalElement);
+      modalBootstrap.hide();
     }
+  }
+
+
+  setURL(unsafeUrl: string) {
+    this.iframeUrl = this._sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
   }
 }

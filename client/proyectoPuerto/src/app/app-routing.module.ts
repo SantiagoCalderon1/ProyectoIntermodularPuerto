@@ -30,7 +30,7 @@ import { FormmuellesComponent } from './muelles/components/formmuelles/formmuell
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent },
   {
     path: 'logout', component: LogoutComponent, canActivate: [authGuard]
   },
@@ -86,11 +86,13 @@ const routes: Routes = [
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
 
-  { path: 'muelles', component: ListamuellesComponent, canActivate: 
-    [authGuard] },
-      { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
-      { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
-    
+  {
+    path: 'muelles', component: ListamuellesComponent, canActivate:
+      [authGuard]
+  },
+  { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
+  { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
+
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

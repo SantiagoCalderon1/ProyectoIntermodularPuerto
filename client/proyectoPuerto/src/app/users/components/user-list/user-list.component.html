@@ -27,10 +27,7 @@
                     <ng-container
                         *ngTemplateOutlet="activeTab === 'habilitados' ? btnsUsuariosHabilitados : btnsUsuariosNoHabilitados"></ng-container>
 
-                    <button [disabled]="users.length === 0 || rol != 4 || !selectedUser" class="btn btn-danger"
-                        [routerLink]="['/users', 'Delete', selectedUser]">
-                        <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
-                    </button>
+
                 </div>
 
                 <div *ngIf="users.length === 0" class="text-center text-muted mt-3">
@@ -52,21 +49,13 @@
 </ng-template>
 
 <ng-template #btnsUsuariosHabilitados>
-    <button [disabled]="users.length === 0 || rol != 4" class="btn btn-success"
-        [routerLink]="['/users', 'Insert', '']">
+    <button [disabled]="users.length === 0 || rol != 4" class="btn btn-success" [routerLink]="['/users', 'Insert', '']">
         <i class="fa-solid fa-user-plus"></i> Añadir Usuario
-    </button>
-    <button [disabled]="users.length === 0 || rol != 4 || !selectedUser" class="btn btn-warning"
-        [routerLink]="['/users', 'Update', selectedUser]">
-        <i class="fa-solid fa-pen"></i> Actualizar Usuario
     </button>
 </ng-template>
 
 <ng-template #btnsUsuariosNoHabilitados>
-    <button [disabled]="users.length === 0 || rol != 4 || !selectedUser" class="btn btn-success"
-        [routerLink]="['/users', 'Habilitar', selectedUser]">
-        <i class="fa-solid fa-user-plus"></i> Habilitar usuario
-    </button>
+
 </ng-template>
 
 <ng-template #listaUsuariosHabilitados>
@@ -75,22 +64,19 @@
             class="table text-center table-striped table-hover table-bordered">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" *ngIf="rol == 4">Seleccionar</th>
                     <th scope="col">Usuario</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
                     <th scope="col">Idioma</th>
                     <th scope="col">Habilitado</th>
                     <th scope="col">Rol</th>
+                    <th scope="col" *ngIf="rol == 4">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let user of usersHabilitados">
                     <tr>
-                        <td *ngIf="rol == 4">
-                            <input class="form-check-input" type="checkbox" [value]="user.usuario"
-                                (change)="selectUser(user.usuario, $event)">
-                        </td>
+
                         <th scope="row">{{ user.usuario }}</th>
                         <td>{{ user.nombre }}</td>
                         <td>{{ user.email }}</td>
@@ -100,6 +86,18 @@
                                 [ngTemplateOutlet]="user.habilitado === 1 ? habilitado : deshabilitado"></ng-container>
                         </td>
                         <td>{{ user.rol }}</td>
+                        <td scope="col" *ngIf="rol == 4">
+                            <div class="d-flex gap-2 align-items-center justify-content-center">
+                                <button [disabled]="users.length === 0 || rol != 4" class="btn btn-warning"
+                                    [routerLink]="['/users', 'Update', user.usuario]">
+                                    <i class="fa-solid fa-pen"></i> Actualizar Usuario
+                                </button>
+                                <button [disabled]="users.length === 0 || rol != 4 " class="btn btn-danger"
+                                    [routerLink]="['/users', 'Delete', user.usuario]">
+                                    <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>
@@ -113,22 +111,19 @@
             class="table text-center table-striped table-hover table-bordered">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" *ngIf="rol == 4">Seleccionar</th>
                     <th scope="col">Usuario</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
                     <th scope="col">Idioma</th>
                     <th scope="col">Habilitado</th>
                     <th scope="col">Rol</th>
+                    <th scope="col" *ngIf="rol == 4">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let user of usersNoHabilitados">
                     <tr>
-                        <td *ngIf="rol == 4">
-                            <input class="form-check-input" type="checkbox" [value]="user.usuario"
-                                (change)="selectUser(user.usuario, $event)">
-                        </td>
+
                         <th scope="row">{{ user.usuario }}</th>
                         <td>{{ user.nombre }}</td>
                         <td>{{ user.email }}</td>
@@ -138,6 +133,19 @@
                                 [ngTemplateOutlet]="user.habilitado === 1 ? habilitado : deshabilitado"></ng-container>
                         </td>
                         <td>{{ user.rol }}</td>
+                        <td scope="col" *ngIf="rol == 4">
+                            <div class="d-flex gap-2 align-items-center justify-content-center">
+
+                                <button [disabled]="users.length === 0 || rol != 4" class="btn btn-success"
+                                    [routerLink]="['/users', 'Habilitar', user.usuario]">
+                                    <i class="fa-solid fa-user-plus"></i> Habilitar usuario
+                                </button>
+                                <button [disabled]="users.length === 0 || rol != 4 " class="btn btn-danger"
+                                    [routerLink]="['/users', 'Delete', user.usuario]">
+                                    <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>

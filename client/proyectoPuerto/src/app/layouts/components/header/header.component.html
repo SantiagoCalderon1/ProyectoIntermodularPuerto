@@ -1,8 +1,7 @@
 <header class="fixed-top">
     <nav class="navbar bg-light">
         <div class="container-fluid">
-            <img
-                src="http://localhost:8080/client/proyectoPuerto/src/assets/images/logo.webp">
+            <img src="http://localhost:8080/client/proyectoPuerto/src/assets/images/logo.webp">
             <a class="navbar-brand d-none d-md-block" [routerLink]="['/home']">
                 Puerto
                 deportivo La Marina
@@ -47,8 +46,7 @@
                                 data-bs-dismiss="offcanvas">Funcionalidades</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
-                            <a class="nav-link" [routerLink]="['/muelles']"
-                                [routerLinkActive]="['active']">Muelles</a>
+                            <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -56,11 +54,12 @@
                                 Transitos
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" [routerLink]="['/transitos-list']">Transitos</a></li>
+                                <li><a class="dropdown-item" [routerLink]="['/transitos-list']"
+                                        data-bs-dismiss="offcanvas">Transitos</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" [routerLink]="['/tripulantes', 0]"
+                                <li><a class="dropdown-item" [routerLink]="['/tripulantes']"
                                         data-bs-dismiss="offcanvas">Tripulantes</a></li>
                             </ul>
                         </li>
@@ -72,13 +71,4 @@
             </div>
         </div>
     </nav>
-
-    <!-- ESTO TENGO QUE TERMINARLO SI SOBRA TIEMPO -->
-    <!-- <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a [routerLink]="['/home']">Home</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users'] ">Usuarios</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users']">Listado de usuarios</a></li>
-        </ol>
-    </nav> -->
 </header>

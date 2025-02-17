@@ -2,7 +2,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h5><a id="title-footer" [routerLink]="['/home']">Puerto La Marina<span style="display: block;"></span>Gestión portuaria y de amarres.</a></h5>
+                <h5><a id="title-footer" [routerLink]="['/home']">Puerto La Marina<span
+                            style="display: block;"></span>Gestión portuaria y de amarres.</a></h5>
             </div>
             <div class="col-md-4 mt-2">
                 <h5>Enlaces</h5>
@@ -30,6 +31,17 @@
                         <a class="nav-link" [routerLink]="['/funcionalidades']"
                             [routerLinkActive]="['active']">Funcionalidades</a>
                     </li>
+                    <li class="nav-item" *ngIf="rol == 4">
+                        <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
+                    </li>
+                    <li class="nav-item" *ngIf="rol == 4">
+                        <a class="nav-link" [routerLink]="['//transitos-list']"
+                            [routerLinkActive]="['active']">Transitos</a>
+                    </li>
+                    <li class="nav-item" *ngIf="rol == 4">
+                        <a class="nav-link" [routerLink]="['/tripulantes']"
+                            [routerLinkActive]="['active']">Tripulantes</a>
+                    </li>
                 </ul>
             </div>
 
@@ -50,5 +62,4 @@
     </div>
 </footer>
 
-<!-- Agregar Bootstrap Icons para los íconos de redes sociales -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">

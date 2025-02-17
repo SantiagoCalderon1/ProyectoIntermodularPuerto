@@ -41,7 +41,7 @@ export class TripulantesComponent {
     fechaExpeDocumento: new Date(),
     fechaCadDocumento: new Date(),
     embarcacion: 0,
-    documentoUrl: ''
+    documentoUrl: null
   };
 
   constructor(
@@ -66,8 +66,6 @@ export class TripulantesComponent {
 
       if (this.numeroDocumento) {
         this.getSelectedTripulante(this.numeroDocumento);
-      } else {
-        this.selectedTripulante.embarcacion = this.embarcacion;
       }
     });
 
@@ -90,9 +88,9 @@ export class TripulantesComponent {
       case 'Insert':
         return "Insertando un nuevo tripulante en la embarcación - " + this.embarcacion;
       case 'Update':
-        return "Actualizando al tripulante - " + this.numeroDocumento + " de la embarcación - " + this.embarcacion;
+        return "Actualizando al tripulante - " + this.numeroDocumento ;
       case 'Delete':
-        return "Eliminando al tripulante - " + this.numeroDocumento + " de la embarcación - " + this.embarcacion;
+        return "Eliminando al tripulante - " + this.numeroDocumento ;
       default:
         return "";
     }
@@ -114,12 +112,7 @@ export class TripulantesComponent {
   }
 
   manageForm(tripulanteForm: NgForm) {
-    console.log("Formulario inválido: ", tripulanteForm.invalid);
-    console.log("Campos del formulario:", tripulanteForm.controls);
     if (tripulanteForm.valid) {
-      console.log("Formulario enviado:", this.selectedTripulante);
-
-      this._route.navigate(['/tripulantes', this.embarcacion]);
       switch (this.option) {
         case 'Insert':
           this.insertNewTripulante();
@@ -191,7 +184,8 @@ export class TripulantesComponent {
             }, 500);
           } else {
             this.toastr.error(
-              response?.message
+              'Prueba modificar algún campo!',
+              ' No se ha actualizado a ' + this.selectedTripulante.nombre, { positionClass: 'toast-top-right' }
             );
           }
         },

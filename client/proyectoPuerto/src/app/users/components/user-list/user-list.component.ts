@@ -105,8 +105,4 @@ export class UserListComponent {
     doc.save('tablaUsers.pdf');
   }
 
-  selectUser(username: string, event: any) {
-    this.selectedUser = event.target.checked ? username : '';
-  }
-
 }

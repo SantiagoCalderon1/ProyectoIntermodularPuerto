@@ -15,7 +15,8 @@ export class HeaderComponent {
   breadcrumb: string[] = [];
   rol: number | null = null;
 
-  constructor(private router: Router, private _appService: AppService
+  constructor(private _appService: AppService, private _route: Router,
+
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +25,4 @@ export class HeaderComponent {
     });
   }
 
-  private updateBreadcrumb(): void {
-  }
 }

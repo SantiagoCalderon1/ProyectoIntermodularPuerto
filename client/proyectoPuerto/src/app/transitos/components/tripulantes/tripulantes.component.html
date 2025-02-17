@@ -14,12 +14,11 @@
                                 <label for="inputEmbarcacion" class="form-label">Numero de embarcación: *</label>
                                 <input type="number" class="form-control rounded-pill" name="inputEmbarcacion" required
                                     #inputEmbarcacion="ngModel" [(ngModel)]="selectedTripulante.embarcacion"
-                                    value="{{embarcacion}}" min="1">
+                                    value="{{embarcacion}}" min="0">
                                 <div
                                     *ngIf="inputEmbarcacion.invalid && (inputEmbarcacion.dirty || inputEmbarcacion.touched)">
                                     <small class="text-danger">Este campo es obligatorio.</small>
                                 </div>
-
                             </div>
                             <!-- Nombre -->
                             <div class="col-md-6">
@@ -39,7 +38,6 @@
                                     <small class="text-danger">Este campo es obligatorio.</small>
                                 </div>
                             </div>
-
                             <!-- tipoDocumento -->
                             <div class="col-md-6">
                                 <label for="selectTipoDocumento" class="form-label">Tipo de documento: *</label>
@@ -180,7 +178,7 @@
                             <div class="card-body">
                                 <p>¿Está seguro de eliminar al tripulante {{ selectedTripulante.nombre }} con Número de
                                     identificación {{selectedTripulante.numeroDocumento}} de la embarcación {{
-                                    embarcacion}}?</p>
+                                    selectedTripulante.embarcacion}}?</p>
                             </div>
                         </div>
                     </div>

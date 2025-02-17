@@ -103,28 +103,30 @@ export class UserComponent {
     });
   }
 
-  manageForm() {
-    //console.log(this.selectedUser);
-    switch (this.option) {
-      case 'Insert':
-        this.insertNewUser();
-        break;
-      case 'Update':
-        this.updateUser();
-        break;
-      case 'Delete':
-        this.deleteUser();
-        break;
-      case 'Habilitar':
-        this.selectedUser.habilitado = 1;
-        this.updateUser(); break;
-      default:
-        this.toastr.error(
-          'El formulario tiene campos inválidos',
-          'Error de validación'
-        );
-        this._route.navigate(['/users']);
-        break;
+  manageForm(userForm: NgForm) {
+    if (userForm.valid) {
+      switch (this.option) {
+        case 'Insert':
+          this.insertNewUser();
+          break;
+        case 'Update':
+          this.updateUser();
+          break;
+        case 'Delete':
+          this.deleteUser();
+          break;
+        case 'Habilitar':
+          this.selectedUser.habilitado = 1;
+          this.updateUser();
+          break;
+      }
+    } else {
+      this.toastr.error(
+        'El formulario tiene campos inválidos',
+        'por favor complete todos los campos requeridos.'
+      );
+      console.log("Formulario no válido, ");
+
     }
   }
 
@@ -138,8 +140,9 @@ export class UserComponent {
               'Se ha añadido a ' + this.selectedUser.nombre,
               'Ususario agregado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this.resetForm();
-            this._route.navigate(['/users']);
+            setTimeout(() => {
+              this._route.navigate(['/users']);
+            }, 500);
           } else {
             this.toastr.error(
               response.message
@@ -177,7 +180,6 @@ export class UserComponent {
   }
 
   updateUser() {
-    //console.log('username ' + this.username + ' user ' + JSON.stringify(this.selectedUser));
     this._usersService
       .updateUser(this.username, this.selectedUser)
       .subscribe({
@@ -187,16 +189,20 @@ export class UserComponent {
               'Se ha actualizado a ' + this.selectedUser.nombre,
               'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this._route.navigate(['/users']);
+            setTimeout(() => {
+              this._route.navigate(['/users']);
+            }, 500);
           } else {
             this.toastr.error(
-              response?.message
+              'Prueba modificar algún campo!',
+              ' No se ha actualizado a ' + this.selectedUser.nombre, { positionClass: 'toast-top-right' }
             );
           }
         },
         error: (error) => {
           this.toastr.error(
-            error.message
+            'No se ha actualizado a ' + this.selectedUser.nombre,
+            'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
           );
         }
       });
@@ -212,8 +218,9 @@ export class UserComponent {
               'Se ha eliminado a ' + this.selectedUser.nombre,
               'Usuario actualizado correctamente!', { positionClass: 'toast-top-right' }
             );
-            this.resetForm();
-            this._route.navigate(['/users']);
+            setTimeout(() => {
+              this._route.navigate(['/users']);
+            }, 500);
           } else {
             this.toastr.error(
               response.message
@@ -229,34 +236,12 @@ export class UserComponent {
   }
 
   cancelForm(event: Event): void {
-    this.resetForm();
     event.preventDefault();
-    this._route.navigate(['/users'], { queryParams: {} });
+    setTimeout(() => {
+      this._route.navigate(['/users']);
+    }, 500);
   }
 
-  changedForm(): void {
-    this.formStatus = !this.formStatus;
-    if (this.selectedUser.habilitado) {
-      this.selectedUser.habilitado = 1;
-    } else {
-      this.selectedUser.habilitado = 0;
-    }
-  }
-
-  resetForm(): void {
-    Object.assign(this.selectedUser, {
-      usuario: '',
-      nombre: '',
-      email: '',
-      password: '',
-      idioma: '',
-      habilitado: 0,
-      rol: 0
-    });
-    if (this.userForm) {
-      this.userForm.resetForm();
-    }
-  }
 
   canDeactivateForm(): boolean {
     if (this.formStatus) {
