@@ -24,17 +24,10 @@
                         <i class="fa-solid fa-print"></i> Imprimir Tabla
                     </button>
 
-<<<<<<< HEAD
-                    <button *ngIf="activeTab === 'habilitados'" [disabled]="users.length === 0 || rol != 4"
-                        class="btn btn-success" [routerLink]="['/users', 'Insert', '']">
-                        <i class="fa-solid fa-user-plus"></i> Añadir Usuario
-                    </button>
-=======
                     <ng-container
                         *ngTemplateOutlet="activeTab === 'habilitados' ? btnsUsuariosHabilitados : btnsUsuariosNoHabilitados"></ng-container>
 
 
->>>>>>> unionUsuarioRolFuncionalidad
                 </div>
 
                 <div *ngIf="users.length === 0" class="text-center text-muted mt-3">
