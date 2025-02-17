@@ -12,7 +12,7 @@ export class LoginService {
   //url local
   //urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
   
-  urlApi = "https://puerto.proyectos-2daw.es/app/controller/usuariosController.php";
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/usuariosController.php";
 
   currentUsername: string = '';
 

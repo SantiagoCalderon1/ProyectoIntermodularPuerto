@@ -30,7 +30,7 @@ export class FormularioComponent {
       },
       (error) => {
         // Aquí se procesa el error del servicio
-        console.error('Error al obtener el rol: ' + error);
+        // console.error('Error al obtener el rol: ' + error);
       }
     );
   }

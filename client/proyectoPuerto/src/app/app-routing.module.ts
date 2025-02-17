@@ -18,8 +18,21 @@ import { PlazaComponent } from './plazas/components/plaza/plaza.component';
 import { InstalacionComponent } from './instalacion/components/creacion/instalacion.component';
 import { ListaComponent as listaInstalacionComponent } from './instalacion/components/lista/lista.component';
 
+<<<<<<< HEAD
 import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
 import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
+=======
+import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
+import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
+
+import { TransitosComponent } from './transitos/components/transitos/transitos.component';
+import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
+
+import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
+import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
+
+
+>>>>>>> unionUsuarioRolFuncionalidad
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,6 +44,9 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [authGuard]
   },
+  { path: "transitos-list", component: TransitosListComponent, canActivate: [authGuard] },
+  { path: "transitos", component: TransitosComponent, canActivate: [authGuard] },
+  { path: 'transitos/:embarcacion/:tipo', component: TransitosComponent, canActivate: [authGuard] },
 
 
   {
@@ -66,17 +82,36 @@ const routes: Routes = [
   { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'instalacion', component: listaInstalacionComponent, canActivate: [authGuard] },
 
+<<<<<<< HEAD
   { path: 'muelles', component: ListamuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
 
+=======
+
+  { path: 'tripulantes', component: TripulantesListComponent, canActivate: [authGuard] },
+  { path: 'tripulantes/:embarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
+  { path: 'tripulantes/:option/:numeroDocumento/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+
+
+  { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
+  { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
+  // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+
+  {
+    path: 'muelles', component: ListamuellesComponent, canActivate:
+      [authGuard]
+  },
+  { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
+  { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
+
+
+>>>>>>> unionUsuarioRolFuncionalidad
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Ruta que no coincide con ninguna de las anteriores
   { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
-
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

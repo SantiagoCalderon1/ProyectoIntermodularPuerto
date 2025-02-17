@@ -26,14 +26,15 @@ export class InstalacionComponent {
   ngOnInit() {
     this.idMod = this._aroute.snapshot.params['id_instalacion']; // Recibimos parámetro
     this.tipo = this._aroute.snapshot.params['tipo'];            //
-    console.log(this.idMod);
+    // console.log(this.idMod);
     this.traeInstalacion(this.idMod);
   }
+
   traeInstalacion(id: number): void {
     this.instalacionesService.getInstalacion(id).subscribe({
       next: (response) => {
-        console.log("response");
-        console.log(response);
+        // console.log("response");
+        // console.log(response);
         this.instalacionAct.codigo = response["codigo"];
         this.instalacionAct.puerto = response["puerto"];
         this.instalacionAct.tipo_instalacion = response["tipo_instalacion"]
@@ -42,19 +43,20 @@ export class InstalacionComponent {
         this.instalacionAct.estado = response["estado"];
       },
       error: (error) => {
-        console.log("Error al obtener la instalación:", error);
+        // console.log("Error al obtener la instalación:", error);
       }
     })
   }
 
   agregarInstalacion() {
-    console.log("idMod");
-    console.log(this.idMod);
+    // console.log("idMod");
+    // console.log(this.idMod);
     if (this.instalacionAct.codigo == "" || this.instalacionAct.puerto == "" || this.instalacionAct.tipo_instalacion == "" || this.instalacionAct.descripcion == "" || this.instalacionAct.fecha_disposicion == "") {
       this.mensajeCreacion = 0;
-      console.log("Error, inputs sin rellenar");
+      // console.log("Error, inputs sin rellenar");
       return
     }
+
     const nuevaInstalacion = {
       id_instalacion: this.idMod,
       codigo: this.instalacionAct.codigo,
@@ -62,43 +64,47 @@ export class InstalacionComponent {
       descripcion: this.instalacionAct.descripcion,
       tipo_instalacion: this.instalacionAct.tipo_instalacion,
       fecha_disposicion: this.instalacionAct.fecha_disposicion,
-      estado: this.instalacionAct.estado,
+      estado: this.instalacionAct.estado ? 1 : 0,
     }
-    console.log(nuevaInstalacion);
+
+
+    // console.log(nuevaInstalacion);
+
+
     if (this.tipo == 1) {
       this.instalacionesService.modifyInstalacion(nuevaInstalacion).subscribe({
         next: (response) => {
-          console.log("response");
-          console.log(response);
+          // console.log("response");
+          // console.log(response);
           this.mensajeCreacion = 1;
           this.route.navigate(['/listado']);
         },
         error: (error) => {
-          console.log("error");
-          console.log(error);
+          // console.log("error");
+          // console.log(error);
           this.mensajeCreacion = 0;
         }
       })
     } else if (this.tipo == 2) {
       this.instalacionesService.crearInstalacion(nuevaInstalacion).subscribe({
         next: (response) => {
-          console.log("Instalación creada", response);
+          // console.log("Instalación creada", response);
           if (nuevaInstalacion["estado"] == 1) {
             this.estadoString = "BUENO";
           } else {
             this.estadoString = "MALO";
           }
-          console.log(nuevaInstalacion.codigo)
+          // console.log(nuevaInstalacion.codigo)
           this.instalaciones.push(nuevaInstalacion);
           this.mensajeCreacion = 1;
-          console.log(this.instalaciones);
+          // console.log(this.instalaciones);
         },
         error: (error) => {
-          console.log("Error al crear instalación", error);
+          // console.log("Error al crear instalación", error);
           this.mensajeCreacion = 0;
         },
         complete: () => {
-          console.log("Petición completada");
+          // console.log("Petición completada");
         }
       });
     }

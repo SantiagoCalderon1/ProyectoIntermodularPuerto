@@ -22,7 +22,7 @@ export class ListaComponent {
         this.roles = resultado.data;
       },
       error: (error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
       }
     });
   }

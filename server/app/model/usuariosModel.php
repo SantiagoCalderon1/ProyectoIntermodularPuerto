@@ -3,7 +3,6 @@ include_once '../../config/conexion.php';
 
 abstract class Users
 {
-
     /**
      * Verifica las credenciales de un usuario y determina si el inicio de sesión es válido.
      * 
@@ -20,15 +19,12 @@ abstract class Users
         }
         try {
             $conexion = openConexion();
-
             $sql = "SELECT password,rol FROM usuario WHERE usuario = ? or email = ? ";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("ss", $input->usuario, $input->usuario);
             $stmt->execute();
-
             $result = $stmt->get_result();
             $user = $result->fetch_assoc(); // Devuelve un array asociativo o NULL si no existe el usuario
-
             // Verificar si el usuario existe y la contraseña es válida
             //return $user && password_verify($password, $passwordHash);
             if (!$user) {
@@ -56,6 +52,7 @@ abstract class Users
         $conexion = null;
         try {
             $conexion = openConexion();
+
             if (empty($username)) {
                 $sql = "SELECT * FROM usuario";
                 $stmt = $conexion->prepare($sql);
@@ -76,7 +73,6 @@ abstract class Users
         }
     }
 
-
     /**
      * Inserta un usuario.
      * 
@@ -92,25 +88,20 @@ abstract class Users
                 return false;
             }
             $conexion = openConexion();
-
             // Hashear la contraseña
             // $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $fields = [];
             $values = [];
             $types = '';
-
             foreach ($input as $key => $value) {
                 $fields[] = $key;
                 $values[] = $value;
-
                 $types .= Users::getTypesBind($value);
             }
-
             $sql = "INSERT INTO usuario (" . implode(',', $fields) . ") VALUES (?,?,?,?,?,?,?)";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en insertNewUserLogin: Excepción - " . $e->getMessage()];
@@ -134,26 +125,20 @@ abstract class Users
         $conexion = null;
         try {
             $conexion = openConexion();
-
             $fields = [];
             $values = [];
             $types = '';
-
             foreach ($input as $key => $value) {
                 $fields[] = "$key = ?";
                 $values[] = $value;
-
                 $types .= users::getTypesBind($value);
             }
-
             $values[] = $oldUsername;
             $types .= users::getTypesBind($oldUsername);
-
             $sql = "UPDATE usuario SET  " . implode(", ", $fields) . "   WHERE usuario = ?";
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param($types, ...$values);
             $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en updateUser: Excepción - " . $e->getMessage()];
@@ -183,7 +168,6 @@ abstract class Users
             $stmt = $conexion->prepare($sql);
             $stmt->bind_param("s", $username);
             $stmt->execute();
-
             return ($stmt->affected_rows > 0);
         } catch (Exception $e) {
             return ["Exception" => "Error en deleteUser: Excepción - " . $e->getMessage()];
@@ -195,7 +179,7 @@ abstract class Users
     }
 
     /**
-     * Función para elimina a un usuario.
+     * Función para obtener el tipo de un dato, se usa para bind_param.
      * 
      * @param string $value, el valor de una propiedad del array input.
      * @return chart  Devuelve una letra correspondinete al tipo de dato.

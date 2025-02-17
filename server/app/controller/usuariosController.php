@@ -1,10 +1,7 @@
 <?php
 
 // url proyecto filezilla
-// https://uat-puerto.proyectos-2daw.es/app/controller/usuariosLoginController.php
-
-// url prueba thunder client
-//http://localhost:8080/server/app/controller/usuariosController.php/user/anna_s
+// https://uat-puerto.proyectos-2daw.es/app/controller/usuariosController.php
 
 include '../model/usuariosModel.php';
 
@@ -106,7 +103,7 @@ function deleteUser(string $username = '')
         echoResponse(true, 200, 'Usuario eliminado correctamente.');
     } else {
         $exception = $result['Exception'] ?? '';
-        echoResponse(false, 500, 'Error al eliminar el usuario con username .', $exception);
+        echoResponse(false, 500, 'Error al eliminar el usuario.', $exception);
     }
 }
 

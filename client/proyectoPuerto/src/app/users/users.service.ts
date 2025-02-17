@@ -10,7 +10,9 @@ import { LoginService } from '../login/login.service';
 })
 export class UsersService {
   //urlApi = "http://localhost:8080/server/app/controller/usuariosController.php";
-  urlApi = "https://puerto.proyectos-2daw.es/app/controller/usuariosController.php";
+  //urlApi = "https://puerto.proyectos-2daw.es/app/controller/usuariosController.php";
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/usuariosController.php";
+
 
 
   httpOptions = {
@@ -34,8 +36,8 @@ export class UsersService {
   }
 
   updateUser(username: string, data: any): Observable<any> {
-    console.log(JSON.stringify(data));
-    console.log(`${this.urlApi}/update/${username}`);
+    //console.log(JSON.stringify(data));
+    //console.log(`${this.urlApi}/update/${username}`);
     return this.http.put<any>(`${this.urlApi}/update/${username}`, JSON.stringify(data), this.httpOptions);
   }
 

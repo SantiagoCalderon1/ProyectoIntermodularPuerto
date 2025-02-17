@@ -30,7 +30,11 @@ export class ListamuellesComponent {
         this.muelles = resultado.data;
       },
       error: (error) => {
+<<<<<<< HEAD
         console.error('Error:', error);
+=======
+        // console.error('Error:', error);
+>>>>>>> unionUsuarioRolFuncionalidad
       }
     });
 

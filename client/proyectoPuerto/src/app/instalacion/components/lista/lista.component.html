@@ -44,7 +44,7 @@
                                     <td>{{ instalacion.estado }}</td>
                                     <td>{{ instalacion.puerto }}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm" (click)="eliminarInstalacion(instalacion.id_instalacion)">
+                                        <button class="btn btn-danger btn-sm" (click)="abrirModal(instalacion)">
                                             <i class="fa-solid fa-trash"></i>Eliminar 
                                         </button>
                                     </td>
@@ -61,6 +61,24 @@
                 <!-- Mensajes de eliminación -->
                 <p *ngIf="mensajeEliminacion == 1" class="text-success text-center">Instalación eliminada correctamente</p>
                 <p *ngIf="mensajeEliminacion == 0" class="text-danger text-center">Error al eliminar la instalación</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="modalConfirmarEliminacion" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que quieres eliminar la instalación <strong>{{instalacionSeleccionada?.id_instalacion}}</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
             </div>
         </div>
     </div>

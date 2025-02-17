@@ -15,10 +15,10 @@ import { AppService } from '../../../app.service';
 export class PlazaComponent {
   @ViewChild('plazaForm', { static: false }) plazaForm: NgForm | undefined;
 
-  public plazaact: Plaza = { id: 0, año: 0, puerto: '', instalacion: '', fecha_inicio: '', datos_titular: '', datos_embarcacion: '', datos_estancia: '' };
+  public plazaact: Plaza = { id_plaza_base: 0, nombre: '', instalacion: ''};
   public titulo: string = 'Nueva Plaza';
   public tipo: number = 0;
-  public id: number = 0;
+  public id_plaza_base: number = 0;
   public txtBtn: string = 'Guardar';
   public formularioCambiado: boolean = false;
   rol: number | null = null;
@@ -32,26 +32,26 @@ export class PlazaComponent {
       this.rol = rol;
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
-    this.id = +this._aroute.snapshot.params['id'];
+    this.id_plaza_base = +this._aroute.snapshot.params['id_plaza_base'];
 
     if (this.tipo == 1 || this.tipo == 2) {
-      this.traePlaza(this.id);
+      this.traePlaza(this.id_plaza_base);
     }
 
     this.obtenerInstalaciones(); // Cargar instalaciones disponibles
   }
 
-  private traePlaza(id: number) {
-    this._plazasService.obtengoPlazaApi(id).subscribe({
+  private traePlaza(id_plaza_base: number) {
+    this._plazasService.obtengoPlazaApi(id_plaza_base).subscribe({
       next: (resultado) => {
-        console.log(resultado[0]);
+        // console.log(resultado[0]);
         this.plazaact = resultado[0];
       },
       error: (error) => {
         this.toastr.error(error, 'Error al obtener la plaza');
       },
       complete: () => {
-        console.log('Operación completada.');
+        // console.log('Operación completada.');
       }
     });
   }
@@ -82,10 +82,10 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error guardando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       } else if (this.tipo == 1) {
-        this._plazasService.modificaPlazaApi(this.id, this.plazaact).subscribe({
+        this._plazasService.modificaPlazaApi(this.id_plaza_base, this.plazaact).subscribe({
           next: (resultado) => {
             if (resultado == "OK") {
               this.toastr.success('Plaza modificada correctamente!');
@@ -95,10 +95,10 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error modificando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       } else if (this.tipo == 2) {
-        this._plazasService.borraPlazaApi(this.id).subscribe({
+        this._plazasService.borraPlazaApi(this.id_plaza_base).subscribe({
           next: (resultado) => {
             if (resultado == "OK") {
               this.toastr.success('Plaza eliminada correctamente!');
@@ -108,7 +108,7 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error eliminando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       }
     } else {

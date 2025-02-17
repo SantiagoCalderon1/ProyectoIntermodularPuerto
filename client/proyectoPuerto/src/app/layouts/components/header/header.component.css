@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 header{
     height: 10vh;
 }
@@ -20,14 +21,15 @@ nav .breadcrumb{
     display: flex;
     align-items: center;
     justify-content: start;
+=======
+header nav{
+    height: 100px;
+>>>>>>> unionUsuarioRolFuncionalidad
 }
 
-.breadcrumb-item a{
-    text-decoration: none;
-    color: #000;
-}
-
-.breadcrumb-item.active > a{
-    text-decoration:underline ;
-    color: #000;
+#logo {
+    height: 7vh;
+    width: 14vw;
+    background-image: url(../../../../assets/images/logo.webp);
+    background-size: cover;
 }

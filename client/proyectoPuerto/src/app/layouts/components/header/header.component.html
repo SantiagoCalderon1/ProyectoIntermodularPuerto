@@ -1,8 +1,9 @@
 <header class="fixed-top">
     <nav class="navbar bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" [routerLink]="['/home']"><img src="http://localhost:8080/ProyectoIntermodularPuerto/client/proyectoPuerto/src/assets/images/logo.webp">
-                Puerto deportivo La Marina de Valencia</a>
+            <a class="navbar-brand" [routerLink]="['/home']">Puerto
+                deportivo La Marina
+                de Valencia</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -14,38 +15,36 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <!-- <form class="d-flex mt-3" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form> -->
-
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Página
+                            <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Página
                                 Principal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']">Usuarios</a>
+                            <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Usuarios</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']">Plazas
+                            <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Plazas
                                 bases</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
-                            <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']">Roles</a>
+                            <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Roles</a>
                         </li>
                         <li class="nav-item" *ngIf=" rol == 4">
-                            <a class="nav-link" [routerLink]="['/instalacion']"
-                                [routerLinkActive]="['active']">Instalaciones</a>
+                            <a class="nav-link" [routerLink]="['/instalacion']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Instalaciones</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
-                            <a class="nav-link" [routerLink]="['/funcionalidades']"
-                                [routerLinkActive]="['active']">Funcionalidades</a>
+                            <a class="nav-link" [routerLink]="['/funcionalidades']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Funcionalidades</a>
                         </li>
                         <li class="nav-item" *ngIf="rol == 4">
-                            <a class="nav-link" [routerLink]="['/muelles']"
-                                [routerLinkActive]="['active']">Muelles</a>
+                            <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Modulo 3</a>
@@ -54,32 +53,31 @@
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                Dropdown
+                                Transitos
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" [routerLink]="['/transitos-list']"
+                                        data-bs-dismiss="offcanvas">Transitos</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" [routerLink]="['/tripulantes']"
+                                        data-bs-dismiss="offcanvas">Tripulantes</a></li>
                             </ul>
-                        </li> -->
+                        </li>
                     </ul>
 
-
                     <button class="btn bg-danger text-white mt-5" [routerLink]="['/logout']"
-                        [routerLinkActive]="['active']">Cerrar sesión</button>
-
+                        [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Cerrar sesión</button>
                 </div>
             </div>
         </div>
     </nav>
-    <!-- <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb" *ngFor="let ruta of rutaBreadCrumb">
-            <li class="breadcrumb-list">
-                {{ruta}}
-            </li>
+    <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a [routerLink]="['/home']">Home</a></li>
+            <li class="breadcrumb-item active"><a [routerLink]="['/users'] ">Usuarios</a></li>
+            <li class="breadcrumb-item active"><a [routerLink]="['/users']">Listado de usuarios</a></li>
         </ol>
-    </nav> -->
+    </nav>
 </header>

@@ -1,17 +1,17 @@
 <div class="container-fluid d-flex justify-content-center align-items-center" id="container-user-list">
-    <div class="col-6 col-sm-8 col-md-10 col-lg-12">
+    <div class="col-6 col-sm-8 col-md-9 col-lg-12">
         <div class="card text-start shadow-lg" style="width: 100%;">
             <div class="card-header title text-center">
                 <h2 class="fs-4">Listado de usuarios</h2>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <button class="nav-link" [ngClass]="{'active': activeTab === 'habilitados'}"
+                        <button class="nav-link text-black" [ngClass]="{'active': activeTab === 'habilitados'}"
                             (click)="setActiveTab('habilitados')">
                             Usuarios Activos
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" [ngClass]="{'active': activeTab === 'noHabilitados'}"
+                        <button class="nav-link text-black" [ngClass]="{'active': activeTab === 'noHabilitados'}"
                             (click)="setActiveTab('noHabilitados')">
                             Usuarios pendientes de activarse
                         </button>
@@ -24,10 +24,17 @@
                         <i class="fa-solid fa-print"></i> Imprimir Tabla
                     </button>
 
+<<<<<<< HEAD
                     <button *ngIf="activeTab === 'habilitados'" [disabled]="users.length === 0 || rol != 4"
                         class="btn btn-success" [routerLink]="['/users', 'Insert', '']">
                         <i class="fa-solid fa-user-plus"></i> Añadir Usuario
                     </button>
+=======
+                    <ng-container
+                        *ngTemplateOutlet="activeTab === 'habilitados' ? btnsUsuariosHabilitados : btnsUsuariosNoHabilitados"></ng-container>
+
+
+>>>>>>> unionUsuarioRolFuncionalidad
                 </div>
 
                 <div *ngIf="users.length === 0" class="text-center text-muted mt-3">
@@ -48,6 +55,19 @@
     <i class="fa-solid fa-x text-danger"></i>
 </ng-template>
 
+<<<<<<< HEAD
+=======
+<ng-template #btnsUsuariosHabilitados>
+    <button [disabled]="users.length === 0 || rol != 4" class="btn btn-success" [routerLink]="['/users', 'Insert', '']">
+        <i class="fa-solid fa-user-plus"></i> Añadir Usuario
+    </button>
+</ng-template>
+
+<ng-template #btnsUsuariosNoHabilitados>
+
+</ng-template>
+
+>>>>>>> unionUsuarioRolFuncionalidad
 <ng-template #listaUsuariosHabilitados>
     <div *ngIf="(users.length > 0 && activeTab == 'habilitados')" id="container-table" class="table-responsive">
         <table id="tableUsers" datatable [dtOptions]="dtOptions"
@@ -60,12 +80,20 @@
                     <th scope="col">Idioma</th>
                     <th scope="col">Habilitado</th>
                     <th scope="col">Rol</th>
+<<<<<<< HEAD
                     <th scope="col">Acciones</th>
+=======
+                    <th scope="col" *ngIf="rol == 4">Acciones</th>
+>>>>>>> unionUsuarioRolFuncionalidad
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let user of usersHabilitados">
                     <tr>
+<<<<<<< HEAD
+=======
+
+>>>>>>> unionUsuarioRolFuncionalidad
                         <th scope="row">{{ user.usuario }}</th>
                         <td>{{ user.nombre }}</td>
                         <td>{{ user.email }}</td>
@@ -75,13 +103,22 @@
                                 [ngTemplateOutlet]="user.habilitado === 1 ? habilitado : deshabilitado"></ng-container>
                         </td>
                         <td>{{ user.rol }}</td>
+<<<<<<< HEAD
                         <td>
                             <div class="d-flex justify-content-center gap-2 m-3">
+=======
+                        <td scope="col" *ngIf="rol == 4">
+                            <div class="d-flex gap-2 align-items-center justify-content-center">
+>>>>>>> unionUsuarioRolFuncionalidad
                                 <button [disabled]="users.length === 0 || rol != 4" class="btn btn-warning"
                                     [routerLink]="['/users', 'Update', user.usuario]">
                                     <i class="fa-solid fa-pen"></i> Actualizar Usuario
                                 </button>
+<<<<<<< HEAD
                                 <button [disabled]="users.length === 0 || rol != 4" class="btn btn-danger"
+=======
+                                <button [disabled]="users.length === 0 || rol != 4 " class="btn btn-danger"
+>>>>>>> unionUsuarioRolFuncionalidad
                                     [routerLink]="['/users', 'Delete', user.usuario]">
                                     <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
                                 </button>
@@ -106,12 +143,20 @@
                     <th scope="col">Idioma</th>
                     <th scope="col">Habilitado</th>
                     <th scope="col">Rol</th>
+<<<<<<< HEAD
                     <th scope="col">Acciones</th>
+=======
+                    <th scope="col" *ngIf="rol == 4">Acciones</th>
+>>>>>>> unionUsuarioRolFuncionalidad
                 </tr>
             </thead>
             <tbody>
                 <ng-container *ngFor="let user of usersNoHabilitados">
                     <tr>
+<<<<<<< HEAD
+=======
+
+>>>>>>> unionUsuarioRolFuncionalidad
                         <th scope="row">{{ user.usuario }}</th>
                         <td>{{ user.nombre }}</td>
                         <td>{{ user.email }}</td>
@@ -121,13 +166,23 @@
                                 [ngTemplateOutlet]="user.habilitado === 1 ? habilitado : deshabilitado"></ng-container>
                         </td>
                         <td>{{ user.rol }}</td>
+<<<<<<< HEAD
                         <td>
                             <div class="d-flex justify-content-center gap-2 m-3">
+=======
+                        <td scope="col" *ngIf="rol == 4">
+                            <div class="d-flex gap-2 align-items-center justify-content-center">
+
+>>>>>>> unionUsuarioRolFuncionalidad
                                 <button [disabled]="users.length === 0 || rol != 4" class="btn btn-success"
                                     [routerLink]="['/users', 'Habilitar', user.usuario]">
                                     <i class="fa-solid fa-user-plus"></i> Habilitar usuario
                                 </button>
+<<<<<<< HEAD
                                 <button [disabled]="users.length === 0 || rol != 4" class="btn btn-danger"
+=======
+                                <button [disabled]="users.length === 0 || rol != 4 " class="btn btn-danger"
+>>>>>>> unionUsuarioRolFuncionalidad
                                     [routerLink]="['/users', 'Delete', user.usuario]">
                                     <i class="fa-solid fa-trash-can"></i> Eliminar Usuario
                                 </button>

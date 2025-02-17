@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { Component } from '@angular/core';
+=======
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+>>>>>>> unionUsuarioRolFuncionalidad
 import { AppService } from '../../../app.service';
 
 
@@ -10,10 +15,20 @@ import { AppService } from '../../../app.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+<<<<<<< HEAD
+=======
+  @ViewChild('offcanvas') offcanvas!: ElementRef;
+  breadcrumb: string[] = [];
+>>>>>>> unionUsuarioRolFuncionalidad
   rol: number | null = null;
   rutaBreadCrumb: any[] = [];
 
+<<<<<<< HEAD
   constructor(private _appService: AppService
+=======
+  constructor(private _appService: AppService, private _route: Router,
+
+>>>>>>> unionUsuarioRolFuncionalidad
   ) { }
 
   ngOnInit(): void {
@@ -33,4 +48,8 @@ export class HeaderComponent {
     //this.rutaBreadCrumb = this._appService.ruta.split(',');
   }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> unionUsuarioRolFuncionalidad

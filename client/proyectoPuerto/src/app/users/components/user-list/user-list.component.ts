@@ -45,7 +45,7 @@ export class UserListComponent {
         this.roles = resultado.data;
       },
       error: (error) => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
       }
     });
 
@@ -79,13 +79,13 @@ export class UserListComponent {
           this.usersHabilitados = this.users.filter(user => user.habilitado == 1);
           this.usersNoHabilitados = this.users.filter(user => user.habilitado == 0);
 
-          //console.log(response.data);
+          ////console.log(response.data);
         } else {
-          console.error('Error:', response.exception);
+          //console.error('Error:', response.exception);
         }
       },
       error: (error) => {
-        console.error('Error al recibir datos:', error);
+        //console.error('Error al recibir datos:', error);
       }
     });
   }
@@ -105,4 +105,8 @@ export class UserListComponent {
     doc.save('tablaUsers.pdf');
   }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> unionUsuarioRolFuncionalidad

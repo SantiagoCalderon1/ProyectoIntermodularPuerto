@@ -1,0 +1,92 @@
+<div id="container-transitos-list" class="col-4 col-sm-6 col-md-8 col-lg-10 container-fluid d-flex justify-content-center align-items-center">
+    <div class="col-4 col-sm-6 col-md-7 col-lg-10">
+        <div class="card text-start shadow-lg p-5">
+            <h1 class="text-center">Listado de transitos</h1>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                <button class="btn btn-success" [routerLink]="['/transitos', 0 , 2]">
+                    <i class="fa-solid fa-plus"></i> Crear nuevo tránsito
+                </button>
+
+            </div>
+            <!-- Mensaje si no hay instalaciones -->
+            <div *ngIf="transitos" class="w-100">
+                <h5 *ngIf="transitos.length == 0" class="text-center text-muted mt-3">
+                    No hay información disponible.
+                </h5>
+
+                <!-- Tabla Responsiva -->
+                <div *ngIf="transitos.length > 0" id="container-table" class="table-responsive">
+                    <table class="table text-center table-striped table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Año</th>
+                                <th>Pantalan</th>
+                                <th>Instalacion</th>
+                                <th>Fecha de entrada</th>
+                                <th>Fecha de salida</th>
+                                <th>Patrón</th>
+                                <th>Embarcación</th>
+                                <th>Datos de estancia</th>
+                                <th>Eliminar</th>
+                                <th>Editar</th>
+                                <th>Lista de tripulantes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let transito of transitos; let i = index">
+                                <td>{{ transito.anyo }}</td>
+                                <td>{{ transito.pantalan }}</td>
+                                <td>{{ transito.instalacion }}</td>
+                                <td>{{ transito.fecha_entrada }}</td>
+                                <td>{{ transito.fecha_salida }}</td>
+                                <td>{{ transito.patron }}</td>
+                                <td>{{ transito.embarcacion }}</td>
+                                <td>{{ transito.datos_estancia }}</td>
+                                <td>
+                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-danger btn-sm"
+                                        (click)="abrirModal(transito)">
+                                        <i class="fa-solid fa-trash"></i>Eliminar
+                                    </button>
+                                </td>
+                                <td>
+                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-warning btn-sm"
+                                        [routerLink]="['/transitos', transito.embarcacion,1]">
+                                        <i class="fa-solid fa-pen"></i>Editar
+                                    </button>
+                                </td>
+                                <td>
+                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-success btn-sm"
+                                        [routerLink]="['/tripulantes', transito.embarcacion]">
+                                        <i class="fa fa-user fa-fw"></i>Lista
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p *ngIf="mensaje == 1" class="text-success text-center mt-3">Tránsito eliminado correctamente</p>
+                    <p *ngIf="mensaje == 2" class="text-danger text-center mt-3">Error al eliminar tránsito</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="modalConfirmarEliminacion" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que quieres eliminar el tránsito de la embarcación
+                    <strong>{{transitoSeleccionado?.embarcacion}}</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

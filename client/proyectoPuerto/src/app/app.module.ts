@@ -18,7 +18,13 @@ import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
 import { PlazasModule } from './plazas/plazas.module';
 import { InstalacionModule } from './instalacion/instalacion.module';
+<<<<<<< HEAD
 import { MuellesModule } from './muelles/muelles.module';
+=======
+import { TransitosModule } from './transitos/transitos.module';
+import { MuellesModule } from './muelles/muelles.module';
+
+>>>>>>> unionUsuarioRolFuncionalidad
 
 @NgModule({
   declarations: [
@@ -39,6 +45,10 @@ import { MuellesModule } from './muelles/muelles.module';
     RolesModule,
     FormsModule,
     InstalacionModule,
+<<<<<<< HEAD
+=======
+    TransitosModule,
+>>>>>>> unionUsuarioRolFuncionalidad
     MuellesModule
   ],
   providers: [],
