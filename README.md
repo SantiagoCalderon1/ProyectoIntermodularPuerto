@@ -15,8 +15,8 @@ Proyecto de Gestión portuaria y de amarres. Puerto deportivo La Marina de Valen
   + Daniel Rufes -------> PBL5: Gestionar plazas base
 
   + Responsabilidades Segundo Sprint:
-  + Santiago Calderon --> PBL6: Gestiónar tránsitos.
-  + Marcos Poveda ------> PBL7: Gestionar tripulantes.
+  + Santiago Calderon --> PBL7: Gestionar tripulantes.
+  + Marcos Poveda ------> PBL6: Gestiónar tránsitos.
   + Damián Rodríguez ---> PBL8: Gestionar muelles/pantalanes
   + Daniel Rufes -------> PBL9: Gestionar reservas de plazas
 
@@ -29,7 +29,7 @@ Proyecto de Gestión portuaria y de amarres. Puerto deportivo La Marina de Valen
   + Daniel Rufes -------> PBL5: Gestionar plazas base
  
   + Responsabilidades Segundo Sprint:
-  + Santiago Calderon --> PBL6: Gestiónar tránsitos.
-  + Marcos Poveda ------> PBL7: Gestionar tripulantes.
+  + Santiago Calderon --> PBL6: Gestionar tripulantes.
+  + Marcos Poveda ------> PBL7: Gestiónar tránsitos.
   + Damián Rodríguez ---> PBL8: Gestionar muelles/pantalanes
   + Daniel Rufes -------> PBL9: Gestionar reservas de plazas
