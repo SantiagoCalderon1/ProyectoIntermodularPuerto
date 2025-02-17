@@ -33,7 +33,7 @@ export class TransitosListComponent {
         this.rol = rol;
       },
       error: (error) => {
-        console.error('Error al obtener rol:', error);
+        // console.error('Error al obtener rol:', error);
       }
     });
 
@@ -42,7 +42,7 @@ export class TransitosListComponent {
         this.roles = resultado.data;
       },
       error: (error) => {
-        console.error('Error al obtener roles:', error);
+        // console.error('Error al obtener roles:', error);
       }
     });
   }
@@ -53,29 +53,29 @@ export class TransitosListComponent {
         this.transitos = response;
       },
       error: (error) => {
-        console.log('Error al obtener transitos', error);
+        // console.log('Error al obtener transitos', error);
       },
       complete: () => {
-        console.log('Operación completada');
+        // console.log('Operación completada');
       }
     });
   }
 
   eliminarTransito(embarcacion: number) {
-    console.log('embarcacion=' + embarcacion);
+    // console.log('embarcacion=' + embarcacion);
     this.transitosService.desecharTransito(embarcacion).subscribe({
       next: (response) => {
-        console.log('response', response);
+        // console.log('response', response);
         this.mensaje = 1;
         this.listarTransitos();
       },
       error: (error) => {
-        console.log('Error al eliminar el transito', error);
+        // console.log('Error al eliminar el transito', error);
         this.mensaje = 2;
         this.listarTransitos();
       },
       complete: () => {
-        console.log('Petición completada');
+        // console.log('Petición completada');
         this.listarTransitos();
       }
     });

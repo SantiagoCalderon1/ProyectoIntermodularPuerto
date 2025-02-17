@@ -28,37 +28,37 @@ export class ListaComponent {
           };
         });
 
-        console.log(this.instalaciones);
+        // console.log(this.instalaciones);
       },
       error: (error) => {
-        console.log("Error al obtener instalaciones", error);
+        // console.log("Error al obtener instalaciones", error);
       },
       complete: () => {
-        console.log("Operación completada");
+        // console.log("Operación completada");
       }
     });
   }
 
   eliminarInstalacion(id: number) {
-    console.log(id);
+    // console.log(id);
     this.instalacionesService.deshecharInstalacion(id).subscribe({
       next: (response) => {
         if (response.error != "Error al eliminar la instalacion") {
-          console.log("Instalacion eliminada", response);
+          // console.log("Instalacion eliminada", response);
           this.mensajeEliminacion = 1;
         } else {
-          console.log("Error al eliminar la instalacion", response.error);
+          // console.log("Error al eliminar la instalacion", response.error);
           this.mensajeEliminacion = 0;
         }
         this.listarInstalaciones();
       },
       error: (error) => {
-        console.log("Error al eliminar la instalacion", error);
+        // console.log("Error al eliminar la instalacion", error);
         this.mensajeEliminacion = 0;
         this.listarInstalaciones();
       },
       complete: () => {
-        console.log("Petición completada");
+        // console.log("Petición completada");
         this.listarInstalaciones();
       }
     })

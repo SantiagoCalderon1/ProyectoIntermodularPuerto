@@ -44,14 +44,14 @@ export class PlazaComponent {
   private traePlaza(id_plaza_base: number) {
     this._plazasService.obtengoPlazaApi(id_plaza_base).subscribe({
       next: (resultado) => {
-        console.log(resultado[0]);
+        // console.log(resultado[0]);
         this.plazaact = resultado[0];
       },
       error: (error) => {
         this.toastr.error(error, 'Error al obtener la plaza');
       },
       complete: () => {
-        console.log('Operación completada.');
+        // console.log('Operación completada.');
       }
     });
   }
@@ -82,7 +82,7 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error guardando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       } else if (this.tipo == 1) {
         this._plazasService.modificaPlazaApi(this.id_plaza_base, this.plazaact).subscribe({
@@ -95,7 +95,7 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error modificando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       } else if (this.tipo == 2) {
         this._plazasService.borraPlazaApi(this.id_plaza_base).subscribe({
@@ -108,7 +108,7 @@ export class PlazaComponent {
             }
           },
           error: () => this.toastr.error('Error eliminando plaza'),
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
       }
     } else {

@@ -73,7 +73,7 @@ export class ReservaComponent {
         this.toastr.error(error, 'Error al obtener la plaza');
       },
       complete: () => {
-        console.log('Operación completada.');
+        // console.log('Operación completada.');
       }
     });
   }
@@ -87,7 +87,7 @@ export class ReservaComponent {
         this.toastr.error(error, 'Error al obtener la plaza');
       },
       complete: () => {
-        console.log('Operación completada.');
+        // console.log('Operación completada.');
       }
     });
   }
@@ -131,7 +131,7 @@ export class ReservaComponent {
 
   actualizaEmbarcacionActual() {
     this.embActual[0] = this.embarcacion
-    console.log(this.embActual);
+    // console.log(this.embActual);
   }
 
   actualizaEmbarcacion() {
@@ -143,7 +143,7 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionApi(id).subscribe({
         next: (resultado) => {
           this.datosEmbarcacion = resultado[0]["matricula"]
-          console.log(this.datosEmbarcacion);
+          // console.log(this.datosEmbarcacion);
         },
         error: () => this.toastr.error('Error')
       });
@@ -160,7 +160,7 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionTitularApi(id).subscribe({
         next: (resultado) => {
           this.embarcaciones = resultado
-          console.log(this.embarcaciones);
+          // console.log(this.embarcaciones);
         },
         error: () => this.toastr.error('Error')
       });
@@ -173,7 +173,7 @@ export class ReservaComponent {
       this.reservaact.embarcacion = this.embarcacion.id_embarcacion
       this.reservaact.titular = this.titular.id_titular
       this.reservaact.plaza = this.plaza.id_plaza_base
-      console.log("Guardando reserva...", this.reservaact);
+      // console.log("Guardando reserva...", this.reservaact);
   
       if (this.tipo === 0) { // Crear nueva reserva
         this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
@@ -187,9 +187,9 @@ export class ReservaComponent {
           },
           error: (error) => {
             this.toastr.error('Error guardando la reserva');
-            console.error(error);
+            // console.error(error);
           },
-          complete: () => console.log('Operación completada.')
+          // complete: () => console.log('Operación completada.')
         });
   
       } else if (this.tipo === 1) { // Modificar reserva existente

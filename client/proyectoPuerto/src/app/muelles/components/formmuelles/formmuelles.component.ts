@@ -53,7 +53,7 @@ export class FormmuellesComponent {
       },
       (error) => {
         // Aquí se procesa el error del servicio
-        console.error('Error al obtener el muelle:' + error);
+        // console.error('Error al obtener el muelle:' + error);
       }); // Resetea el formulario
   }
   modificaMuelle(): void {
@@ -72,7 +72,7 @@ export class FormmuellesComponent {
         }
       },
       (error) => {
-        console.error('Error al actualizar el muelle:', error);
+        // console.error('Error al actualizar el muelle:', error);
       }
     );
   }
@@ -109,7 +109,7 @@ export class FormmuellesComponent {
         }
       },
       (error) => {
-        console.error('Error al eliminar el muelle:', error);
+        // console.error('Error al eliminar el muelle:', error);
       }
     );
   }

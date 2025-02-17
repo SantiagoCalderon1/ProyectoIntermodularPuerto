@@ -41,7 +41,7 @@ export class ListaComponent {
         this.dataPlaces = response;
       },
       error: (error) => {
-        console.error('Error en la solicitud', error);
+        // console.error('Error en la solicitud', error);
       }
     });
 
@@ -50,7 +50,7 @@ export class ListaComponent {
         this.dataReservations = response;
       },
       error: (error) => {
-        console.error('Error en la solicitud', error);
+        // console.error('Error en la solicitud', error);
       }
     });
   }

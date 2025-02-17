@@ -56,7 +56,7 @@ export class TripulantesListComponent {
 
     this._aroute.params.subscribe(params => {
       this.embarcacion = params['embarcacion']; 
-      console.log(params['embarcacion']);
+      //console.log(params['embarcacion']);
       
       if (params['embarcacion'] == undefined) {
         this.getAllTripulantes();
@@ -97,11 +97,11 @@ export class TripulantesListComponent {
         if (response.success) { // esto debe ser true
           this.tripulantes = response.data;
         } else {
-          console.error('Error:', response.exception);
+          //console.error('Error:', response.exception);
         }
       },
       error: (error) => {
-        console.error('Error al recibir datos:', error);
+        //console.error('Error al recibir datos:', error);
       }
     });
   }
@@ -113,11 +113,11 @@ export class TripulantesListComponent {
           this.tripulantes = response.data;
 
         } else {
-          console.error('Error:', response.exception);
+          //console.error('Error:', response.exception);
         }
       },
       error: (error) => {
-        console.error('Error al recibir datos:', error);
+        //console.error('Error al recibir datos:', error);
       }
     });
   }

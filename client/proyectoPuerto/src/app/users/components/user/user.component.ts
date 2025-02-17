@@ -59,7 +59,7 @@ export class UserComponent {
         this.roles = resultado.data;
       },
       error: (error) => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
       }
     });
 
@@ -125,7 +125,7 @@ export class UserComponent {
         'El formulario tiene campos inválidos',
         'por favor complete todos los campos requeridos.'
       );
-      console.log("Formulario no válido, ");
+      //console.log("Formulario no válido, ");
 
     }
   }

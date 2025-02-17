@@ -8,7 +8,7 @@ import { Muelle } from './muelle';
 })
 export class MuellesService {
   ///url prueba
-   urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/controllerMuelles.php";
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/controllerMuelles.php";
   
   //url local
   //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/controllerMuelles.php";

@@ -8,9 +8,9 @@ import { Reserva } from './plazas';
 })
 export class ReservasService {
   //url local
-  private apiUrl = 'http://localhost:8080/server/app/controller/reservasController.php';
+  //private apiUrl = 'http://localhost:8080/server/app/controller/reservasController.php';
   
-  //apiUrl = "https://puerto.proyectos-2daw.es/app/controller/reservasController.php";
+  apiUrl = "https://uat-puerto.proyectos-2daw.es/app/controller/reservasController.php";
 
 
   httpOptions = {

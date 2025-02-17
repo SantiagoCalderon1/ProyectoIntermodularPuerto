@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class FuncionalidadesService {
   //url local
   //urlApi = 'http://localhost:8080/server/app/controller/controllerFuncionalidades.php';
-  urlApi = "http://uat-puerto.proyectos-2daw.es/app/controller/controllerFuncionalidades.php"; //urlPrueba
+  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/controllerFuncionalidades.php"; //urlPrueba
 
   //urlApi = "https://puerto.proyectos-2daw.es/app/controller/controllerFuncionalidades.php";
 

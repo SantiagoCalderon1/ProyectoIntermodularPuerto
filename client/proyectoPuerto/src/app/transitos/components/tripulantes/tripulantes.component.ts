@@ -132,14 +132,14 @@ export class TripulantesComponent {
         'El formulario tiene campos inválidos',
         'por favor complete todos los campos requeridos.'
       );
-      console.log("Formulario no válido, ");
+      //console.log("Formulario no válido, ");
 
     }
   }
 
   insertNewTripulante() {
     let formData = this.crearFormulario();
-    console.log('FormData' + formData);
+    //console.log('FormData' + formData);
     this._transitosService
       .insertNewTripulante(formData)
       .subscribe({
@@ -168,7 +168,7 @@ export class TripulantesComponent {
 
   updateTripulante() {
     let formData = this.crearFormulario();
-    console.log('FormData' + formData);
+    //console.log('FormData' + formData);
 
     this._transitosService
       .updateTripulante(this.numeroDocumento, formData)
@@ -249,9 +249,9 @@ export class TripulantesComponent {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       this.selectedFile = this.prepararDocumento(inputElement.files[0]);
-      console.log("Archivo seleccionado:", this.selectedFile);
+      //console.log("Archivo seleccionado:", this.selectedFile);
     } else {
-      console.warn('No se seleccionó ningún archivo.');
+      //console.warn('No se seleccionó ningún archivo.');
     }
   }
 
@@ -260,7 +260,7 @@ export class TripulantesComponent {
     let extension = nombreFichero.split('.').pop();
     let nuevoNombreFichero = 'tripulante_' + this.selectedTripulante.numeroDocumento + '.' + extension;
     let renamedFile = new File([file], nuevoNombreFichero, { type: file.type });
-    console.log('Nombre del fichero: ' + renamedFile.name);
+    //console.log('Nombre del fichero: ' + renamedFile.name);
     return renamedFile;
   }
 
@@ -268,13 +268,13 @@ export class TripulantesComponent {
     let formData = new FormData();
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
-      console.log("Archivo añadido al FormData: ", this.selectedFile);
+      //console.log("Archivo añadido al FormData: ", this.selectedFile);
     } else {
-      console.warn("No se seleccionó ningún archivo.");
+      //console.warn("No se seleccionó ningún archivo.");
     }
     formData.append('tripulante', JSON.stringify(this.selectedTripulante));
-    console.log("Tripulante añadido al FormData: ", this.selectedTripulante);
-    console.log("Datos a enviar:", formData);
+    //console.log("Tripulante añadido al FormData: ", this.selectedTripulante);
+    //console.log("Datos a enviar:", formData);
     return formData;
   }
 

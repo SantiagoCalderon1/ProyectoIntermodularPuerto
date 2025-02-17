@@ -36,8 +36,8 @@ export class UsersService {
   }
 
   updateUser(username: string, data: any): Observable<any> {
-    console.log(JSON.stringify(data));
-    console.log(`${this.urlApi}/update/${username}`);
+    //console.log(JSON.stringify(data));
+    //console.log(`${this.urlApi}/update/${username}`);
     return this.http.put<any>(`${this.urlApi}/update/${username}`, JSON.stringify(data), this.httpOptions);
   }
 

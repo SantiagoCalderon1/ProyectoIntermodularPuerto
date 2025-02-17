@@ -21,7 +21,7 @@ export class ListaComponent {
       this.funcionalidades = resultado.data; // Almacena las funcionalidades en el array
       },
       error: (error) => {
-        console.error('Error:', error); // Muestra el error en consola
+        // console.error('Error:', error); // Muestra el error en consola
       }
     });
   }

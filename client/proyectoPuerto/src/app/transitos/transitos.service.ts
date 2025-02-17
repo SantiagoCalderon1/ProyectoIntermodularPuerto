@@ -21,6 +21,8 @@ export class TransitosService {
   //urlApi = "https://puerto.proyectos-2daw.es/app/controller/tripulantesController.php";
 
 
+  
+
   httpOptions = {
     headers: new HttpHeaders()
   }
@@ -29,21 +31,21 @@ export class TransitosService {
   //Inicio Sección Tránsitos-----------------------------------------------------
 
   getAllTransitos(): Observable<any> {
-    console.log("entrando a getAllTransitos");
+    //console.log("entrando a getAllTransitos");
     return this.http.get(`${this.urlApiTransitos}/transitos`).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
     )
   }
 
   getTransito(idtransito: number): Observable<any> {
-    console.log("entrando a getTransito");
+    // console.log("entrando a getTransito");
     return this.http.get(`${this.urlApiTransitos}/transito/${idtransito}`).pipe(
       tap(response => console.log("respuesta servidor:", response))
     )
   }
 
   desecharTransito(embarcacion: number): Observable<any> {
-    console.log("entrando en desecharTransito");
+    // console.log("entrando en desecharTransito");
     const URLDELETE = this.urlApiTransitos + "?embarcacion=" + embarcacion;
     return this.http.delete(`${URLDELETE}`).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
@@ -51,18 +53,19 @@ export class TransitosService {
   }
 
   nuevoTransito(transito: Transito): Observable<any> {
-    console.log("entrando en nuevoTransito");
-    console.log(JSON.stringify(transito));
+    // console.log("entrando en nuevoTransito");
+    // console.log(JSON.stringify(transito));
     return this.http.post<any>(this.urlApiTransitos, JSON.stringify(transito), this.httpOptions).pipe(
       tap(response => console.log("Respuesta del servidor:", response))
     );
   }
 
   updateTransito(transito: Transito) {
-    console.log("entrando a updateTransito");
+    // console.log("entrando a updateTransito");
     const updateURL = this.urlApiTransitos + "?embarcacion=" + transito.embarcacion;
     return this.http.put<any>(updateURL, JSON.stringify(transito)).pipe(
-      tap(response => console.log("Respuesta del servidor: ", response))
+      tap(response => console.log("Respuesta del servidor: ", response)
+    )
     );
   }
 
