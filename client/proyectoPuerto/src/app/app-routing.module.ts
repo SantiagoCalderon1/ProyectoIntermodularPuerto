@@ -27,6 +27,8 @@ import { TransitosListComponent } from './transitos/components/transitos-list/tr
 import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
 import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
 
+import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+
 
 
 const routes: Routes = [
@@ -85,6 +87,9 @@ const routes: Routes = [
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
   // { path: 'tripulantes/:option/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
+  { path: 'reservas', component: ReservaComponent, canActivate: [authGuard] },
+  { path: 'reservas/:tipo/:id_reserva', component: ReservaComponent, canActivate: [authGuard] },
+
 
   {
     path: 'muelles', component: ListamuellesComponent, canActivate:

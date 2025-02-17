@@ -1,5 +1,5 @@
-<div id="container-authorization-list" class="container-fluid d-flex justify-content-center align-items-center">
-    <div class="col-7 col-md-10 col-lg-12">
+<div id="container-authorization-list" class="col-11 col-sm-11 col-md-12 container-fluid d-flex justify-content-center align-items-center">
+    <div class="col-11 col-md-12 ">
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <button class="nav-link" [ngClass]="{'active': activeTab === 2}"
@@ -48,7 +48,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of dataPlaces">
-                                    <td>{{ item.nombre }}</td>
+                                    <td>{{ item.puerto }}</td>
                                     <td>{{ item.instalacion }}</td>
                                     <td *ngIf="rol==3 || rol==4">
                                         <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="tooltip"
@@ -69,14 +69,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
 
         <!-- Segunda tarjeta: Se muestra solo si activeTab es 2 -->
         <div class="card text-start shadow-lg" *ngIf="activeTab === 2">

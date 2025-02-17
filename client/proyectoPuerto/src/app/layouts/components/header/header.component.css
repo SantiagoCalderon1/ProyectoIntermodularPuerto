@@ -3,8 +3,8 @@ header nav{
 }
 
 #logo {
-    height: 7vh;
-    width: 14vw;
+    height: 70px;
+    width: 140px;
     background-image: url(../../../../assets/images/logo.webp);
     background-size: cover;
 }

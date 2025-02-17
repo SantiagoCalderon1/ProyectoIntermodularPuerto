@@ -29,7 +29,7 @@ export class TripulantesListComponent {
   public filterSearch: string = '';
   rol: number | null = null;
 
-  public embarcacion: number = -1;
+  public embarcacion: number = 0;
   public numeroDocumento: string = '';
 
   documentoUrl: string = '';
@@ -56,8 +56,7 @@ export class TripulantesListComponent {
 
     this._aroute.params.subscribe(params => {
       this.embarcacion = params['embarcacion']; 
-      //console.log(params['embarcacion']);
-      
+      console.log(params['embarcacion']);
       if (params['embarcacion'] == undefined) {
         this.getAllTripulantes();
       } else{
@@ -111,7 +110,6 @@ export class TripulantesListComponent {
       next: (response) => {
         if (response.success) { // esto debe ser true
           this.tripulantes = response.data;
-
         } else {
           //console.error('Error:', response.exception);
         }
