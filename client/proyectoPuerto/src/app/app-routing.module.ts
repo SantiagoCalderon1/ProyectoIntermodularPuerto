@@ -29,6 +29,8 @@ import { TripulantesComponent } from './transitos/components/tripulantes/tripula
 
 import { ReservaComponent } from './plazas/components/reservas/reservas.component';
 
+import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+
 
 >>>>>>> f460f36 (Versión casi casi terminada, sin la parte de editar y eliminar de reservas)
 
