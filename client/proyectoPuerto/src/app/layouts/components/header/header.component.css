@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+header{
+    height: 10vh;
+}
+
+img{
+    /* Tamaño logo */
+    height: 7vh;
+}
+/* 
+nav .navbar{
+} */
+
+nav .breadcrumb{
+    background-color: rgb(234, 234, 234);
+    height: 4vh;
+    width: 100%;
+
+    padding-left: 10px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: start;
+=======
+header nav{
+    height: 100px;
+>>>>>>> unionUsuarioRolFuncionalidad
+}
+
+#logo {
+    height: 70px;
+    width: 140px;
+    background-image: url(../../../../assets/images/logo.webp);
+    background-size: cover;
+}

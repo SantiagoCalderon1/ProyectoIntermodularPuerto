@@ -1,0 +1,39 @@
+<div class="container d-flex align-items-center justify-content-center contenedor-formulario">
+    <div class="col-10 col-md-12 card text-center my-3">
+        <div class="card-header titulos">{{ titulo }}</div>
+        <div class="card-body">
+            <h5 class="card-title">Introduce los datos de la Plaza</h5>
+            <form #plazaForm="ngForm" class="mt-4 text-start" (ngSubmit)="guardaPlaza()" novalidate>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-12">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="plazaact.nombre"
+                            [readonly]="tipo == 2" (ngModelChange)="cambiado()" required>
+                    </div>
+                </div>
+
+                <div class="row mb-6">
+                    <div class="col-12 col-md-12">
+                        <label for="instalacion" class="form-label">Instalación</label>
+                        <select id="instalacion" name="instalacion" class="form-control"
+                            [(ngModel)]="plazaact.instalacion" [disabled]="tipo == 2" (ngModelChange)="cambiado()"
+                            required>
+                            <option *ngFor="let inst of instalaciones" [value]="inst.codigo">
+                                {{ inst.codigo }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="my-3 text-center">
+                    <div name="cancelar" class="btn btn-secondary btn-lg me-3">
+                        <a [routerLink]="['/listaPlazas']">Cancelar</a>
+                    </div>
+
+                    <input type="submit" class="btn btn-dark btn-lg" [value]="txtBtn">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

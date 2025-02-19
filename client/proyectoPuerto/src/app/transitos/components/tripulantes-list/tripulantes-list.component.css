@@ -1,0 +1,27 @@
+#container-tripulantes-list{
+    pad: 5vh 0;
+}
+
+#container-table {
+    overflow-y: auto; 
+    overflow-x: auto;
+    position: relative ;
+    padding-bottom: 50px ;
+}
+
+#container-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#container-table thead th{
+    position: sticky;
+    color: white; 
+    z-index: 2;
+    text-align: center;
+}
+
+#container-table thead th {
+    top: 0; 
+}
+
