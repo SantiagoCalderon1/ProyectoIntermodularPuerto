@@ -4,9 +4,9 @@ class Connection
 {
     private $connection;
 
-    public function __construct($host, $user, $key, $db)
+    public function __construct($host, $user, $key, $db, $port)
     {
-        $this->connection = new mysqli($host, $user, $key, $db);
+        $this->connection = new mysqli($host, $user, $key, $db, $port);
 
         if ($this->connection->connect_errno) {
             die("Fallo al conectar a MySQL: " . $this->connection->connect_error);

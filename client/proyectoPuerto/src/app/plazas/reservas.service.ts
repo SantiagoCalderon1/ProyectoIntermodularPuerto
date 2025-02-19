@@ -8,9 +8,9 @@ import { Reserva } from './plazas';
 })
 export class ReservasService {
   //url local
-  //private apiUrl = 'http://localhost:8080/server/app/controller/reservasController.php';
+  private apiUrl = 'http://localhost:8888/app/controller/reservasController.php';
   
-  apiUrl = "https://uat-puerto.proyectos-2daw.es/app/controller/reservasController.php";
+  //apiUrl = "https://uat-puerto.proyectos-2daw.es/app/controller/reservasController.php";
 
 
   httpOptions = {
@@ -24,26 +24,6 @@ export class ReservasService {
   // Obtener todas las reservas
   obtengoReservasApi(): Observable<any> {
     return this.http.get<any>(this.apiUrl+"/reservas");
-  }
-
-  // Obtener todas las provincias
-  obtengoProvinciasApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/provincia");
-  }
-
-  // Obtener provincia por id
-  obtengoProvinciaApi(nCcaa:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/provincia/"+nCcaa);
-  }
-
-  // Obtener todos los municipios
-  obtengoMunicipiosApi(): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/municipio");
-  }
-
-  // Obtener municipio por id
-  obtengoMunicipiosProvinciaApi(nMunicipio:number): Observable<any> {
-    return this.http.get<any>(this.apiUrl+"/municipio/"+nMunicipio);
   }
 
   // Obtener titular
@@ -78,7 +58,7 @@ export class ReservasService {
 
   // Obtener una reserva por ID
   obtengoReservaApi(nreserva: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${nreserva}`); // La API obtiene el ID desde la URL
+    return this.http.get<any>(`${this.apiUrl}/reservas/${nreserva}`); // La API obtiene el ID desde la URL
   }
 
   // Modificar una reserva existente
@@ -91,7 +71,7 @@ export class ReservasService {
 
   // Borrar una reserva
   borraReservaApi(nreserva: number): Observable<any> {
-    const body = JSON.stringify({ id: nreserva });
+    const body = JSON.stringify({ id_reserva: nreserva });
     return this.http.request<any>('DELETE', this.apiUrl, { body, ...this.httpOptions });
   }
 }

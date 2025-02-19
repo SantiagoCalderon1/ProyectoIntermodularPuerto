@@ -8,9 +8,9 @@ class Reservations
     function __construct()
     {
         //url local
-        //$this->conexion = new Connection('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+        $this->conexion = new Connection('127.0.0.1', 'root', 'root', 'Puerto', 8889    );
         
-        $this->conexion = new Connection('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
+        //$this->conexion = new Connection('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
     }
 
     function showReservation(string $id = '')
@@ -103,12 +103,12 @@ class Reservations
     }
 
     function showUser($id){
-        $sql = "SELECT nombre, apellidos FROM titular WHERE id_titular = '$id'";
+        $sql = "SELECT * FROM titular WHERE id_titular = '$id'";
             return $this->conexion->dataQuery($sql);
     }
 
     function showBoat($id){
-        $sql = "SELECT nombre FROM embarcaciones WHERE id_embarcacion = '$id'";
+        $sql = "SELECT * FROM embarcaciones WHERE id_embarcacion = '$id'";
             return $this->conexion->dataQuery($sql);
     }
 

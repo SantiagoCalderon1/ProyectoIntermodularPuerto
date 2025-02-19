@@ -34,16 +34,7 @@ function handleGet($db, $uri = null)
 {
     if (((array_slice($uri, -2, 1))[0]) === "reservas" || end($uri) === "reservas") {
         $products = $db->showReservation(end($uri));
-        $res = [];
-        foreach ($products as $product) {
-            $user = $db->showUser($product["titular"]);
-            $product["titular"] = $user[0]["nombre"] . " " . $user[0]["apellidos"];
-            $boat = $db->showBoat($product["embarcacion"]);
-            $product["embarcacion"] = $boat[0]["nombre"];
-            $res[] = $product;
-        }
-
-        echo json_encode($res);
+        echo json_encode($products);
     } else if (((array_slice($uri, -2, 1))[0]) === "titular" || end($uri) === "titular") {
         $ccaa = $db->showTitulares(end($uri));
         echo json_encode($ccaa);
