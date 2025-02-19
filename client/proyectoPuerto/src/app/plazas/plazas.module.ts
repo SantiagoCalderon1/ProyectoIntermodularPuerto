@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from '../app-routing.module';
 import { ReservaComponent } from './components/reservas/reservas.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -21,6 +22,7 @@ import { ReservaComponent } from './components/reservas/reservas.component';
     DataTablesModule,
     RouterModule,
     FormsModule,
+    NgSelectModule
   ]
 })
 export class PlazasModule { }

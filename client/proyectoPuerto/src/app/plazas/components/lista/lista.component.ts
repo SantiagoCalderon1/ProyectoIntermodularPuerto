@@ -48,6 +48,24 @@ export class ListaComponent {
     this.reservasService.obtengoReservasApi().subscribe({
       next: (response) => {
         this.dataReservations = response;
+        this.dataReservations.forEach((reservation) => {
+          this.reservasService.obtengoTitularApi(reservation.titular).subscribe({
+          next: (response) => {
+            reservation["titular"] = response[0];
+          },
+          error: (error) => {
+            // console.error('Error en la solicitud', error);
+          }
+        });
+        this.reservasService.obtengoEmbarcacionApi(reservation.embarcacion).subscribe({
+          next: (response) => {
+            reservation["embarcacion"] = response[0];
+          },
+          error: (error) => {
+            // console.error('Error en la solicitud', error);
+          }
+        });
+        });
       },
       error: (error) => {
         // console.error('Error en la solicitud', error);

@@ -1,7 +1,10 @@
 <header class="fixed-top">
     <nav class="navbar bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" [routerLink]="['/home']">Puerto
+            <!-- <img src="http://localhost:8080/client/proyectoPuerto/src/assets/images/logo.webp"> -->
+            <div id="logo" [routerLink]="['/home']"></div>
+            <a class="navbar-brand d-none d-md-block" [routerLink]="['/home']">
+                Puerto
                 deportivo La Marina
                 de Valencia</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -25,7 +28,10 @@
                             <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']"
                                 data-bs-dismiss="offcanvas">Usuarios</a>
                         </li>
-
+                        <li class="nav-item" *ngIf=" rol == 4">
+                            <a class="nav-link" [routerLink]="['/clientes']" [routerLinkActive]="['active']"
+                                data-bs-dismiss="offcanvas">Clientes</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']"
                                 data-bs-dismiss="offcanvas">Plazas
@@ -46,11 +52,7 @@
                         <li class="nav-item" *ngIf="rol == 4">
                             <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Modulo 3</a>
-                        </li> -->
-
-                        <!-- <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 Transitos
@@ -66,18 +68,10 @@
                             </ul>
                         </li>
                     </ul>
-
                     <button class="btn bg-danger text-white mt-5" [routerLink]="['/logout']"
                         [routerLinkActive]="['active']" data-bs-dismiss="offcanvas">Cerrar sesión</button>
                 </div>
             </div>
         </div>
-    </nav>
-    <nav class="container-fluid breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a [routerLink]="['/home']">Home</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users'] ">Usuarios</a></li>
-            <li class="breadcrumb-item active"><a [routerLink]="['/users']">Listado de usuarios</a></li>
-        </ol>
     </nav>
 </header>

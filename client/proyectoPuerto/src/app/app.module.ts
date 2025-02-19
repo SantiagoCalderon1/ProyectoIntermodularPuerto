@@ -18,13 +18,11 @@ import { RolesModule } from './roles/roles.module';
 import { FormsModule } from '@angular/forms';
 import { PlazasModule } from './plazas/plazas.module';
 import { InstalacionModule } from './instalacion/instalacion.module';
-<<<<<<< HEAD
-import { MuellesModule } from './muelles/muelles.module';
-=======
 import { TransitosModule } from './transitos/transitos.module';
 import { MuellesModule } from './muelles/muelles.module';
+import { ClientesModule } from './clientes/clientes.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
->>>>>>> unionUsuarioRolFuncionalidad
 
 @NgModule({
   declarations: [
@@ -38,6 +36,7 @@ import { MuellesModule } from './muelles/muelles.module';
     LoginModule,
     UsersModule,
     PlazasModule,
+    NgSelectModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
     FuncionalidadesModule,
@@ -45,11 +44,9 @@ import { MuellesModule } from './muelles/muelles.module';
     RolesModule,
     FormsModule,
     InstalacionModule,
-<<<<<<< HEAD
-=======
     TransitosModule,
->>>>>>> unionUsuarioRolFuncionalidad
-    MuellesModule
+    MuellesModule,
+    ClientesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

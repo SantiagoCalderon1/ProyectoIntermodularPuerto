@@ -48,7 +48,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of dataPlaces">
-                                    <td>{{ item.puerto }}</td>
+                                    <td>{{ item.nombre }}</td>
                                     <td>{{ item.instalacion }}</td>
                                     <td *ngIf="rol==3 || rol==4">
                                         <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="tooltip"
@@ -108,19 +108,19 @@
                             <tbody>
                                 <tr *ngFor="let item of dataReservations">
                                     <td>{{ item.plaza }}</td>
-                                    <td>{{ item.titular }}</td>
-                                    <td>{{ item.embarcacion }}</td>
+                                    <td>{{ item.titular.nombre }} {{ item.titular.apellidos }}</td>
+                                    <td>{{ item.embarcacion.nombre }}</td>
                                     <td>{{ item.fecha_ini }}</td>
                                     <td>{{ item.fecha_fin }}</td>
                                     <td>
                                         <button class="btn btn-sm btn-warning ms-1" data-bs-toggle="tooltip"
-                                            title="Modificar registro {{ item.id_reservas }}"
-                                            [routerLink]="['/reservas', 1, item.id_reservas]">
+                                            title="Modificar registro {{ item.id_reserva }}"
+                                            [routerLink]="['/reservas', 1, item.id_reserva]">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger ms-1" data-bs-toggle="tooltip"
-                                            title="Eliminar registro {{ item.id_reservas }}"
-                                            [routerLink]="['/reservas', 2, item.id_reservas]">
+                                            title="Eliminar registro {{ item.id_reserva }}"
+                                            [routerLink]="['/reservas', 2, item.id_reserva]">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>

@@ -39,8 +39,8 @@ export class ReservaComponent {
     0, // plaza
     '', // fecha_inicio
     '', // fecha_fin
-    0,
-    0,
+    0, // titular
+    0, //embarcacion
   );
   public plazaact: Plaza = { id_plaza_base: 0, nombre: '', instalacion: ''};
   public plazas: any[] = [];
@@ -53,7 +53,7 @@ export class ReservaComponent {
       this.rol = rol;
     });
     this.tipo = +this._aroute.snapshot.params['tipo'];
-    this.id_reserva = +this._aroute.snapshot.params['id_plaza_base'];
+    this.id_reserva = +this._aroute.snapshot.params['id_reserva'];
     this.titulares = [];
     this.traeTitulares();
     this.traeEmbarcaciones();
@@ -61,6 +61,8 @@ export class ReservaComponent {
 
     if (this.tipo == 1 || this.tipo == 2) {
       this.traeReserva(this.id_reserva);
+      setTimeout(() => {
+      }, 100);
     }
   }
 
@@ -82,6 +84,31 @@ export class ReservaComponent {
     this._reservasService.obtengoReservaApi(id_reserva).subscribe({
       next: (resultado) => {
         this.reservaact = resultado[0];
+        this._reservasService.obtengoTitularApi(this.reservaact.titular).subscribe({
+          next: (resultado) => {
+            console.log(resultado)
+            this.titulares.forEach((titular: Titular) => {
+              console.log(titular)
+              if (titular.id_titular === this.reservaact.titular) {
+                this.titular = titular;
+              }
+            });
+            this.actualizaTitularActual();
+          },
+          error: () => this.toastr.error('Error al obtener el titular')
+        });
+        this._reservasService.obtengoEmbarcacionApi(this.reservaact.embarcacion).subscribe({
+          next: (resultado) => {
+            this.embarcacion = resultado[0];
+          },
+          error: () => this.toastr.error('Error al obtener la embarcación')
+        });
+        this._plazasService.obtengoPlazaApi(this.reservaact.plaza).subscribe({
+          next: (resultado) => {
+            this.plaza = resultado[0];
+          },
+          error: () => this.toastr.error('Error al obtener la embarcación')
+        });
       },
       error: (error) => {
         this.toastr.error(error, 'Error al obtener la plaza');
@@ -94,15 +121,21 @@ export class ReservaComponent {
 
   private traeTitulares() {
     this._reservasService.obtengoTitularesApi().subscribe({
-      next: (resultado) => {
-        this.titulares = resultado
+      next: (resultado: Titular[]) => { // Especificamos el tipo del resultado
+        this.titulares = resultado.map((titular: Titular) => ({ // Especificamos el tipo de titular
+          ...titular,
+          nombreCompleto: `${titular.nombre} ${titular.apellidos}`
+        }));
+        console.log(this.titulares);
       },
-      error: () => this.toastr.error('Error')
+      error: () => this.toastr.error('Error al obtener titulares')
     });
   }
+  
 
   actualizaTitularActual() {
     this.titActual[0] = this.titular
+    this.traeEmbarcacionTitular();
   }
 
   actualizaTitular() {
@@ -120,35 +153,39 @@ export class ReservaComponent {
     }
   }
 
-  traeEmbarcaciones() {
-    this._reservasService.obtengoEmbarcacionesApi().subscribe({
-      next: (resultado) => {
-        this.embarcaciones = resultado
-      },
-      error: () => this.toastr.error('Error')
-    });
-  }
+  public embarcacionesFiltradas: any[] = [];
 
-  actualizaEmbarcacionActual() {
-    this.embActual[0] = this.embarcacion
-    // console.log(this.embActual);
-  }
+private traeEmbarcaciones() {
+  this._reservasService.obtengoEmbarcacionesApi().subscribe({
+    next: (resultado) => {
+      this.embarcaciones = resultado || [];
+      this.embarcacionesFiltradas = this.embarcaciones.filter(e => e.titular === 4);
+    },
+    error: () => this.toastr.error('Error al obtener embarcaciones')
+  });
+}
 
-  actualizaEmbarcacion() {
-    let id = 0;
-    if (!this.embActual || this.embActual.length === 0 || !this.embActual[0]?.id_embarcacion) {
-      this.datosEmbarcacion = "Embarcacion no seleccionada";
-    } else {
+
+
+actualizaEmbarcacionActual() {
+  this.embActual[0] = this.embarcacion;
+}
+
+actualizaEmbarcacion() {
+  let id = 0;
+  if (!this.embActual || this.embActual.length === 0 || !this.embActual[0]?.id_embarcacion) {
+      this.datosEmbarcacion = "Embarcación no seleccionada";
+  } else {
       id = this.embActual[0]["id_embarcacion"];
       this._reservasService.obtengoEmbarcacionApi(id).subscribe({
-        next: (resultado) => {
-          this.datosEmbarcacion = resultado[0]["matricula"]
-          // console.log(this.datosEmbarcacion);
-        },
-        error: () => this.toastr.error('Error')
+          next: (resultado) => {
+              this.datosEmbarcacion = resultado[0]["matricula"];
+          },
+          error: () => this.toastr.error('Error')
       });
-    }
   }
+}
+
 
   traeEmbarcacionTitular() {
     let id = 0;
@@ -160,7 +197,6 @@ export class ReservaComponent {
       this._reservasService.obtengoEmbarcacionTitularApi(id).subscribe({
         next: (resultado) => {
           this.embarcaciones = resultado
-          // console.log(this.embarcaciones);
         },
         error: () => this.toastr.error('Error')
       });
@@ -173,7 +209,6 @@ export class ReservaComponent {
       this.reservaact.embarcacion = this.embarcacion.id_embarcacion
       this.reservaact.titular = this.titular.id_titular
       this.reservaact.plaza = this.plaza.id_plaza_base
-      // console.log("Guardando reserva...", this.reservaact);
   
       if (this.tipo === 0) { // Crear nueva reserva
         this._reservasService.guardaNuevaReservaApi(this.reservaact).subscribe({
@@ -210,6 +245,7 @@ export class ReservaComponent {
         });
   
       } else if (this.tipo === 2) { // Eliminar reserva
+        console.log('Eliminando reserva:', this.id_reserva);
         this._reservasService.borraReservaApi(this.id_reserva).subscribe({
           next: (resultado) => {
             if (resultado === "OK") {

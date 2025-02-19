@@ -1,38 +1,38 @@
 import { Component } from '@angular/core';
-import { UsersService } from '../../users.service';
-import { Config } from 'datatables.net';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { ClientesService } from '../../clientes.service';
 import { AppService } from '../../../app.service';
-import { Rol } from '../../../roles/rol';
-import { RolesService } from '../../../roles/roles.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Config } from 'datatables.net';
+import { cliente } from '../../cliente';
 
 @Component({
-  selector: 'app-user-list',
+  selector: 'app-clientes-list',
   standalone: false,
 
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css'
+  templateUrl: './clientes-list.component.html',
+  styleUrl: './clientes-list.component.css'
 })
-export class UserListComponent {
-  public title: string = "Usuarios";
-  public users: any[] = [];
-  public roles: Rol[] = [];
-
-
-
-  public usersHabilitados: any[] = [];
-  public usersNoHabilitados: any[] = [];
+export class ClientesListComponent {
+  public title: string = "Listado Todos Los Clientes";
+  public clientes: any[] = [];
+  public option: string = '';
 
   public dtOptions: Config = {};
-  public selectedUser: string = '';
+  public selectedCliente: string = '';
   public filterSearch: string = '';
   rol: number | null = null;
 
-  public activeTab: string = 'habilitados'; // Pestaña por defecto
+  public nif: string = '';
 
+  clienteSelected: cliente | null = null;
 
-  constructor(private _userService: UsersService, private listarolesService: RolesService, private _appService: AppService
+  constructor(
+    private _clientesService: ClientesService,
+    private _appService: AppService,
+    private _route: Router,
+    private _aroute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -40,16 +40,9 @@ export class UserListComponent {
       this.rol = rol;
     });
 
-    this.listarolesService.obtengoRolesApi().subscribe({
-      next: (resultado) => {
-        this.roles = resultado.data;
-      },
-      error: (error) => {
-        //console.error('Error:', error);
-      }
-    });
+    this.getAllClientes();
 
-    this.selectedUser = '';
+    this.selectedCliente = '';
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -72,14 +65,13 @@ export class UserListComponent {
       },
     };
 
-    this._userService.getAllUser().subscribe({
+  }
+
+  getAllClientes() {
+    this._clientesService.getAllClientes().subscribe({
       next: (response) => {
         if (response.success) { // esto debe ser true
-          this.users = response.data;
-          this.usersHabilitados = this.users.filter(user => user.habilitado == 1);
-          this.usersNoHabilitados = this.users.filter(user => user.habilitado == 0);
-
-          ////console.log(response.data);
+          this.clientes = response.data;
         } else {
           //console.error('Error:', response.exception);
         }
@@ -90,19 +82,13 @@ export class UserListComponent {
     });
   }
 
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
-  }
-
   descargarPDF() {
     const doc = new jsPDF();
-    doc.text('Tabla de usuarios.', 14, 10);
+    doc.text('Tabla de clientes.', 14, 10);
     autoTable(doc, {
-      html: '#tableUsers',
+      html: '#tableClientes',
       startY: 20,
     });
-    doc.save('tablaUsers.pdf');
+    doc.save('tablaClientes.pdf');
   }
-
 }

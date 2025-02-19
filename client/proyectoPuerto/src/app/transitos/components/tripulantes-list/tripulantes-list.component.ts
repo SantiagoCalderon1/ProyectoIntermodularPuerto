@@ -122,12 +122,12 @@ export class TripulantesListComponent {
 
   descargarPDF() {
     const doc = new jsPDF();
-    doc.text('Tabla de usuarios.', 14, 10);
+    doc.text('Tabla de tripulantes.', 14, 10);
     autoTable(doc, {
-      html: '#tableUsers',
+      html: '#tableTripulantes',
       startY: 20,
     });
-    doc.save('tablaUsers.pdf');
+    doc.save('tablaTripulantes.pdf');
   }
 
 
