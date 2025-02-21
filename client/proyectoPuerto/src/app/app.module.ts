@@ -21,6 +21,7 @@ import { InstalacionModule } from './instalacion/instalacion.module';
 import { TransitosModule } from './transitos/transitos.module';
 import { MuellesModule } from './muelles/muelles.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FacturasModule } from './facturas/facturas.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InstalacionModule,
     TransitosModule,
     MuellesModule,
+    FacturasModule,
     NgSelectModule,
   ],
   providers: [],

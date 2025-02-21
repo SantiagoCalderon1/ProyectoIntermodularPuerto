@@ -13,11 +13,33 @@ class Facturas
 
     function showFactura($id)
     {
-        if (is_numeric($id)) {
+        if ($id!='facturas') {
             $sql = "SELECT * FROM facturas WHERE num_factura = '$id'";
             return $this->conexion->dataQuery($sql);
         } else {
             $sql = "SELECT * FROM facturas";
+            return $this->conexion->dataQuery($sql);
+        }
+    }
+
+    function showCliente($id)
+    {
+        if ($id!='clientes') {
+            $sql = "SELECT * FROM clientes WHERE nif = '$id'";
+            return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM clientes";
+            return $this->conexion->dataQuery($sql);
+        }
+    }
+
+    function showReserva($id)
+    {
+        if (is_numeric($id)) {
+            $sql = "SELECT * FROM reservas WHERE id_reserva = '$id'";
+            return $this->conexion->dataQuery($sql);
+        } else {
+            $sql = "SELECT * FROM reservas";
             return $this->conexion->dataQuery($sql);
         }
     }
@@ -32,13 +54,13 @@ class Facturas
         $base_imponible = (float)$input['base_imponible'];
         $dias = (int)$input['dias'];
         $precio_unitario = (float)$input['precio_unitario'];
-        $precio = (float)$input['precio'];
         $tipo_iva = (int)$input['tipo_iva'];
         $tipo_irpf = (int)$input['tipo_irpf'];
         $total = (float)$input['total'];
+        $cobrada = (int)$input['cobrada'];
 
-        $sql = "INSERT INTO facturas (num_factura, nif_cliente, id_reserva, fecha_expedicion, fecha_vencimiento, base_imponible, dias, precio_unitario, precio, tipo_iva, tipo_irpf, total) 
-                VALUES ('$num_factura', '$nif_cliente', $id_reserva, '$fecha_expedicion', '$fecha_vencimiento', $base_imponible, $dias, $precio_unitario, $precio, $tipo_iva, $tipo_irpf, $total)";
+        $sql = "INSERT INTO facturas (num_factura, nif_cliente, id_reserva, fecha_expedicion, fecha_vencimiento, base_imponible, dias, precio_unitario, tipo_iva, tipo_irpf, total, cobrada) 
+                VALUES ('$num_factura', '$nif_cliente', $id_reserva, '$fecha_expedicion', '$fecha_vencimiento', $base_imponible, $dias, $precio_unitario, $tipo_iva, $tipo_irpf, $total, $cobrada)";
 
         return $this->conexion->dataQuery($sql);
     }

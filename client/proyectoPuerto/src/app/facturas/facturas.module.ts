@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListaFacturaComponent } from './components/lista-factura/lista-factura.component';
-
-
+import { ListaFacturasComponent } from './components/lista-facturas/lista-facturas.component';
+import { FacturaComponent } from './components/factura/factura.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
-    ListaFacturaComponent
+    ListaFacturasComponent,
+    FacturaComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    NgSelectModule
   ]
 })
-export class FacturasModule { }
+export class FacturasModule {
+
+}

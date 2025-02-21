@@ -32,8 +32,16 @@ switch ($requestMethod) {
 
 function handleGet($db, $uri)
 {
-    $facturas = $db->showFactura(end($uri));
-    echo json_encode($facturas);
+    if (((array_slice($uri, -2, 1))[0]) === "facturas" || end($uri) === "facturas") {
+        $products = $db->showFactura(end($uri));
+        echo json_encode($products);
+    } else if (((array_slice($uri, -2, 1))[0]) === "clientes" || end($uri) === "clientes") {
+        $ccaa = $db->showCliente(end($uri));
+        echo json_encode($ccaa);
+    } else if (((array_slice($uri, -2, 1))[0]) === "reservas" || end($uri) === "reservas") {
+        $ccaa = $db->showReserva(end($uri));
+        echo json_encode($ccaa);
+    }
 }
 
 function handlePost($db, $data)
@@ -47,7 +55,6 @@ function handlePost($db, $data)
     //     "base_imponible" => 1000.50,
     //     "dias" => 30,
     //     "precio_unitario" => 33.35,
-    //     "precio" => 1000.50,
     //     "tipo_iva" => 21,
     //     "tipo_irpf" => 15,
     //     "total" => 1210.58
@@ -71,7 +78,6 @@ function handlePut($db, $data)
         "base_imponible" => 1000.50,
         "dias" => 30,
         "precio_unitario" => 33.35,
-        "precio" => 1000.50,
         "tipo_iva" => 21,
         "tipo_irpf" => 15,
         "total" => 1210.58

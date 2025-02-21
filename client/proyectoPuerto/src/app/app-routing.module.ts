@@ -26,6 +26,8 @@ import { TripulantesListComponent } from './transitos/components/tripulantes-lis
 import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
 
 import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+import { ListaFacturasComponent } from './facturas/components/lista-facturas/lista-facturas.component';
+import { FacturaComponent } from './facturas/components/factura/factura.component';
 
 
 
@@ -100,6 +102,13 @@ const routes: Routes = [
   },
   { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
+
+
+  {
+    path: 'listaFacturas', component: ListaFacturasComponent, canActivate:
+      [authGuard]
+  },
+  { path: 'facturas/:tipo/:num_factura', component: FacturaComponent, canActivate: [authGuard] },
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

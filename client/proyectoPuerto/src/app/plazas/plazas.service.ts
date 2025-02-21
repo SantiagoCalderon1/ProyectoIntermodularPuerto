@@ -48,7 +48,6 @@ export class PlazasService {
     return this.http.put<any>(this.apiUrl, JSON.stringify(plazaConId), this.httpOptions);
   }
   
-
   // Borrar una plaza
   borraPlazaApi(nplaza: number): Observable<any> {
     const body = JSON.stringify({ id: nplaza }); // La API espera el ID dentro del cuerpo JSON
