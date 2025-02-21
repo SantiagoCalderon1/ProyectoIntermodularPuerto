@@ -3,7 +3,7 @@
         <div class="card text-start shadow-lg p-2">
             <h1 class="text-center">Listado de transitos</h1>
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                <button class="btn btn-success" [routerLink]="['/transitos', 0 , 2]">
+                <button class="btn btn-success" [routerLink]="['/transitos', 0 , 2]" [disabled]="rol == 1">
                     <i class="fa-solid fa-plus"></i> Crear nuevo tránsito
                 </button>
             </div>
@@ -41,19 +41,19 @@
                                 <td>{{ transito.embarcacion }}</td>
                                 <td>{{ transito.datos_estancia }}</td>
                                 <td>
-                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-danger btn-sm"
+                                    <button [disabled]="rol == 1" class="btn btn-danger btn-sm"
                                         (click)="abrirModal(transito)">
                                         <i class="fa-solid fa-trash"></i>Eliminar
                                     </button>
                                 </td>
                                 <td>
-                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-warning btn-sm"
+                                    <button [disabled]="rol == 1" class="btn btn-warning btn-sm"
                                         [routerLink]="['/transitos', transito.embarcacion,1]">
                                         <i class="fa-solid fa-pen"></i>Editar
                                     </button>
                                 </td>
                                 <td>
-                                    <button [disabled]="rol != 4 && rol != 3" class="btn btn-success btn-sm"
+                                    <button [disabled]="rol == 1" class="btn btn-success btn-sm"
                                         [routerLink]="['/tripulantes', transito.embarcacion]">
                                         <i class="fa fa-user fa-fw"></i>Lista
                                     </button>

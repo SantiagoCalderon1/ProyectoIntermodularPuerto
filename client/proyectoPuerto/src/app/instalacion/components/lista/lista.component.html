@@ -7,7 +7,7 @@
             <div class="card-body">
                 <!-- Botones Responsivos -->
                 <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                    <button class="btn btn-success" [routerLink]="['/creacion', 0 , 2]">
+                    <button class="btn btn-success" [routerLink]="['/creacion', 0 , 2]" [disabled]="rol == 1">
                         <i class="fa-solid fa-plus"></i> Crear nueva instalación
                     </button>
                 </div>
@@ -44,12 +44,12 @@
                                     <td>{{ instalacion.estado }}</td>
                                     <td>{{ instalacion.puerto }}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm" (click)="abrirModal(instalacion)">
+                                        <button class="btn btn-danger btn-sm" (click)="abrirModal(instalacion)" [disabled]="rol == 1">
                                             <i class="fa-solid fa-trash"></i>Eliminar 
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-warning btn-sm" [routerLink]="['/creacion', instalacion.id_instalacion,1]">
+                                        <button class="btn btn-warning btn-sm" [routerLink]="['/creacion', instalacion.id_instalacion,1]" [disabled]="rol == 1">
                                             <i class="fa-solid fa-pen"></i>Editar 
                                         </button>
                                     </td>
