@@ -8,10 +8,10 @@ import { Recibo } from './recibo';
 })
 export class RecibosService {
   ///url prueba
-  //urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
+  urlApi1 = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
   
   //url local get todos
-  urlApi1 = "http://localhost:8080/PROYECTO_PUERTO/ProyectoIntermodularPuerto/server/app/controller/reciboController.php?opcion=1";
+  //urlApi1 = "http://localhost:8080/PROYECTO_PUERTO/ProyectoIntermodularPuerto/server/app/controller/reciboController.php";
 
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient
 
@@ -22,7 +22,7 @@ export class RecibosService {
   }
 
   obtenerRecibosApi(): Observable<any> {
-    return this.http.get(`${this.urlApi1}`); // Obtengo todos los recibos
+    return this.http.get(`${this.urlApi1}?opcion=1`); // Obtengo todos los recibos
   }
 
   actualizarReciboApi(idRecibo: number,recibo: Recibo): Observable<any> {

@@ -13,17 +13,13 @@ $metodo = $_SERVER["REQUEST_METHOD"];
 
 switch ($metodo) {
     case "PUT":
-        //procesa un array de recibos para ponerlos en "devuelto por el banco"
-        if (isset($data["id_recibos"]) && is_array($data["id_recibos"])) {
-            $resultado = Recibo::devolver($data["id_recibos"]);
+
+            $resultado = Recibo::devolver($data['id_recibo']);
             if ($resultado) {
                 echo json_encode(["mensaje" => "Recibos devueltos correctamente"]);
             } else {
                 echo json_encode(["error" => "Error al devolver los recibos"]);
             }
-        } else {
-            echo json_encode(["mensaje" => "Datos inválidos, o faltan datos"]);
-        }
         break;
 
     case "GET":

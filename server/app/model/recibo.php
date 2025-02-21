@@ -26,19 +26,19 @@ class Recibo
         }
     }
 
-    public static function devolver(array $id_recibo)
+    public static function devolver(string $recibo)
     {
         $conexion = openConexion();
         $errores = 0;
 
-        foreach ($id_recibo as $recibo) {
-            $ssql = "UPDATE `recibos` SET devuelto=1 WHERE id_recibo='$recibo'";
+
+            $ssql = "UPDATE `recibos` SET devuelto=0 WHERE id_recibo='$recibo'";
             $respuesta = $conexion->query($ssql);
 
             if (!$respuesta || $conexion->affected_rows == 0) {
                 $errores++;
             }
-        }
+        
 
         closeConexion($conexion);
 
