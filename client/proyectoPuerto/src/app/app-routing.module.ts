@@ -27,7 +27,6 @@ import { TripulantesComponent } from './transitos/components/tripulantes/tripula
 import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
 import { TransitosComponent } from './transitos/components/transitos/transitos.component';
 import { ListarecibosComponent } from './recibos/listarecibos/listarecibos.component';
-import { ReciboComponent } from './recibos/recibo/recibo.component';
 
 
 
@@ -104,7 +103,6 @@ const routes: Routes = [
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
 
   { path: 'listarecibos', component: ListarecibosComponent, canActivate: [authGuard] },
-  { path: 'recibo', component: ReciboComponent, canActivate: [authGuard]},
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Recibo } from './recibo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecibosService {
   ///url prueba
-  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
+  //urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
   
-  //url local
-  //urlApi = "http://localhost:8080/ProyectoIntermodularPuerto/server/app/controller/reciboController.php";
+  //url local get todos
+  urlApi1 = "http://localhost:8080/PROYECTO_PUERTO/ProyectoIntermodularPuerto/server/app/controller/reciboController.php?opcion=1";
 
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient
 
@@ -21,6 +22,10 @@ export class RecibosService {
   }
 
   obtenerRecibosApi(): Observable<any> {
-    return this.http.get(`${this.urlApi}`); // Obtengo todos los recibos
+    return this.http.get(`${this.urlApi1}`); // Obtengo todos los recibos
+  }
+
+  actualizarReciboApi(idRecibo: number,recibo: Recibo): Observable<any> {
+    return this.http.put<any>(`${this.urlApi1}/${idRecibo}`, JSON.stringify(recibo), this.httpOptions);
   }
 }

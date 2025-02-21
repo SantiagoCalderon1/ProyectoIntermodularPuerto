@@ -1,4 +1,4 @@
-<?
+<?php
 include_once "../../config/conexion.php";
 class Recibo
 {
@@ -26,13 +26,13 @@ class Recibo
         }
     }
 
-    public static function devolver(array $n_facturas)
+    public static function devolver(array $id_recibo)
     {
         $conexion = openConexion();
         $errores = 0;
 
-        foreach ($n_facturas as $numFactura) {
-            $ssql = "UPDATE `recibos` SET devuelto=1 WHERE n_factura='$numFactura'";
+        foreach ($id_recibo as $recibo) {
+            $ssql = "UPDATE `recibos` SET devuelto=1 WHERE id_recibo='$recibo'";
             $respuesta = $conexion->query($ssql);
 
             if (!$respuesta || $conexion->affected_rows == 0) {
@@ -44,6 +44,18 @@ class Recibo
 
         // Si hubo errores, devolvemos false, si todo fue bien, true.
         return $errores == 0;
+    }
+
+    public static function crearRecibo($n_factura,$fechaHoy){
+        $conexion = openConexion();
+        $ssql = "INSERT INTO `recibos` (`n_factura`, `fecha_emision`, `devuelto`) VALUES ('$n_factura', '$fechaHoy', '0')";
+        $respuesta = $conexion->query($ssql);
+
+        if($respuesta && $conexion->affected_rows > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

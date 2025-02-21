@@ -9,9 +9,9 @@ function openConexion()
     //urlApi = "https://puerto.proyectos-2daw.es/app/controller/ controlador aquí .php";
 
     // conexión local
-    //$mysqli = new mysqli('127.0.0.1', 'phpmyadmin', '1234', 'Puerto');
+    $mysqli = new mysqli('127.0.0.1', 'root', '1234', 'Puerto');
     // conexión producción o test uat
-    $mysqli = new mysqli('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
+    //$mysqli = new mysqli('127.0.0.1', 'puerto', '%e2Ta?N>9!6', 'Puerto');
 
     if ($mysqli->connect_errno) {
         echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ")";

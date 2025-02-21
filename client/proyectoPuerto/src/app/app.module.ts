@@ -20,6 +20,7 @@ import { PlazasModule } from './plazas/plazas.module';
 import { InstalacionModule } from './instalacion/instalacion.module';
 import { TransitosModule } from './transitos/transitos.module';
 import { MuellesModule } from './muelles/muelles.module';
+import { RecibosModule } from './recibos/recibos.module';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { MuellesModule } from './muelles/muelles.module';
     FormsModule,
     InstalacionModule,
     TransitosModule,
-    MuellesModule
+    MuellesModule,
+    RecibosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
