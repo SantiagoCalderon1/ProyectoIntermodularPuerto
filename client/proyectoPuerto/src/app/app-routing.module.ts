@@ -20,17 +20,16 @@ import { ListaComponent as listaInstalacionComponent } from './instalacion/compo
 
 import { ListamuellesComponent } from './muelles/components/listamuelles/listamuelles.component';
 import { FormmuellesComponent } from './muelles/components/formmuelles/formmuelles.component';
-<<<<<<< HEAD
-import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
-import { TransitosComponent } from './transitos/components/transitos/transitos.component';
-import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
-import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
-=======
 
 import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+import { TripulantesListComponent } from './transitos/components/tripulantes-list/tripulantes-list.component';
+import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
+import { TransitosListComponent } from './transitos/components/transitos-list/transitos-list.component';
+import { TransitosComponent } from './transitos/components/transitos/transitos.component';
+import { ListarecibosComponent } from './recibos/listarecibos/listarecibos.component';
+import { ReciboComponent } from './recibos/recibo/recibo.component';
 
 
->>>>>>> f460f36 (Versión casi casi terminada, sin la parte de editar y eliminar de reservas)
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -103,6 +102,9 @@ const routes: Routes = [
   },
   { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
+
+  { path: 'listarecibos', component: ListarecibosComponent, canActivate: [authGuard] },
+  { path: 'recibo', component: ReciboComponent, canActivate: [authGuard]},
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

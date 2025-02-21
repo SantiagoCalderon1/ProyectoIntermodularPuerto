@@ -9,7 +9,6 @@ import { TransitosComponent } from './components/transitos/transitos.component';
 import { TransitosListComponent } from './components/transitos-list/transitos-list.component';
 
 
-
 @NgModule({
   declarations: [
     TripulantesComponent,

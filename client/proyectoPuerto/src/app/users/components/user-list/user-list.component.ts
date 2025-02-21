@@ -105,8 +105,4 @@ export class UserListComponent {
     doc.save('tablaUsers.pdf');
   }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> unionUsuarioRolFuncionalidad

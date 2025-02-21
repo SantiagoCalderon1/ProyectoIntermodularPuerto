@@ -19,7 +19,6 @@ export class ListamuellesComponent {
   public roles: Rol[] = [];
   public rol: number | null = null; // Para controlar el acceso según el rol del usuario
   public selectedMuelle: number = 0;
-  muellesSeleccionados: number[] = [];
 
   ngOnInit() {
     this._appService.rol$.subscribe(rol => {
@@ -30,11 +29,7 @@ export class ListamuellesComponent {
         this.muelles = resultado.data;
       },
       error: (error) => {
-<<<<<<< HEAD
-        console.error('Error:', error);
-=======
         // console.error('Error:', error);
->>>>>>> unionUsuarioRolFuncionalidad
       }
     });
 
