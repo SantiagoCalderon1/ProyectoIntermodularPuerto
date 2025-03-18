@@ -8,11 +8,11 @@ import { Factura } from './facturas';
 })
 export class FacturasService {
 //url local
-private apiUrl = 'http://localhost:8888/app/controller/facturasController.php';
-apiUrlRecibo = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
+//private apiUrl = 'http://localhost:8888/app/controller/facturasController.php';
+//apiUrlRecibo = "http://localhost:8888/app/controller/reciboController.php";
     
-//apiUrl = "https://uat-puerto.proyectos-2daw.es/app/controller/facturasController.php";
-//apiUrlRecibo = "https://uat-puerto.proyectos-2daw.es/app/controller/reciboController.php";
+apiUrl = "https://puerto.proyectos-2daw.es/app/controller/facturasController.php";
+apiUrlRecibo = "https://puerto.proyectos-2daw.es/app/controller/reciboController.php";
 
 
 httpOptions = {
@@ -70,10 +70,8 @@ borraFacturaApi(nfactura: string): Observable<any> {
 }
 
 // Generar un recibo
-generaReciboApi(num_reserva: string, dataToday:string): Observable<any> {
-  const body = JSON.stringify({ 'n_factura':num_reserva, 'fecha':dataToday });
+generaReciboApi(num_factura: string, dataToday:string): Observable<any> {
+  const body = JSON.stringify({ 'n_factura':num_factura, 'fecha':dataToday });
   return this.http.post<any>(this.apiUrlRecibo, body, this.httpOptions);
 }
-
-// Obtener todos los recibos
 }

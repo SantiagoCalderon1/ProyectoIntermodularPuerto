@@ -50,7 +50,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="dias" class="form-label">Días:</label>
                             <input type="number" class="form-control" [(ngModel)]="facturaAct.dias" name="dias"
-                                id="dias" (change)="actualizaBase()" required>
+                                id="dias" (change)="actualizaBase()" required min="1">
                         </div>
                     </div>
 
@@ -59,14 +59,14 @@
                             <label for="precio_unitario" class="form-label">Precio Unitario:</label>
                             <input type="number" step="0.01" class="form-control"
                                 [(ngModel)]="facturaAct.precio_unitario" (change)="actualizaBase()"
-                                name="precio_unitario" id="precio_unitario" required>
+                                name="precio_unitario" id="precio_unitario" required min="1">
                         </div>
 
                         <div class="mb-3 col-md-4">
                             <label for="base_imponible" class="form-label">Base Imponible:</label>
                             <input type="number" step="0.01" class="form-control"
                                 [(ngModel)]="facturaAct.base_imponible" (change)="actualizaTotal()"
-                                name="base_imponible" id="base_imponible" required>
+                                name="base_imponible" id="base_imponible" disabled>
                         </div>
                     </div>
 
@@ -74,22 +74,20 @@
                         <div class="mb-3 col-md-6">
                             <label for="tipo_iva" class="form-label">Tipo IVA (%):</label>
                             <input type="number" step="0.01" class="form-control" [(ngModel)]="facturaAct.tipo_iva"
-                                (change)="actualizaTotal()" name="tipo_iva" id="tipo_iva" required>
+                                (change)="actualizaTotal()" name="tipo_iva" id="tipo_iva" required min="1">
                         </div>
 
                         <div class="mb-3 col-md-6">
                             <label for="tipo_irpf" class="form-label">Tipo IRPF (%):</label>
                             <input type="number" step="0.01" class="form-control" [(ngModel)]="facturaAct.tipo_irpf"
-                                (change)="actualizaTotal()" name="tipo_irpf" id="tipo_irpf" required>
+                                (change)="actualizaTotal()" name="tipo_irpf" id="tipo_irpf" required min="1">
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="total" class="form-label">Total:</label>
                         <input type="number" step="0.01" class="form-control" [(ngModel)]="facturaAct.total"
-                            name="total" id="total" required>
+                            name="total" id="total" disabled>
                     </div>
-
                     <div class="mb-3">
                         <label for="estado" class="form-label">Estado:</label>
                         <select class="form-control" [(ngModel)]="facturaAct.cobrada" name="estado" id="estado"

@@ -1,0 +1,161 @@
+<div class="container d-flex align-items-center justify-content-center cliente-form">
+    <div class="col-11 col-md-10 col-lg-12 card text-center">
+        <div class="card-header d-flex justify-content-center align-items-center p-3">
+            <h5>{{ tituloConfirmacion }}</h5>
+        </div>
+        <div class="card-body p-4 shadow-lg rounded-4 ">
+            <form #clienteForm="ngForm" (ngSubmit)="manageForm(clienteForm)" novalidate>
+                <div [ngSwitch]="option">
+                    <div *ngIf="option === 'Insert' || option === 'Update'">
+                        <div class="row gx-3 gy-3">
+                            <!-- Cliente -->
+                            <!-- Número de identificación fiscal -->
+                            <div class="col-md-6">
+                                <label for="inputNif" class="form-label">NIF: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputNif" required
+                                    #inputNif="ngModel" [(ngModel)]="selectedCliente.nif" minlength="8" maxlength="15">
+                                <div *ngIf="inputNif.invalid && (inputNif.dirty || inputNif.touched)">
+                                    <small class="text-danger" *ngIf="inputNif.errors?.['required']">Este campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger" *ngIf="inputNif.errors?.['minlength']">Este campo es de
+                                        mínimo 8 caracteres.</small>
+                                    <small class="text-danger" *ngIf="inputNif.errors?.['maxlength']">Este campo es de
+                                        máximo 15 caracteres.</small>
+                                </div>
+                            </div>
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label for="imputNombre" class="form-label">Nombre: *</label>
+                                <input type="text" class="form-control rounded-pill" name="imputNombre" required
+                                    #imputNombre="ngModel" [(ngModel)]="selectedCliente.nombre" minlength="2">
+                                <div *ngIf="imputNombre.invalid && (imputNombre.dirty || imputNombre.touched)">
+                                    <small class="text-danger" *ngIf="imputNombre.errors?.['required']">Este campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger" *ngIf="imputNombre.errors?.['minlength']">Este campo es
+                                        de mínimo 2 caracteres.</small>
+                                </div>
+                            </div>
+                            <!-- Apellidos -->
+                            <div class="col-md-6">
+                                <label for="inputApellidos" class="form-label">Apellidos: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputApellidos" required
+                                    #inputApellidos="ngModel" [(ngModel)]="selectedCliente.apellidos" minlength="2"
+                                    maxlength="255">
+                                <div *ngIf="inputApellidos.invalid && (inputApellidos.dirty || inputApellidos.touched)">
+                                    <small class="text-danger" *ngIf="inputApellidos.errors?.['required']">Este campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger" *ngIf="inputApellidos.errors?.['minlength']">Este campo
+                                        es de mínimo 2 caracteres.</small>
+                                    <small class="text-danger" *ngIf="inputApellidos.errors?.['maxlength']">Este campo
+                                        es de máximo 255 caracteres.</small>
+                                </div>
+                            </div>
+                            <!-- Domicilio -->
+                            <div class="col-md-6">
+                                <label for="inputDomicilio" class="form-label">Domicilio: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputDomicilio" required
+                                    #inputDomicilio="ngModel" [(ngModel)]="selectedCliente.domicilio" minlength="7"
+                                    maxlength="500">
+                                <div *ngIf="inputDomicilio.invalid && (inputDomicilio.dirty || inputDomicilio.touched)">
+                                    <small class="text-danger" *ngIf="inputDomicilio.errors?.['required']">Este campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger" *ngIf="inputDomicilio.errors?.['minlength']">Este campo
+                                        es de mínimo 7 caracteres.</small>
+                                    <small class="text-danger" *ngIf="inputDomicilio.errors?.['maxlength']">Este campo
+                                        es de máximo 500 caracteres.</small>
+                                </div>
+                            </div>
+
+                            <!-- codigoPostal -->
+                            <div class="col-md-6">
+                                <label for="inputCodigoPostal" class="form-label">Código Postal: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputCodigoPostal" required
+                                    #inputCodigoPostal="ngModel" [(ngModel)]="selectedCliente.codigoPostal"
+                                    minlength="5" maxlength="5" pattern="^[0-9]{5}$">
+                                <div
+                                    *ngIf="inputCodigoPostal.invalid && (inputCodigoPostal.dirty || inputCodigoPostal.touched)">
+                                    <small class="text-danger" *ngIf="inputCodigoPostal.errors?.['required']">Este campo
+                                        es
+                                        obligatorio.</small>
+                                    <small class="text-danger"
+                                        *ngIf="inputCodigoPostal.errors?.['minlength'] || inputCodigoPostal.errors?.['maxlength']">Este
+                                        campo
+                                        es de exactamente 5 números.</small>
+                                </div>
+                            </div>
+
+                            <!-- númeroBancario -->
+                            <div class="col-md-6">
+                                <label for="inputNumeroBancario" class="form-label">Número Bancario: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputNumeroBancario" required minlength="20" maxlength="20"
+                                    #inputNumeroBancario="ngModel" [(ngModel)]="selectedCliente.numeroBancario">
+                                <div
+                                    *ngIf="inputNumeroBancario.invalid && (inputNumeroBancario.dirty || inputNumeroBancario.touched)">
+                                    <small class="text-danger" *ngIf="inputNumeroBancario.errors?.['required']">Este
+                                        campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger"
+                                        *ngIf="inputNumeroBancario.errors?.['minlength'] || inputNumeroBancario.errors?.['maxlength']">Este
+                                        campo es de exactamente 20 caracteres.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Telefono-->
+                            <div class="col-md-6">
+                                <label for="inputTelefono" class="form-label">Teléfono: *</label>
+                                <input type="text" class="form-control rounded-pill" name="inputTelefono" required
+                                    #inputTelefono="ngModel" [(ngModel)]="selectedCliente.telefono" minlength="9" maxlength="12"> 
+                                <div *ngIf="inputTelefono.invalid && (inputTelefono.dirty || inputTelefono.touched)">
+                                    <small class="text-danger" *ngIf="inputTelefono.errors?.['required']">Este campo es
+                                        obligatorio.</small>
+                                    <small class="text-danger" *ngIf="inputTelefono.errors?.['maxlength']">Este campo
+                                        es de máximo 12 caracteres.</small>
+                                        <small class="text-danger" *ngIf="inputTelefono.errors?.['minlength']">Este campo
+                                            es de mínimo 9 números.</small>
+                                </div>
+                            </div>
+
+                            <!-- email-->
+                            <div class="col-md-6">
+                                <label for="inputEmail" class="form-label">Email: *</label>
+                                <input type="email" class="form-control rounded-pill" name="inputEmail" required email
+                                    #inputEmail="ngModel" [(ngModel)]="selectedCliente.email" minlength="1">
+                                <div *ngIf="inputEmail.invalid && (inputEmail.dirty || inputEmail.touched)">
+                                    <small class="text-danger" *ngIf="inputEmail.errors?.['required']">
+                                        Este campo es obligatorio.
+                                    </small>
+                                    <small class="text-danger" *ngIf="inputEmail.errors?.['email']">
+                                        El formato del email no es válido.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>Campos obligatorios *</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="option === 'Delete'">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>¿Está seguro de eliminar al tripulante {{ selectedCliente.nombre }} con NIF
+                                    {{selectedCliente.nif}}?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row gx-3 gy-3 m-3">
+                    <div class="col-6">
+                        <button name="cancelar" class="btn btn-danger px-4 "
+                            (click)="cancelForm($event )">Cancelar</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success px-4">Aceptar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

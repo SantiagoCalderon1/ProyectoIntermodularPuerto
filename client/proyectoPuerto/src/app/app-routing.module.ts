@@ -26,8 +26,11 @@ import { TripulantesListComponent } from './transitos/components/tripulantes-lis
 import { TripulantesComponent } from './transitos/components/tripulantes/tripulantes.component';
 
 import { ReservaComponent } from './plazas/components/reservas/reservas.component';
+import { ClientesListComponent } from './clientes/components/clientes-list/clientes-list.component';
+import { ClienteComponent } from './clientes/components/cliente/cliente.component';
 import { ListaFacturasComponent } from './facturas/components/lista-facturas/lista-facturas.component';
 import { FacturaComponent } from './facturas/components/factura/factura.component';
+import { ListarecibosComponent } from './recibos/listarecibos/listarecibos.component';
 
 
 
@@ -46,34 +49,18 @@ const routes: Routes = [
   { path: 'transitos/:embarcacion/:tipo', component: TransitosComponent, canActivate: [authGuard] },
 
 
-  {
-    path: 'users', component: UserListComponent,
-    canActivate: [authGuard],
-  },
-  
-  {
-    path: 'users/:option/:username',
-    component: UserComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'roles', component: listaRoles,
-    canActivate: [authGuard]
-  },
-  {
-    path: 'formulario/:id', component: FormularioComponent,
-    canActivate: [authGuard]
-  },
+  { path: 'users', component: UserListComponent, canActivate: [authGuard],  },
 
-  {
-    path: 'funcionalidades', component: listaFuncionalidad,
-    canActivate: [authGuard]
-  },
+  { path: 'users/:option/:username', component: UserComponent, canActivate: [authGuard], },
+  
+  { path: 'roles', component: listaRoles, canActivate: [authGuard] },
+  { path: 'formulario/:id', component: FormularioComponent, canActivate: [authGuard] },
+
+  { path: 'funcionalidades', component: listaFuncionalidad, canActivate: [authGuard] },
 
   { path: 'listaPlazas', component: listaPlazasComponents, canActivate: [authGuard] },
   { path: 'plazas', component: PlazaComponent, canActivate: [authGuard] },
   { path: 'plazas/:tipo/:id', component: PlazaComponent, canActivate: [authGuard] },
-
 
   { path: 'creacion', component: InstalacionComponent, canActivate: [authGuard] },
   { path: 'creacion/:id_instalacion/:tipo', component: InstalacionComponent, canActivate: [authGuard] },
@@ -83,11 +70,9 @@ const routes: Routes = [
   { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
 
-
   { path: 'tripulantes', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'tripulantes/:embarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'tripulantes/:option/:numeroDocumento/:embarcacion', component: TripulantesComponent, canActivate: [authGuard] },
-
 
   { path: 'transito/:numeroEmbarcacion', component: TripulantesListComponent, canActivate: [authGuard] },
   { path: 'transito/:option/:numeroDocumento', component: TripulantesComponent, canActivate: [authGuard] },
@@ -96,19 +81,17 @@ const routes: Routes = [
   { path: 'reservas/:tipo/:id_reserva', component: ReservaComponent, canActivate: [authGuard] },
 
 
-  {
-    path: 'muelles', component: ListamuellesComponent, canActivate:
-      [authGuard]
-  },
+  { path: 'muelles', component: ListamuellesComponent, canActivate:[authGuard]},
   { path: 'formmuelles', component: FormmuellesComponent, canActivate: [authGuard] },
   { path: 'formmuelles/:id/:tipo', component: FormmuellesComponent, canActivate: [authGuard] },
 
-
-  {
-    path: 'listaFacturas', component: ListaFacturasComponent, canActivate:
-      [authGuard]
-  },
+  { path: 'clientes', component: ClientesListComponent, canActivate: [authGuard] },
+  { path: 'clientes/:option/:nif', component: ClienteComponent, canActivate: [authGuard] },
+  
+  { path: 'listaFacturas', component: ListaFacturasComponent, canActivate: [authGuard] },
   { path: 'facturas/:tipo/:num_factura', component: FacturaComponent, canActivate: [authGuard] },
+  
+  { path: 'listarecibos', component: ListarecibosComponent, canActivate: [authGuard] },
 
   // Ruta por defecto (vacía) -> Redirigir a /login
   { path: '', redirectTo: '/login', pathMatch: 'full' },

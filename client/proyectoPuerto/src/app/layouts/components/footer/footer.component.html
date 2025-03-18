@@ -15,32 +15,42 @@
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/users']" [routerLinkActive]="['active']">Usuarios</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/clientes']" [routerLinkActive]="['active']"
+                            data-bs-dismiss="offcanvas">Clientes</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/listaPlazas']" [routerLinkActive]="['active']">Plazas
                             bases</a>
                     </li>
-                    <li class="nav-item" *ngIf="rol == 4">
+                    <li class="nav-item" *ngIf="rol != 2 && rol != 1">
                         <a class="nav-link" [routerLink]="['/roles']" [routerLinkActive]="['active']">Roles</a>
                     </li>
-                    <li class="nav-item" *ngIf=" rol == 4">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/instalacion']"
                             [routerLinkActive]="['active']">Instalaciones</a>
                     </li>
-                    <li class="nav-item" *ngIf="rol == 4">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/funcionalidades']"
                             [routerLinkActive]="['active']">Funcionalidades</a>
                     </li>
-                    <li class="nav-item" *ngIf="rol == 4">
+                    
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/muelles']" [routerLinkActive]="['active']">Muelles</a>
                     </li>
-                    <li class="nav-item" *ngIf="rol == 4">
-                        <a class="nav-link" [routerLink]="['//transitos-list']"
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/transitos-list']"
                             [routerLinkActive]="['active']">Transitos</a>
                     </li>
-                    <li class="nav-item" *ngIf="rol == 4">
+                    <li class="nav-item">
                         <a class="nav-link" [routerLink]="['/tripulantes']"
                             [routerLinkActive]="['active']">Tripulantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/listarecibos']" [routerLinkActive]="['active']">Recibos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/listaFacturas']" [routerLinkActive]="['active']">Facturas</a>
                     </li>
                 </ul>
             </div>

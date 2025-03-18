@@ -20,8 +20,10 @@ import { PlazasModule } from './plazas/plazas.module';
 import { InstalacionModule } from './instalacion/instalacion.module';
 import { TransitosModule } from './transitos/transitos.module';
 import { MuellesModule } from './muelles/muelles.module';
+import { ClientesModule } from './clientes/clientes.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FacturasModule } from './facturas/facturas.module';
+import { RecibosModule } from './recibos/recibos.module';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { FacturasModule } from './facturas/facturas.module';
     LoginModule,
     UsersModule,
     PlazasModule,
+    NgSelectModule,
     BrowserAnimationsModule, 
     ToastrModule.forRoot(),
     FuncionalidadesModule,
@@ -45,8 +48,10 @@ import { FacturasModule } from './facturas/facturas.module';
     InstalacionModule,
     TransitosModule,
     MuellesModule,
+    ClientesModule,
+    RecibosModule,
     FacturasModule,
-    NgSelectModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

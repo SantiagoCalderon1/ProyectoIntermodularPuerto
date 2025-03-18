@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InstalacionService } from '../../instalacion.service';
 import { Instalacion } from '../instalacion';
+import { AppService } from '../../../app.service';
 declare var bootstrap: any;
 
 @Component({
@@ -10,11 +11,17 @@ declare var bootstrap: any;
   styleUrl: './lista.component.css'
 })
 export class ListaComponent {
-  constructor(private instalacionesService: InstalacionService) { }
+  constructor(private instalacionesService: InstalacionService, private _appService: AppService) { }
   mensajeEliminacion = 3;
   instalaciones: Instalacion[] = [];
   instalacionSeleccionada: Instalacion | null = null;
+  rol: number | null = null;
+
+
   ngOnInit(): void {
+    this._appService.rol$.subscribe(rol => {
+      this.rol = rol;
+    });
     this.listarInstalaciones();
   }
 

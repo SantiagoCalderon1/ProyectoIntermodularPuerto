@@ -79,13 +79,13 @@ export class FacturaComponent {
       this.rol = rol;
     });
     let fechaHoy = new Date();
-    this.fecha = fechaHoy.getDate() + '-' + (fechaHoy.getMonth() + 1) + '-' + fechaHoy.getFullYear();
-    console.log(this.fecha);
+    this.fecha = fechaHoy.getFullYear() + '-' + (fechaHoy.getMonth() + 1) + '-' + fechaHoy.getDate();
+    //console.log(this.fecha);
     this.tipo = +this._aroute.snapshot.params['tipo'];
     this.num_factura = this._aroute.snapshot.params['num_factura'];
     this.obtenerClientes();
     this.obtenerReservas();
-    if (this.tipo==1) {
+    if (this.tipo == 1) {
       this.obtenerFactura(this.num_factura);
     }
   }
@@ -105,8 +105,6 @@ export class FacturaComponent {
           },
           error: () => this.toastr.error('Error al obtener el cliente')
         });
-        
-
       },
       error: () => this.toastr.error('Error al obtener la factura')
     });
@@ -158,8 +156,7 @@ export class FacturaComponent {
       this.facturaAct.nif_cliente = this.cliente.nif
 
       if (this.tipo === 0) { // Crear nueva factura
-        console.log(this.facturaAct.cobrada)
-        if (this.facturaAct.cobrada === 1) {
+        if (this.facturaAct.cobrada == 1) {
           this._facturasService.generaReciboApi(this.facturaAct.num_factura, this.fecha).subscribe({});
         }
         this._facturasService.guardaNuevaFacturaApi(this.facturaAct).subscribe({
@@ -173,15 +170,15 @@ export class FacturaComponent {
           },
           error: (error) => {
             this.toastr.error('Error guardando la factura');
-            console.error(error);
+            //console.error(error);
           }
         });
 
       } else if (this.tipo === 1) { // Modificar factura existente
-        if (this.facturaAct.cobrada === 1) {
+        if (this.facturaAct.cobrada == 1) {
           this._facturasService.generaReciboApi(this.facturaAct.num_factura, this.fecha).subscribe({});
+          //console.log(this.facturaAct.num_factura)
         }
-        console.log(this.facturaAct)
         this._facturasService.modificaFacturaApi(this.num_factura, this.facturaAct).subscribe({
           next: (resultado) => {
             if (resultado === "OK") {
@@ -193,7 +190,7 @@ export class FacturaComponent {
           },
           error: (error) => {
             this.toastr.error('Error modificando la factura');
-            console.error(error);
+            ////console.error(error);
           }
         });
 

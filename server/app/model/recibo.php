@@ -1,5 +1,6 @@
-<?
+<?php
 include_once "../../config/conexion.php";
+
 class Recibo
 {
     public static function getCobros()
@@ -26,27 +27,27 @@ class Recibo
         }
     }
 
-    public static function devolver(array $n_facturas)
+    public static function devolver(string $id_recibo)
     {
         $conexion = openConexion();
-        $errores = 0;
-
-        foreach ($n_facturas as $numFactura) {
-            $ssql = "UPDATE `recibos` SET devuelto=1 WHERE n_factura='$numFactura'";
-            $respuesta = $conexion->query($ssql);
-
-            if (!$respuesta || $conexion->affected_rows == 0) {
-                $errores++;
-            }
+        $ssql = "UPDATE `recibos` SET devuelto=1 WHERE id_recibo='$id_recibo'";
+        $respuesta = $conexion->query($ssql);
+        if (!$respuesta || $conexion->affected_rows == 0) {
+            return false;
         }
-
-        closeConexion($conexion);
-
-        // Si hubo errores, devolvemos false, si todo fue bien, true.
-        return $errores == 0;
+        return true;
     }
 
+    public static function crearRecibo($n_factura, $fechaHoy)
+    {
+        $conexion = openConexion();
+        $ssql = "INSERT INTO `recibos` (`n_factura`, `fecha_emision`, `devuelto`) VALUES ('$n_factura', '$fechaHoy', '0')";
+        $respuesta = $conexion->query($ssql);
 
+        if ($respuesta && $conexion->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-
-?>

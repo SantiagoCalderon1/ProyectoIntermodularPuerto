@@ -36,7 +36,7 @@ export class ListaFacturasComponent {
 private traeFacturas() {
   this._facturasService.obtengoFacturasApi().subscribe({
     next: (resultado) => {
-      console.log(resultado);
+      //console.log(resultado);
       this.facturas = resultado;
     },
     error: (error) => {
@@ -52,7 +52,7 @@ imprimirFactura(factura: any) {
     const doc = new jsPDF();
     this._facturasService.obtengoClienteApi(factura.nif_cliente).subscribe({
       next: (response) => {
-        console.log(response);
+        //console.log(response);
         let cliente = response[0];
 
     // Datos de la factura

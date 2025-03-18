@@ -12,7 +12,7 @@ export class RolesService {
   
   //urlApi = "https://puerto.proyectos-2daw.es/app/controller/controllerRoles.php";
 
-  urlApi = "https://uat-puerto.proyectos-2daw.es/app/controller/controllerRoles.php"; 
+  urlApi = "https://puerto.proyectos-2daw.es/app/controller/controllerRoles.php"; 
 
 
   constructor(private http: HttpClient) { } // Inicializo el servicio con el HttpClient

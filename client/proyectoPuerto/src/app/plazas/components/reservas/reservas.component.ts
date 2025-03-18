@@ -132,6 +132,7 @@ export class ReservaComponent {
     });
   }
   
+
   actualizaTitularActual() {
     this.titActual[0] = this.titular
     this.traeEmbarcacionTitular();

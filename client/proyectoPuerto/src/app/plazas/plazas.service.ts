@@ -8,10 +8,9 @@ import { Plaza } from './plazas';
 })
 export class PlazasService {
   //url local
-  private apiUrl = 'http://localhost:8888/app/controller/plazasController.php';
+  //private apiUrl = 'http://localhost/ProyectoIntermodularPuerto/server/app/controller/plazasController.php';
   
-  //apiUrl = "https://uat-puerto.proyectos-2daw.es/app/controller/plazasController.php";
-
+  apiUrl = "https://puerto.proyectos-2daw.es/app/controller/plazasController.php";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -48,6 +47,7 @@ export class PlazasService {
     return this.http.put<any>(this.apiUrl, JSON.stringify(plazaConId), this.httpOptions);
   }
   
+
   // Borrar una plaza
   borraPlazaApi(nplaza: number): Observable<any> {
     const body = JSON.stringify({ id: nplaza }); // La API espera el ID dentro del cuerpo JSON

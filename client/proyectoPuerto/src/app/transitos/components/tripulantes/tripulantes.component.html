@@ -1,4 +1,4 @@
-<div class="container d-flex align-items-center justify-content-center user-form">
+<div class="container d-flex align-items-center justify-content-center tripulante-form">
     <div class="col-11 col-md-10 col-lg-12 card text-center">
         <div class="card-header d-flex justify-content-center align-items-center p-3">
             <h5>{{ tituloConfirmacion }}</h5>
@@ -123,7 +123,7 @@
                             <!-- Lugar de nacimiento -->
                             <div class="col-md-6">
                                 <label for="inputLugarNacimiento" class="form-label">Lugar de nacimiento: *</label>
-                                <input type="email" class="form-control rounded-pill" name="inputLugarNacimiento"
+                                <input type="text" class="form-control rounded-pill" name="inputLugarNacimiento"
                                     required #inputLugarNacimiento="ngModel"
                                     [(ngModel)]="selectedTripulante.lugarNacimiento" minlength="1">
                                 <div
