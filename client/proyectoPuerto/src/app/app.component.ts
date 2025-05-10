@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoginService } from './login/login.service';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'proyectoPuerto';
+  constructor(private _loginService: LoginService, private _appService: AppService) {}
+
+  isIdentified(){
+    return this._loginService.isLoggedIn();
+  }
 }

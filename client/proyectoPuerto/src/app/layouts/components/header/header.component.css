@@ -1,0 +1,10 @@
+header nav{
+    height: 100px;
+}
+
+#logo {
+    height: 70px;
+    width: 140px;
+    background-image: url(../../../../assets/images/logo.webp);
+    background-size: cover;
+}

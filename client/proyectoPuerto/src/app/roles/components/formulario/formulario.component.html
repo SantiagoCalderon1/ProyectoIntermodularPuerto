@@ -1,0 +1,35 @@
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
+    <div class="col-10 col-md-8 col-lg-6">
+        <div class="card text-center shadow">
+            <div class="card-header bg-primary text-white p-3">
+                <h1 class="mb-0">ROL: {{ rolact.nombre_rol }}</h1>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="modificaRol()">
+                    <div class="row g-3">
+                        <!-- Nombre -->
+                        <div class="col-md-12">
+                            <label for="nombre" class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" name="inputNombre"
+                                [(ngModel)]="rolact.nombre_rol">
+                        </div>
+                        <!-- Descripción -->
+                        <div class="col-md-12">
+                            <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion"
+                                [(ngModel)]="rolact.descripcion" rows="10"></textarea>
+                        </div>
+                        <!-- Botón -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary rounded-pill w-100">Guardar</button>
+                        </div>
+                        <!-- Botón Volver -->
+                        <div class="col-12">
+                            <a routerLink="/roles" class="btn btn-secondary rounded-pill w-100">Volver</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
